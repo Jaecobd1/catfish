@@ -6,7 +6,7 @@
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
 }
 
-.main .leftPanel {
+.leftPanel {
   height: 580px;
   width: 720px;
   min-width: 410px;
@@ -16,9 +16,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
-.main .rightPanel {
+.leftPanel h1 {
+  font-size: 50px;
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rightPanel {
   height: 580px;
   min-width: 410px;
   border-radius: 50px;
@@ -27,6 +37,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .SWIGoogle {
   height: 75px;
   width: 100;
