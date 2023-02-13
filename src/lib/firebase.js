@@ -1,7 +1,9 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
 
-const firebase = {
+const firebaseConfig = {
   apiKey: "AIzaSyCgiQw_5_I_v35oUUmwS2fKbBSKZxUf6qM",
   authDomain: "catfish-97e19.firebaseapp.com",
   projectId: "catfish-97e19",
@@ -12,11 +14,12 @@ const firebase = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-const auth = firebase.auth();
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
-export const googleAuthProvider = new firebase.auth.googleAuthProvider();
-const analytics = getAnalytics(app);
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+export const storage = firebase.storage();
 
-const firestore = firebase.firestore();
-const storage = firebase.storage();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();

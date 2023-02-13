@@ -4,15 +4,18 @@ import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import Google from "../images/Google.png";
+import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const signInWithGoogle = () => {
-  console.log("Sign in");
-};
-
 export default function Home() {
   // This is the Main Page of the website
+
+  // This is the sign in with google function
+  const signInWithGoogle = async () => {
+    await auth.signInWithPopup(googleAuthProvider);
+  };
+
   return (
     <>
       <Head>
