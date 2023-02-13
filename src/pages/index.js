@@ -16,6 +16,8 @@ export default function Home() {
     await auth.signInWithPopup(googleAuthProvider);
   };
 
+  //Sign out button
+
   return (
     <>
       <Head>
@@ -27,7 +29,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.leftPanel}></div>
         <div className={styles.rightPanel}>
-          {/* <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+          <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
             <Image
               src={Google}
               width={50}
@@ -35,9 +37,13 @@ export default function Home() {
               alt="Sign in with google"
             />
             Sign in Google
-          </button> */}
+          </button>
         </div>
       </main>
     </>
   );
+}
+
+function SignOutButton() {
+  return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
