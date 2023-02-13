@@ -5,6 +5,7 @@ import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
+import { toast } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,9 @@ export default function Home() {
 
   // This is the sign in with google function
   const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider);
+    await auth.signInWithPopup(googleAuthProvider).then(() => {
+      toast.success("Signed in");
+    });
   };
 
   //Sign out button
