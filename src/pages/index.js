@@ -22,17 +22,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className="leftPanel"></div>
-        <div className="rightPanel">
-          <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+        <div className={styles.leftPanel}></div>
+        <div className={styles.rightPanel}>
+          {/* <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
             <Image
               src={Google}
               width={50}
               height={50}
-              alt="Sign in with googles"
+              alt="Sign in with google"
             />
             Sign in Google
-          </button>
+          </button> */}
         </div>
       </main>
     </>
