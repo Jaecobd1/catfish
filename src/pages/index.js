@@ -3,8 +3,13 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
+import Google from "../images/Google.png";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const signInWithGoogle = () => {
+  console.log("Sign in");
+};
 
 export default function Home() {
   // This is the Main Page of the website
@@ -17,7 +22,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <p>hello, this is a test</p>
+        <div className="leftPanel"></div>
+        <div className="rightPanel">
+          <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+            <Image
+              src={Google}
+              width={50}
+              height={50}
+              alt="Sign in with googles"
+            />
+            Sign in Google
+          </button>
+        </div>
       </main>
     </>
   );

@@ -6,3 +6,10 @@
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
   width: 100vw;
 }
+
+.SWIGoogle {
+  height: 100%;
+  width: 100;
+  display: flex;
+  align-items: center;
+}

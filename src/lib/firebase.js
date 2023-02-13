@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
-const firebaseConfig = {
+const firebase = {
   apiKey: "AIzaSyCgiQw_5_I_v35oUUmwS2fKbBSKZxUf6qM",
   authDomain: "catfish-97e19.firebaseapp.com",
   projectId: "catfish-97e19",
@@ -12,5 +12,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+export const googleAuthProvider = new firebase.auth.googleAuthProvider();
 const analytics = getAnalytics(app);
+
+const firestore = firebase.firestore();
+const storage = firebase.storage();
