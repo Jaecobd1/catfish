@@ -7,8 +7,10 @@ import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
-import { useState, useRef } from "react";
-
+import { useState, useRef, useContext, useEffect } from "react";
+import { UserContext } from "../lib/context";
+import RightPannel from "@/components/RightPannel/RightPannel";
+import Profile from "@/components/Profiles/Profile";
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
   subsets: ["latin"],
@@ -17,80 +19,10 @@ const lato = Lato({
 });
 
 export default function Home() {
+  // User Context
+  const { user, username } = useContext(UserContext);
+
   // This is the Main Page of the website
-
-  // State for Right Panel (Signup/Login)
-  const [userLogin, setUserLogin] = useState(true);
-
-  // This is the sign in with google function
-  const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider).then(() => {
-      toast.success("Signed in");
-    });
-  };
-  // Sign Up with an email & add username
-  const signUpWithEmail = async () => {
-    var email = signUpEmailRef.current.value;
-    var username = signUpUsernameRef.current.value;
-    var password = signUpPasswordRef.current.value;
-    var confirmPassword = signUpPasswordConfirmRef.current.value;
-    await auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        var user = userCredentials.user;
-        if (user) {
-          toast.success("Account Created");
-          user.updateProfile({
-            displayName: username,
-          });
-        }
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        toast.error(errorCode + ":" + errorMessage);
-      });
-  };
-
-  // Login With Email
-  const loginWithEmail = async () => {
-    var username = loginEmail.current.value;
-    var password = loginPasswordRef.current.value;
-    await auth
-      .signInWithEmailAndPassword(username, password)
-      .then((userCredentials) => {
-        var user = userCredentials.user;
-        toast.success(user.displayName + " Signed in");
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        toast.error(errorCode + ":" + errorMessage);
-      });
-  };
-
-  const resetPassword = () => {
-    const email = loginEmail.current.value;
-
-    if (!email || email == "") {
-      toast.error("Please enter your email");
-    }
-
-    auth.sendPasswordResetEmail(email).then(() => {
-      toast.success(
-        "Password reset email has been sent,\n check your spam folder"
-      );
-    });
-  };
-
-  // Reference objs
-  const loginEmail = useRef();
-  const loginPasswordRef = useRef();
-
-  const signUpUsernameRef = useRef();
-  const signUpEmailRef = useRef();
-  const signUpPasswordRef = useRef();
-  const signUpPasswordConfirmRef = useRef();
 
   return (
     <>
@@ -102,91 +34,24 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         {/* Left Side Panel */}
-        <div className={styles.leftPanel}>
-          <Hero />
-        </div>
+        <div className={styles.leftPanel}>{!user ? <Hero /> : null}</div>
 
         {/* Could we make this it's own components? */}
         {/* Right Side Panel */}
         <div className={styles.rightPanel}>
-          {userLogin ? (
-            <>
-              <div className={`${styles.loginTab} ${styles.authTab}`}>
-                Login
-              </div>
-              <div
-                className={`${styles.signUpTab} ${styles.authTab} ${styles.hiddenTab}`}
-                onClick={() => setUserLogin(false)}
-              >
-                Signup
-              </div>
-
-              <h3 style={{ marginTop: 50 }}>Email</h3>
-              <input type="text" ref={loginEmail} className="loginUsername" />
-              <h3>Password</h3>
-              <input
-                type="password"
-                ref={loginPasswordRef}
-                className="loginPassword"
-              />
-              <p
-                className="text-right underline hover:no-underline"
-                onClick={() => resetPassword()}
-              >
-                Need to reset your password?
-              </p>
-              <div className={styles.loginSubmit}>
-                <button onClick={() => loginWithEmail()}>
-                  <p className="font-lato italic font-bold">Login</p>
-                </button>
-              </div>
-              <div className={styles.loginDivider}></div>
-            </>
+          {!user ? (
+            <RightPannel />
           ) : (
             <>
-              <div
-                className={`${styles.loginTab} ${styles.authTab} ${styles.hiddenTab}`}
-                onClick={() => setUserLogin(true)}
-              >
-                Login
-              </div>
-              <div className={`${styles.signUpTab} ${styles.authTab}`}>
-                Signup
-              </div>
+              <div className="flex w-full h-full justify-between flex-col items-center">
+                <h1 className="font-lato text-2xl mt-2 ">
+                  Hi <span className="capitalize">{user.displayName}</span>
+                </h1>
 
-              <h3 style={{ marginTop: 30 }}>Email</h3>
-              <input type="email" ref={signUpEmailRef} />
-              <h3>Username</h3>
-              <input type="text" ref={signUpUsernameRef} />
-              <h3>Password</h3>
-              <input type="password" ref={signUpPasswordRef} />
-              <h3>Confirm Password</h3>
-              <input
-                type="password"
-                style={{ marginBottom: 10 }}
-                ref={signUpPasswordConfirmRef}
-              />
-              <div className={styles.loginSubmit}>
-                <button onClick={() => signUpWithEmail()}>
-                  <p className="font-lato italic font-bold ">Sign up</p>
-                </button>
+                <SignOutButton />
               </div>
-              <div className={styles.loginDivider}></div>
             </>
           )}
-          <p className={styles.copyright}>
-            Developed by Jake Dobler and John Gaynor
-          </p>
-
-          {/* <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
-            <Image
-              src={Google}
-              width={50}
-              height={50}
-              alt="Sign in with google"
-            />
-            Sign in Google
-          </button> */}
         </div>
       </main>
     </>
