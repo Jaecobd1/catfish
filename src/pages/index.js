@@ -52,23 +52,6 @@ export default function Home() {
           <h2>DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?</h2>
         </div>
         <div className={styles.rightPanel}>
-          {/* <>
-            <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
-            <div className={`${styles.signUpTab} ${styles.authTab}`}>
-              Signup
-            </div>
-
-            <h3>Username</h3>
-            <input type="text" />
-            <h3>Password</h3>
-            <input type="text" />
-            <p>Forgot your username/password?</p>
-            <div className={styles.loginSubmit}>
-              <p>submit</p>
-            </div>
-            <div className={styles.loginDivider}></div>
-          </> */}
-
           {userLogin ? (
             <>
               <div className={`${styles.loginTab} ${styles.authTab}`}>
