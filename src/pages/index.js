@@ -30,16 +30,19 @@ export default function Home() {
   };
   // Sign Up with an email & add username
   const signUpWithEmail = async () => {
-    const email = signUpEmailRef.current.value;
-    const username = signUpUsernameRef.current.value;
-    const password = signUpPasswordRef.current.value;
-    const confirmPassword = signUpPasswordConfirmRef.current.value;
+    var email = signUpEmailRef.current.value;
+    var username = signUpUsernameRef.current.value;
+    var password = signUpPasswordRef.current.value;
+    var confirmPassword = signUpPasswordConfirmRef.current.value;
     await auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
-        var user = userCredential.user;
+        var user = userCredentials.user;
         if (user) {
           toast.success("Account Created");
+          user.updateProfile({
+            displayName: username,
+          });
         }
       })
       .catch((error) => {
@@ -49,8 +52,39 @@ export default function Home() {
       });
   };
 
+  // Login With Email
+  const loginWithEmail = async () => {
+    var username = loginEmail.current.value;
+    var password = loginPasswordRef.current.value;
+    await auth
+      .signInWithEmailAndPassword(username, password)
+      .then((userCredentials) => {
+        var user = userCredentials.user;
+        toast.success(user.displayName + " Signed in");
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        toast.error(errorCode + ":" + errorMessage);
+      });
+  };
+
+  const resetPassword = () => {
+    const email = loginEmail.current.value;
+
+    if (!email || email == "") {
+      toast.error("Please enter your email");
+    }
+
+    auth.sendPasswordResetEmail(email).then(() => {
+      toast.success(
+        "Password reset email has been sent,\n check your spam folder"
+      );
+    });
+  };
+
   // Reference objs
-  const loginUsernameRef = useRef();
+  const loginEmail = useRef();
   const loginPasswordRef = useRef();
 
   const signUpUsernameRef = useRef();
@@ -87,21 +121,22 @@ export default function Home() {
                 Signup
               </div>
 
-              <h3 style={{ marginTop: 50 }}>Username</h3>
-              <input
-                type="text"
-                ref={loginUsernameRef}
-                className="loginUsername"
-              />
+              <h3 style={{ marginTop: 50 }}>Email</h3>
+              <input type="text" ref={loginEmail} className="loginUsername" />
               <h3>Password</h3>
               <input
                 type="password"
                 ref={loginPasswordRef}
                 className="loginPassword"
               />
-              <p>Forgot your username/password?</p>
+              <p
+                className="text-right underline hover:no-underline"
+                onClick={() => resetPassword()}
+              >
+                Need to reset your password?
+              </p>
               <div className={styles.loginSubmit}>
-                <button onClick={() => signUpWithEmail()}>
+                <button onClick={() => loginWithEmail()}>
                   <p className="font-lato italic font-bold">Login</p>
                 </button>
               </div>
