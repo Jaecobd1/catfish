@@ -64,7 +64,7 @@ export default function Home() {
                 Signup
               </div>
 
-              <h3>Username</h3>
+              <h3 style={{ marginTop: 50 }}>Username</h3>
               <input type="text" />
               <h3>Password</h3>
               <input type="text" />
@@ -86,16 +86,21 @@ export default function Home() {
                 Signup
               </div>
 
-              <h3>Username</h3>
+              <h3 style={{ marginTop: 50 }}>Username</h3>
               <input type="text" />
               <h3>Password</h3>
               <input type="text" />
+              <h3>Confirm Password</h3>
+              <input type="text" style={{ marginBottom: 20 }} />
               <div className={styles.loginSubmit}>
                 <p>submit</p>
               </div>
               <div className={styles.loginDivider}></div>
             </>
           )}
+          <p className={styles.copyright}>
+            Developed by Jake Dobler and John Gaynor
+          </p>
 
           {/* <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
             <Image

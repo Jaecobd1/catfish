@@ -89,10 +89,6 @@
   margin: 30px auto 20px 28px;
 }
 
-.rightPanel h3:nth-child(1) {
-  margin-top: 70px;
-}
-
 .rightPanel input {
   height: 35px;
   width: 350px;
@@ -120,6 +116,12 @@
 .loginSubmit p {
   color: white;
   font-size: 25px;
+}
+
+.copyright {
+  position: absolute;
+  inset: auto 0 5px 0;
+  text-align: center;
 }
 
 .SWIGoogle {
