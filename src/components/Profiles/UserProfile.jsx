@@ -2,7 +2,7 @@ import { useContext, useRef, useEffect, useState } from "react";
 import { UserContext } from "@/lib/context";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
-import { storage, firestore, STATE_CHANGED } from "@/lib/firebase";
+import { storage, firestore, STATE_CHANGED, auth } from "@/lib/firebase";
 
 function UserProfile() {
   const { user, username } = useContext(UserContext);
@@ -15,7 +15,7 @@ function UserProfile() {
 
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [downloadURL, setDownloadURL] = useState(null);
+  const [profileURL, setProfileURL] = useState(null);
 
   const userStorageRef = storage.ref().child(user.uid);
   useEffect(() => {
@@ -26,6 +26,7 @@ function UserProfile() {
         lastNameRef.current.value = profile.lastName;
         bioRef.current.value = profile.bio;
         imageRef.current.src = profile.photoURL;
+        setProfileURL(profile.photoURL);
       }
     });
   }, []);
@@ -96,13 +97,13 @@ function UserProfile() {
       task
         .then((d) => ref.getDownloadURL())
         .then((url) => {
-          setDownloadURL(url);
+          setProfileURL(url);
           setUploading(false);
           toast.success("Image Uploaded");
           imageRef.current.src = url;
           userDoc
             .update({
-              photoURL: url,
+              photoURL: profileURL,
             })
             .then(() => {
               toast.success("Image Saved!");
@@ -120,12 +121,16 @@ function UserProfile() {
           Hi <span className="capitalize">{username}</span>, would you like to
           update your profile?
         </h1>
+        <p className="">
+          Make your profile authentic, the catfish of the group will be selected
+          at random
+        </p>
         <div className="flex">
           <div className="w-20 h-20 overflow-hidden rounded-full">
             <Image
               alt="profile"
               ref={imageRef}
-              src=""
+              src={profileURL ? profileURL : ""}
               height={100}
               width={100}
               className=" object-cover "
