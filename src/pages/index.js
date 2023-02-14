@@ -7,6 +7,7 @@ import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -17,6 +18,7 @@ const lato = Lato({
 
 export default function Home() {
   // This is the Main Page of the website
+  const [userLogin, setUserLogin] = useState(true);
 
   // This is the sign in with google function
   const signInWithGoogle = async () => {
@@ -50,8 +52,8 @@ export default function Home() {
           <h2>DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?</h2>
         </div>
         <div className={styles.rightPanel}>
-          <div className={styles.loginTab}>Login</div>
-          <div className={styles.signUpTab}>Signup</div>
+          <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
+          <div className={`${styles.signUpTab} ${styles.authTab}`}>Signup</div>
 
           <h3>Username</h3>
           <input type="text" />
