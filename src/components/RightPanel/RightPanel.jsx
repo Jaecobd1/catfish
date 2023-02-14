@@ -79,6 +79,7 @@ function RightPannel() {
     <>
       {userLogin ? (
         <>
+        <div className="font-lato">
           <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
           <div
             className={`${styles.signUpTab} ${styles.authTab} ${styles.hiddenTab}`}
@@ -86,14 +87,14 @@ function RightPannel() {
           >
             Signup
           </div>
-
-          <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
-          <input type="text" ref={loginEmail} className="loginUsername" />
+        </div>
+       <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
+          <input type="text" ref={loginEmail} className="loginUsername p-2 font-lato" />
           <h3 className="font-lato">Password</h3>
           <input
             type="password"
             ref={loginPasswordRef}
-            className="loginPassword"
+            className="loginPassword p-2 font-lato"
           />
           <p
             className="text-right underline hover:no-underline font-lato italic"
@@ -108,24 +109,26 @@ function RightPannel() {
         </>
       ) : (
         <>
-          <div
+        <div className="font-lato">
+        <div
             className={`${styles.loginTab} ${styles.authTab} ${styles.hiddenTab}`}
             onClick={() => setUserLogin(true)}
           >
             Login
           </div>
           <div className={`${styles.signUpTab} ${styles.authTab}`}>Signup</div>
+        </div> 
+          <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
+          <input type="email" ref={signUpEmailRef} className=" p-2 font-lato" />
 
-          <h3 style={{ marginTop: 30 }}>Email</h3>
-          <input type="email" ref={signUpEmailRef} />
-
-          <h3>Password</h3>
-          <input type="password" ref={signUpPasswordRef} />
-          <h3>Confirm Password</h3>
+          <h3 className="font-lato">Password</h3>
+          <input type="password" ref={signUpPasswordRef} className="p-2 font-lato" />
+          <h3 className="font-lato">Confirm Password</h3>
           <input
             type="password"
             style={{ marginBottom: 10 }}
             ref={signUpPasswordConfirmRef}
+            className="p-2 font-lato"
           />
           <div className={styles.authSubmit} onClick={() => signUpWithEmail()}>   
               <p className="font-lato italic font-bold">Sign up</p>
@@ -133,7 +136,7 @@ function RightPannel() {
           <div className={styles.loginDivider}></div>
         </>
       )}
-      <p className={styles.copyright}>
+      <p className={`${styles.copyright} font-lato`}>
         Developed by Jake Dobler and John Gaynor
       </p>
 

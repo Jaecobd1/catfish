@@ -128,7 +128,8 @@
 .copyright {
   position: absolute;
   inset: auto 0 5px 0;
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .SWIGoogle {
