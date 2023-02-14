@@ -19,12 +19,11 @@ const lato = Lato({
   style: ["italic", "normal"],
   weight: ["400", "100"],
 });
+// This is the Main Page of the website
 
 export default function Home() {
-  // User Context
+  // Get User Context
   const { user, username } = useContext(UserContext);
-
-  // This is the Main Page of the website
 
   return (
     <>
@@ -63,7 +62,7 @@ export default function Home() {
               <>
                 <div className="flex w-full h-full justify-between flex-col items-center">
                   <h1 className="font-lato text-2xl mt-2 ">
-                    Hi <span className="capitalize">{user.displayName}</span>
+                    Hi <span className="capitalize">{username}</span>
                   </h1>
                   <SignOutButton />
                 </div>
