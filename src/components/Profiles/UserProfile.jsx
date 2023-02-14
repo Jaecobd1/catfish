@@ -102,7 +102,7 @@ function UserProfile() {
           imageRef.current.src = url;
           userDoc
             .update({
-              photoURL: url,
+              photoURL: downloadURL,
             })
             .then(() => {
               toast.success("Image Saved!");
@@ -129,7 +129,7 @@ function UserProfile() {
             <Image
               alt="profile"
               ref={imageRef}
-              src=""
+              src={downloadURL ? downloadURL : ""}
               height={100}
               width={100}
               className=" object-cover "
