@@ -6,6 +6,7 @@
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
 }
 
+/* these are the styles for the left panel */
 .leftPanel {
   height: 580px;
   width: 720px;
@@ -46,14 +47,53 @@
   inset: auto auto 40px 50px;
 }
 
+/* these are the styles for the right panel */
 .rightPanel {
   height: 580px;
   min-width: 410px;
   border-radius: 50px;
   background-color: white;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.rightPanel h3 {
+  font-size: 25px;
+  margin-bottom: 20px;
+  margin: 30px auto 20px 28px;
+}
+
+.rightPanel h3:nth-child(1) {
+  margin-top: 70px;
+}
+
+.rightPanel input {
+  height: 35px;
+  width: 350px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.rightPanel p {
+  width: 350px;
+  margin: 10px auto;
+}
+
+.loginSubmit {
+  height: 40px;
+  width: 355px;
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  margin: 20px auto 0 auto;
+  border-radius: 5px;
+  display: flex;
   align-items: center;
+  text-align: center;
+}
+
+.loginSubmit p {
+  color: white;
+  font-size: 25px;
 }
 
 .SWIGoogle {

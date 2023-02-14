@@ -6,6 +6,7 @@ import Link from "next/link";
 import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
+import { StyleRegistry } from "styled-jsx";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -49,7 +50,20 @@ export default function Home() {
           <h2>DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?</h2>
         </div>
         <div className={styles.rightPanel}>
-          <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+          <div className={styles.loginTab}>Login</div>
+          <div className={styles.signUpTab}>Signup</div>
+
+          <h3>Username</h3>
+          <input type="text" />
+          <h3>Password</h3>
+          <input type="text" />
+          <p>Forgot your username/password?</p>
+          <div className={styles.loginSubmit}>
+            <p>submit</p>
+          </div>
+          <div className={styles.loginDivider}></div>
+
+          {/* <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
             <Image
               src={Google}
               width={50}
@@ -57,7 +71,7 @@ export default function Home() {
               alt="Sign in with google"
             />
             Sign in Google
-          </button>
+          </button> */}
         </div>
       </main>
     </>
