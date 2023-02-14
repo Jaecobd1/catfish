@@ -7,7 +7,7 @@ import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -18,6 +18,8 @@ const lato = Lato({
 
 export default function Home() {
   // This is the Main Page of the website
+
+  // State for Right Panel (Signup/Login)
   const [userLogin, setUserLogin] = useState(true);
 
   // This is the sign in with google function
@@ -26,8 +28,35 @@ export default function Home() {
       toast.success("Signed in");
     });
   };
+  // Sign Up with an email & add username
+  const signUpWithEmail = async () => {
+    const email = signUpEmailRef.current.value;
+    const username = signUpUsernameRef.current.value;
+    const password = signUpPasswordRef.current.value;
+    const confirmPassword = signUpPasswordConfirmRef.current.value;
+    await auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((userCredentials) => {
+        var user = userCredential.user;
+        if (user) {
+          toast.success("Account Created");
+        }
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        toast.error(errorCode + ":" + errorMessage);
+      });
+  };
 
-  //Sign out button
+  // Reference objs
+  const loginUsernameRef = useRef();
+  const loginPasswordRef = useRef();
+
+  const signUpUsernameRef = useRef();
+  const signUpEmailRef = useRef();
+  const signUpPasswordRef = useRef();
+  const signUpPasswordConfirmRef = useRef();
 
   return (
     <>
@@ -40,21 +69,7 @@ export default function Home() {
       <main className={styles.main}>
         {/* Left Side Panel */}
         <div className={styles.leftPanel}>
-          <h1 className="text-[50px] font-lato font-black italic">
-            WELCOME TO CATFISH!
-          </h1>
-          <p className="font-raleway tracking-wide">
-            In this social media-inspired game, players work together to catch
-            the elusive catfish, but be careful - not everyone is who they claim
-            to be!
-          </p>
-          <p className="font-raleway tracking-wide">
-            Analyze messages, photos, and participate in minigames to expose the
-            fake profiles and emerge victorious.
-          </p>
-          <h2 className="font-lato italic">
-            DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
-          </h2>
+          <Hero />
         </div>
 
         {/* Could we make this it's own components? */}
@@ -73,12 +88,22 @@ export default function Home() {
               </div>
 
               <h3 style={{ marginTop: 50 }}>Username</h3>
-              <input type="text" />
+              <input
+                type="text"
+                ref={loginUsernameRef}
+                className="loginUsername"
+              />
               <h3>Password</h3>
-              <input type="text" />
+              <input
+                type="password"
+                ref={loginPasswordRef}
+                className="loginPassword"
+              />
               <p>Forgot your username/password?</p>
               <div className={styles.loginSubmit}>
-                <p>submit</p>
+                <button onClick={() => signUpWithEmail()}>
+                  <p className="font-lato italic font-bold">Login</p>
+                </button>
               </div>
               <div className={styles.loginDivider}></div>
             </>
@@ -94,14 +119,22 @@ export default function Home() {
                 Signup
               </div>
 
-              <h3 style={{ marginTop: 50 }}>Username</h3>
-              <input type="text" />
+              <h3 style={{ marginTop: 30 }}>Email</h3>
+              <input type="email" ref={signUpEmailRef} />
+              <h3>Username</h3>
+              <input type="text" ref={signUpUsernameRef} />
               <h3>Password</h3>
-              <input type="text" />
+              <input type="password" ref={signUpPasswordRef} />
               <h3>Confirm Password</h3>
-              <input type="text" style={{ marginBottom: 20 }} />
+              <input
+                type="password"
+                style={{ marginBottom: 10 }}
+                ref={signUpPasswordConfirmRef}
+              />
               <div className={styles.loginSubmit}>
-                <p>submit</p>
+                <button onClick={() => signUpWithEmail()}>
+                  <p className="font-lato italic font-bold ">Sign up</p>
+                </button>
               </div>
               <div className={styles.loginDivider}></div>
             </>
@@ -147,4 +180,25 @@ function GoogleSignUp() {
 
 function SignOutButton() {
   return <button onClick={() => auth.signOut()}>Sign Out</button>;
+}
+
+function Hero() {
+  return (
+    <>
+      <h1 className="text-[50px] font-lato font-black italic">
+        WELCOME TO CATFISH!
+      </h1>
+      <p className="font-raleway tracking-wide">
+        In this social media-inspired game, players work together to catch the
+        elusive catfish, but be careful - not everyone is who they claim to be!
+      </p>
+      <p className="font-raleway tracking-wide">
+        Analyze messages, photos, and participate in minigames to expose the
+        fake profiles and emerge victorious.
+      </p>
+      <h2 className="font-lato italic">
+        DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
+      </h2>
+    </>
+  );
 }
