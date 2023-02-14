@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
 import { useState, useRef, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../lib/context";
-import RightPanel from "@/components/RightPanel/RightPanel";
+import RightPannel from "@/components/RightPanel/RightPanel";
 import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
 import UserProfile from "@/components/Profiles/UserProfile";
@@ -34,10 +34,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="overflow-hidden">
+      <div className="">
         <main className={styles.main}>
           {/* Left Side Panel */}
-
           <div className={styles.leftPanel}>
             {!user ? (
               <Hero />
