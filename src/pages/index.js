@@ -10,10 +10,8 @@ import { toast } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
   subsets: ["latin"],
-  style: "normal",
-  weight: "400",
-  // style: ["italic", "normal"],
-  // weight: ["400", "100"],
+  style: ["italic", "normal"],
+  weight: ["400", "100"],
 });
 
 export default function Home() {
