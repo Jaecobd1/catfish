@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "@next/font/google";
+import { Inter, Lato, Roboto } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import Google from "../images/Google.png";
@@ -8,6 +8,13 @@ import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
+const lato = Lato({
+  subsets: ["latin"],
+  style: "normal",
+  weight: "400",
+  // style: ["italic", "normal"],
+  // weight: ["400", "100"],
+});
 
 export default function Home() {
   // This is the Main Page of the website
@@ -31,7 +38,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.leftPanel}>
-          <h1>WELCOME TO CATFISH!</h1>
+          <h1 className={lato.className}>WELCOME TO CATFISH!</h1>
         </div>
         <div className={styles.rightPanel}>
           <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
