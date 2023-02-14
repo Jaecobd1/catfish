@@ -6,21 +6,13 @@ import Link from "next/link";
 import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
+import { UserContext } from "@/lib/context";
+import { useContext } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  // This is the Main Page of the website
-
-  // This is the sign in with google function
-  const signInWithGoogle = async () => {
-    await auth.signInWithPopup(googleAuthProvider).then(() => {
-      toast.success("Signed in");
-    });
-  };
-
-  //Sign out button
-
+  const { user, username } = useContext(UserContext);
   return (
     <>
       <Head>
@@ -34,18 +26,30 @@ export default function Home() {
           <h1>WELCOME TO CATFISH!</h1>
         </div>
         <div className={styles.rightPanel}>
-          <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
-            <Image
-              src={Google}
-              width={50}
-              height={50}
-              alt="Sign in with google"
-            />
-            Sign in Google
-          </button>
+          {user ? <GoogleSignUp /> : null}
         </div>
       </main>
     </>
+  );
+}
+
+function GoogleSignUp() {
+  // This is the sign in with google function
+  const signInWithGoogle = async () => {
+    await auth
+      .signInWithPopup(googleAuthProvider)
+      .then(() => {
+        toast.success("Signed in");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  return (
+    <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+      <Image src={Google} width={50} height={50} alt="Sign in with google" />
+      Sign in Google
+    </button>
   );
 }
 

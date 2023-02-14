@@ -2,12 +2,11 @@ import "@/styles/globals.css";
 import { UserContext } from "@/lib/context";
 import Nav from "@/components/Nav/Nav";
 import { Toaster } from "react-hot-toast";
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-
+import { useUserData } from "@/lib/hooks";
 export default function App({ Component, pageProps }) {
+  const userData = useUserData();
   return (
-    <UserContext.Provider value={{ user: {}, username: "Jake" }}>
+    <UserContext.Provider value={userData}>
       <Nav />
       <Component {...pageProps} />
       <Toaster />
