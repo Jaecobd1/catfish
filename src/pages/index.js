@@ -34,7 +34,22 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         {/* Left Side Panel */}
-        <div className={styles.leftPanel}>{!user ? <Hero /> : null}</div>
+        <div className={styles.leftPanel}>
+          {!user ? (
+            <Hero />
+          ) : (
+            <>
+              <div className="flex justify-center items-center h-full">
+                <button
+                  onClick={() => toast.success("looking for match...")}
+                  className="p-2 rounded-xl bg-gradient-to-tr from-[#00bfff] to-[#ba55d3] via-[#8a2be2] text-white font-lato text-3xl "
+                >
+                  Start Game
+                </button>
+              </div>
+            </>
+          )}
+        </div>
 
         {/* Could we make this it's own components? */}
         {/* Right Side Panel */}
@@ -47,7 +62,6 @@ export default function Home() {
                 <h1 className="font-lato text-2xl mt-2 ">
                   Hi <span className="capitalize">{user.displayName}</span>
                 </h1>
-
                 <SignOutButton />
               </div>
             </>
@@ -95,6 +109,10 @@ function Hero() {
       <p className="font-raleway tracking-wide">
         Analyze messages, photos, and participate in minigames to expose the
         fake profiles and emerge victorious.
+      </p>
+      <p className="font-raleway tracking-wide mb-2">
+        Or will the catfish fool the group with their fake identiy and stand win
+        it all?
       </p>
       <h2 className="font-lato italic">
         DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
