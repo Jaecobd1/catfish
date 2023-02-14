@@ -45,7 +45,7 @@ export default function Home() {
             the elusive catfish, but be careful - not everyone is who they claim
             to be!
           </p>
-          <p>
+          <p className={inter.className}>
             Analyze messages, photos, and participate in minigames to expose the
             fake profiles and emerge victorious.
           </p>
