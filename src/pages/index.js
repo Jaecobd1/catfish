@@ -6,13 +6,8 @@ import Link from "next/link";
 import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
-<<<<<<< HEAD
-import { UserContext } from "@/lib/context";
-import { useContext } from "react";
-=======
 import { StyleRegistry } from "styled-jsx";
 import { useState } from "react";
->>>>>>> c1319a834b9044ab3ca90bca19242e2c5bb23ee2
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -22,9 +17,6 @@ const lato = Lato({
 });
 
 export default function Home() {
-<<<<<<< HEAD
-  const { user, username } = useContext(UserContext);
-=======
   // This is the Main Page of the website
   const [userLogin, setUserLogin] = useState(true);
 
@@ -37,7 +29,6 @@ export default function Home() {
 
   //Sign out button
 
->>>>>>> c1319a834b9044ab3ca90bca19242e2c5bb23ee2
   return (
     <>
       <Head>
@@ -48,7 +39,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.leftPanel}>
-          <h1 className={lato.className}>WELCOME TO CATFISH!</h1>
+          <h1 className="text-[50px] font-lato">WELCOME TO CATFISH!</h1>
           <p>
             In this social media-inspired game, players work together to catch
             the elusive catfish, but be careful - not everyone is who they claim
@@ -61,9 +52,6 @@ export default function Home() {
           <h2>DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?</h2>
         </div>
         <div className={styles.rightPanel}>
-<<<<<<< HEAD
-          {user ? <GoogleSignUp /> : null}
-=======
           {userLogin ? (
             <>
               <div className={`${styles.loginTab} ${styles.authTab}`}>
@@ -123,7 +111,6 @@ export default function Home() {
             />
             Sign in Google
           </button> */}
->>>>>>> c1319a834b9044ab3ca90bca19242e2c5bb23ee2
         </div>
       </main>
     </>
