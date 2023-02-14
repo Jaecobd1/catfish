@@ -39,7 +39,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.leftPanel}>
-          <h1 className={lato.className}>WELCOME TO CATFISH!</h1>
+          <h1 className="text-[50px] font-lato">WELCOME TO CATFISH!</h1>
           <p>
             In this social media-inspired game, players work together to catch
             the elusive catfish, but be careful - not everyone is who they claim
@@ -114,6 +114,26 @@ export default function Home() {
         </div>
       </main>
     </>
+  );
+}
+
+function GoogleSignUp() {
+  // This is the sign in with google function
+  const signInWithGoogle = async () => {
+    await auth
+      .signInWithPopup(googleAuthProvider)
+      .then(() => {
+        toast.success("Signed in");
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+  return (
+    <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+      <Image src={Google} width={50} height={50} alt="Sign in with google" />
+      Sign in Google
+    </button>
   );
 }
 
