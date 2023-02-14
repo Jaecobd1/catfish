@@ -87,24 +87,22 @@ function RightPannel() {
             Signup
           </div>
 
-          <h3 style={{ marginTop: 50 }}>Email</h3>
+          <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
           <input type="text" ref={loginEmail} className="loginUsername" />
-          <h3>Password</h3>
+          <h3 className="font-lato">Password</h3>
           <input
             type="password"
             ref={loginPasswordRef}
             className="loginPassword"
           />
           <p
-            className="text-right underline hover:no-underline"
+            className="text-right underline hover:no-underline font-lato italic"
             onClick={() => resetPassword()}
           >
             Need to reset your password?
           </p>
-          <div className={styles.loginSubmit}>
-            <button onClick={() => loginWithEmail()}>
+          <div className={styles.authSubmit} onClick={() => loginWithEmail()}>
               <p className="font-lato italic font-bold">Login</p>
-            </button>
           </div>
           <div className={styles.loginDivider}></div>
         </>
@@ -129,10 +127,8 @@ function RightPannel() {
             style={{ marginBottom: 10 }}
             ref={signUpPasswordConfirmRef}
           />
-          <div className={styles.loginSubmit}>
-            <button onClick={() => signUpWithEmail()}>
-              <p className="font-lato italic font-bold text-center ">Sign up</p>
-            </button>
+          <div className={styles.authSubmit} onClick={() => signUpWithEmail()}>   
+              <p className="font-lato italic font-bold">Sign up</p>
           </div>
           <div className={styles.loginDivider}></div>
         </>
