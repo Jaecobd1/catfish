@@ -37,6 +37,16 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.leftPanel}>
           <h1 className={lato.className}>WELCOME TO CATFISH!</h1>
+          <p>
+            In this social media-inspired game, players work together to catch
+            the elusive catfish, but be careful - not everyone is who they claim
+            to be!
+          </p>
+          <p>
+            Analyze messages, photos, and participate in minigames to expose the
+            fake profiles and emerge victorious.
+          </p>
+          <h2>DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?</h2>
         </div>
         <div className={styles.rightPanel}>
           <button className={styles.SWIGoogle} onClick={signInWithGoogle}>

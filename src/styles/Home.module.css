@@ -14,18 +14,36 @@
   border-radius: 50px;
   background-color: white;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   position: relative;
 }
 
-.leftPanel h1 {
-  font-size: 50px;
+.leftPanel h1,
+.leftPanel h2 {
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
   background-size: 100%;
   background-repeat: repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.leftPanel h1 {
+  font-size: 50px;
+  margin-top: 40px;
+  margin: 40px auto 70px 50px;
+}
+
+.leftPanel p {
+  margin-left: 50px;
+  max-width: 400px;
+  margin-bottom: 50px;
+  font-size: 20px;
+}
+
+.leftPanel h2 {
+  font-size: 35px;
+  position: absolute;
+  inset: auto auto 40px 50px;
 }
 
 .rightPanel {
