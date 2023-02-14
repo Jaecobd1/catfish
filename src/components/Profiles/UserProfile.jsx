@@ -15,7 +15,7 @@ function UserProfile() {
 
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [downloadURL, setDownloadURL] = useState(null);
+  const [profileURL, setProfileURL] = useState(null);
 
   const userStorageRef = storage.ref().child(user.uid);
   useEffect(() => {
@@ -26,6 +26,7 @@ function UserProfile() {
         lastNameRef.current.value = profile.lastName;
         bioRef.current.value = profile.bio;
         imageRef.current.src = profile.photoURL;
+        setProfileURL(profile.photoURL);
       }
     });
   }, []);
@@ -96,13 +97,13 @@ function UserProfile() {
       task
         .then((d) => ref.getDownloadURL())
         .then((url) => {
-          setDownloadURL(url);
+          setProfileURL(url);
           setUploading(false);
           toast.success("Image Uploaded");
           imageRef.current.src = url;
           userDoc
             .update({
-              photoURL: downloadURL,
+              photoURL: profileURL,
             })
             .then(() => {
               toast.success("Image Saved!");
@@ -129,7 +130,7 @@ function UserProfile() {
             <Image
               alt="profile"
               ref={imageRef}
-              src={downloadURL ? downloadURL : ""}
+              src={profileURL ? profileURL : ""}
               height={100}
               width={100}
               className=" object-cover "
