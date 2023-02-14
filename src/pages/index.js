@@ -38,19 +38,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        {/* Left Side Panel */}
         <div className={styles.leftPanel}>
-          <h1 className="text-[50px] font-lato">WELCOME TO CATFISH!</h1>
-          <p>
+          <h1 className="text-[50px] font-lato font-black italic">
+            WELCOME TO CATFISH!
+          </h1>
+          <p className="font-raleway tracking-wide">
             In this social media-inspired game, players work together to catch
             the elusive catfish, but be careful - not everyone is who they claim
             to be!
           </p>
-          <p>
+          <p className="font-raleway tracking-wide">
             Analyze messages, photos, and participate in minigames to expose the
             fake profiles and emerge victorious.
           </p>
-          <h2>DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?</h2>
+          <h2 className="font-lato italic">
+            DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
+          </h2>
         </div>
+
+        {/* Could we make this it's own components? */}
+        {/* Right Side Panel */}
         <div className={styles.rightPanel}>
           {userLogin ? (
             <>
