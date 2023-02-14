@@ -75,7 +75,12 @@
 }
 
 .signUpTab {
-  right: 185px;
+  right: 180px;
+}
+
+.hiddenTab {
+  background-color: #eee;
+  color: #888;
 }
 
 .rightPanel h3 {
