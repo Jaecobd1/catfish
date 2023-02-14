@@ -12,6 +12,7 @@ import { UserContext } from "../lib/context";
 import RightPannel from "@/components/RightPannel/RightPannel";
 import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
+import UserProfile from "@/components/Profiles/UserProfile";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -59,14 +60,7 @@ export default function Home() {
             !username ? (
               <UsernameForm />
             ) : (
-              <>
-                <div className="flex w-full h-full justify-between flex-col items-center">
-                  <h1 className="font-lato text-2xl mt-2 ">
-                    Hi <span className="capitalize">{username}</span>
-                  </h1>
-                  <SignOutButton />
-                </div>
-              </>
+              <UserProfile />
             )
           ) : (
             <RightPannel />
@@ -95,10 +89,6 @@ function GoogleSignUp() {
       Sign in Google
     </button>
   );
-}
-
-function SignOutButton() {
-  return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
 
 // Username Validation form
@@ -156,6 +146,8 @@ function UsernameForm() {
       username: formValue,
       photoURL: user.photoURL,
       displayName: user.displayName,
+      firstName: user.firstName,
+      lastName: user.lastName,
     });
     batch.set(usernameDoc, { uid: user.uid });
 
