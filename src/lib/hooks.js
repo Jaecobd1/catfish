@@ -23,3 +23,9 @@ export function useUserData() {
 
   return { user, username };
 }
+
+export function useGameData() {
+  const [isUserInGame, setIsUserInGame] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [chatUID, setChatUID] = useState();
+}

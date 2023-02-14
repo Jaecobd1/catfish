@@ -7,10 +7,12 @@ import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../lib/context";
 import RightPannel from "@/components/RightPannel/RightPannel";
-import Profile from "@/components/Profiles/Profile";
+import debounce from "lodash.debounce";
+import { firestore } from "../lib/firebase";
+
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
   subsets: ["latin"],
@@ -54,17 +56,21 @@ export default function Home() {
         {/* Could we make this it's own components? */}
         {/* Right Side Panel */}
         <div className={styles.rightPanel}>
-          {!user ? (
-            <RightPannel />
+          {user ? (
+            !username ? (
+              <UsernameForm />
+            ) : (
+              <>
+                <div className="flex w-full h-full justify-between flex-col items-center">
+                  <h1 className="font-lato text-2xl mt-2 ">
+                    Hi <span className="capitalize">{user.displayName}</span>
+                  </h1>
+                  <SignOutButton />
+                </div>
+              </>
+            )
           ) : (
-            <>
-              <div className="flex w-full h-full justify-between flex-col items-center">
-                <h1 className="font-lato text-2xl mt-2 ">
-                  Hi <span className="capitalize">{user.displayName}</span>
-                </h1>
-                <SignOutButton />
-              </div>
-            </>
+            <RightPannel />
           )}
         </div>
       </main>
@@ -94,6 +100,105 @@ function GoogleSignUp() {
 
 function SignOutButton() {
   return <button onClick={() => auth.signOut()}>Sign Out</button>;
+}
+
+// Username Validation form
+function UsernameForm() {
+  const [formValue, setFormValue] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { user, username } = useContext(UserContext);
+
+  useEffect(() => {
+    checkUsername(formValue);
+  }, [formValue]);
+
+  const onChange = (e) => {
+    const val = e.target.value.toLowerCase();
+    const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+
+    // Only set form calue if length is < 3 Or it passes regex
+    if (val.length < 3) {
+      setFormValue(val);
+      setLoading(false);
+      setIsValid(false);
+    }
+
+    if (re.test(val)) {
+      setFormValue(val);
+      setLoading(true);
+      setIsValid(true);
+    }
+  };
+
+  // Check database for username match after debounce
+  // useCallback is needed for debounce
+  const checkUsername = useCallback(
+    debounce(async (username) => {
+      if (username.length >= 3) {
+        const ref = firestore.doc(`usernames/${username}`);
+        const { exists } = await ref.get();
+        setIsValid(!exists);
+        setLoading(false);
+      }
+    }, 500),
+    []
+  );
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const userDoc = firestore.doc(`users/${user.uid}`);
+    const usernameDoc = firestore.doc(`usernames/${formValue}`);
+
+    // Send to DB at same time
+    const batch = firestore.batch();
+    batch.set(userDoc, {
+      username: formValue,
+      photoURL: user.photoURL,
+      displayName: user.displayName,
+    });
+    batch.set(usernameDoc, { uid: user.uid });
+
+    await batch.commit();
+  };
+
+  return (
+    !username && (
+      <>
+        <section>
+          <h3>Username</h3>
+          <form onSubmit={onSubmit} className="flex flex-col">
+            <input
+              type="text"
+              name="username"
+              placeholder="username"
+              value={formValue}
+              onChange={onChange}
+            />
+            <UsernameMessage
+              username={formValue}
+              isValid={isValid}
+              loading={loading}
+            />
+            <button type="submit" disabled={!isValid}>
+              Choose
+            </button>
+          </form>
+        </section>
+      </>
+    )
+  );
+}
+
+function UsernameMessage({ username, isValid, loading }) {
+  if (loading) {
+    return <p> Checking...</p>;
+  } else if (isValid) {
+    return <p>{username} is available!</p>;
+  } else {
+    return <p></p>;
+  }
 }
 
 function Hero() {

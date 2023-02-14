@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import styles from "@/styles/Home.module.css";
 import { toast } from "react-hot-toast";
 import { auth, firebase, googleAuthProvider } from "../../lib/firebase";
+import { UserContext } from "@/lib/context";
 function RightPannel() {
   // This is the sign in with google function
   const signInWithGoogle = async () => {
@@ -13,7 +14,6 @@ function RightPannel() {
   // Sign Up with an email & add username
   const signUpWithEmail = async () => {
     var email = signUpEmailRef.current.value;
-    var username = signUpUsernameRef.current.value;
     var password = signUpPasswordRef.current.value;
     var confirmPassword = signUpPasswordConfirmRef.current.value;
     await auth
@@ -41,7 +41,6 @@ function RightPannel() {
     await auth
       .signInWithEmailAndPassword(username, password)
       .then((userCredentials) => {
-        var user = userCredentials.user;
         toast.success(user.displayName + " Signed in");
       })
       .catch((error) => {
@@ -73,7 +72,6 @@ function RightPannel() {
   const loginEmail = useRef();
   const loginPasswordRef = useRef();
 
-  const signUpUsernameRef = useRef();
   const signUpEmailRef = useRef();
   const signUpPasswordRef = useRef();
   const signUpPasswordConfirmRef = useRef();
@@ -122,8 +120,7 @@ function RightPannel() {
 
           <h3 style={{ marginTop: 30 }}>Email</h3>
           <input type="email" ref={signUpEmailRef} />
-          <h3>Username</h3>
-          <input type="text" ref={signUpUsernameRef} />
+
           <h3>Password</h3>
           <input type="password" ref={signUpPasswordRef} />
           <h3>Confirm Password</h3>
