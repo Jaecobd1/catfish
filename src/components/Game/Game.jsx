@@ -8,7 +8,7 @@ const gameDBRef = firestore.collection("games");
 
 function Game() {
   // Get user
-  const [gameID, setGameID] = useState(false);
+  const [gameID, setGameID] = useState();
   const [isGameActive, setIsGameActive] = useState(false);
   const [isUserInGame, setIsUserInGame] = useState(false);
   const [lobbyCount, setLobbyCount] = useState(0);

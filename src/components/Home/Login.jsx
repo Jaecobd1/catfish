@@ -6,6 +6,7 @@ import Image from "next/image";
 import Google from "../../images/Google.png";
 import Apple from "../../images/Apple.png";
 import Facebook from "../../images/Facebook.png";
+import { OAuthProvider } from "firebase/auth";
 
 import { UserContext } from "@/lib/context";
 function Login() {
@@ -15,6 +16,8 @@ function Login() {
       toast.success("Signed in");
     });
   };
+
+  //Sign Up with Apple
 
   // Sign Up with an email & add username
   const signUpWithEmail = async () => {
@@ -84,17 +87,23 @@ function Login() {
     <>
       {userLogin ? (
         <div className={styles.loginContainer}>
-        <div className="font-lato">
-          <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
-          <div
-            className={`${styles.signUpTab} ${styles.authTab} ${styles.hiddenTab}`}
-            onClick={() => setUserLogin(false)}
-          >
-            Signup
+          <div className="font-lato">
+            <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
+            <div
+              className={`${styles.signUpTab} ${styles.authTab} ${styles.hiddenTab}`}
+              onClick={() => setUserLogin(false)}
+            >
+              Signup
+            </div>
           </div>
-        </div>
-       <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
-          <input type="text" ref={loginEmail} className="loginUsername p-2 font-lato" />
+          <h3 style={{ marginTop: 50 }} className="font-lato">
+            Email
+          </h3>
+          <input
+            type="text"
+            ref={loginEmail}
+            className="loginUsername p-2 font-lato"
+          />
           <h3 className="font-lato">Password</h3>
           <input
             type="password"
@@ -108,7 +117,7 @@ function Login() {
             Need to reset your password?
           </p>
           <div className={styles.authSubmit} onClick={() => loginWithEmail()}>
-              <p className="font-lato italic font-bold">Login</p>
+            <p className="font-lato italic font-bold">Login</p>
           </div>
           <div className={styles.loginDivider}>
             <div className={styles.line}></div>
@@ -122,35 +131,34 @@ function Login() {
               alt="Sign in with google"
               onClick={signInWithGoogle}
             />
-            <Image
-              src={Apple}
-              height={40}
-              alt="Sign in with apple"
-            />
-            <Image
-              src={Facebook}
-              height={40}
-              alt="Sign in with facebook"
-            />
-            
-      </div>
+            <Image src={Apple} height={40} alt="Sign in with apple" />
+            <Image src={Facebook} height={40} alt="Sign in with facebook" />
+          </div>
         </div>
       ) : (
         <div className={styles.loginContainer}>
-        <div className="font-lato">
-        <div
-            className={`${styles.loginTab} ${styles.authTab} ${styles.hiddenTab}`}
-            onClick={() => setUserLogin(true)}
-          >
-            Login
+          <div className="font-lato">
+            <div
+              className={`${styles.loginTab} ${styles.authTab} ${styles.hiddenTab}`}
+              onClick={() => setUserLogin(true)}
+            >
+              Login
+            </div>
+            <div className={`${styles.signUpTab} ${styles.authTab}`}>
+              Signup
+            </div>
           </div>
-          <div className={`${styles.signUpTab} ${styles.authTab}`}>Signup</div>
-        </div> 
-          <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
+          <h3 style={{ marginTop: 50 }} className="font-lato">
+            Email
+          </h3>
           <input type="email" ref={signUpEmailRef} className=" p-2 font-lato" />
 
           <h3 className="font-lato">Password</h3>
-          <input type="password" ref={signUpPasswordRef} className="p-2 font-lato" />
+          <input
+            type="password"
+            ref={signUpPasswordRef}
+            className="p-2 font-lato"
+          />
           <h3 className="font-lato">Confirm Password</h3>
           <input
             type="password"
@@ -158,8 +166,8 @@ function Login() {
             ref={signUpPasswordConfirmRef}
             className="p-2 font-lato"
           />
-          <div className={styles.authSubmit} onClick={() => signUpWithEmail()}>   
-              <p className="font-lato italic font-bold">Sign up</p>
+          <div className={styles.authSubmit} onClick={() => signUpWithEmail()}>
+            <p className="font-lato italic font-bold">Sign up</p>
           </div>
         </div>
       )}
