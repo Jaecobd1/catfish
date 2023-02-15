@@ -3,7 +3,7 @@ import styles from "@/styles/Home.module.css";
 import { toast } from "react-hot-toast";
 import { auth, firebase, googleAuthProvider } from "../../lib/firebase";
 import { UserContext } from "@/lib/context";
-function RightPannel() {
+function Login() {
   // This is the sign in with google function
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider).then(() => {
@@ -153,4 +153,4 @@ function RightPannel() {
   );
 }
 
-export default RightPannel;
+export default Login;

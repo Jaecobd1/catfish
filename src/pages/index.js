@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
 import { useState, useRef, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../lib/context";
-import RightPanel from "@/components/RightPanel/RightPanel";
+import Login from "@/components/RightPanel/Login";
 import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
 import UserProfile from "@/components/Profiles/UserProfile";
@@ -57,15 +57,7 @@ export default function Home() {
           {/* Could we make this it's own components? */}
           {/* Right Side Panel */}
           <div className={styles.rightPanel}>
-            {user ? (
-              !username ? (
-                <UsernameForm />
-              ) : (
-                <UserProfile />
-              )
-            ) : (
-              <RightPanel />
-            )}
+            {user ? !username ? <UsernameForm /> : <UserProfile /> : <Login />}
           </div>
         </main>
       </div>
