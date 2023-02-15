@@ -177,7 +177,7 @@ function UsernameMessage({ username, isValid, loading }) {
 function Hero() {
   return (
     <>
-      <h1 className="text-[50px] font-lato font-black italic">
+      <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic">
         WELCOME TO CATFISH!
       </h1>
       <p className="font-raleway tracking-wide">

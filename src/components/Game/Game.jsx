@@ -2,6 +2,7 @@ import { useContext, useEffect, useId, useState } from "react";
 import { UserContext } from "@/lib/context";
 import { toast } from "react-hot-toast";
 import { firestore } from "@/lib/firebase";
+import Chat from "./Chat";
 
 const gameDBRef = firestore.collection("games");
 
@@ -30,7 +31,7 @@ function Game() {
           .get()
           .then((game) => {
             const active = game.data().isGameActive;
-
+            console.log(active);
             if (active) {
               setIsGameActive(true);
             } else {
@@ -64,10 +65,6 @@ function Game() {
       </div>
     </>
   );
-}
-
-function Chat() {
-  return <div className="flex">hi</div>;
 }
 
 function Start() {

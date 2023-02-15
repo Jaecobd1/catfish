@@ -9,6 +9,9 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    screens: {
+      md: "990px",
+    },
     extend: {},
     fontFamily: {
       lato: "Lato",
