@@ -1,9 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter, Lato, Roboto } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import Google from "../images/Google.png";
 import { auth, firebase, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";

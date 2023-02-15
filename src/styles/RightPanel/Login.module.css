@@ -72,15 +72,24 @@
   justify-content: center;
 }
 
+.signInProviders {
+  background-color: red;
+  display: flex;
+  justify-content: space-evenly;
+  width: 70%;
+  margin: 0 auto;
+}
+
 .SWIGoogle {
-  height: 75px;
+  /* height: 75px;
   width: 100;
   display: flex;
   align-items: center;
-  border: none;
+  border: none; */
+  /* background-color: red; */
 }
 .SWIGoogle:hover {
-  background-color: white;
+  /* background-color: white; */
 }
 
 @media screen and (max-width: 660px) {

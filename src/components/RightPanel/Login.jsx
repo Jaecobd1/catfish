@@ -2,6 +2,11 @@ import { useState, useEffect, useRef, useContext } from "react";
 import styles from "@/styles/RightPanel/Login.module.css";
 import { toast } from "react-hot-toast";
 import { auth, firebase, googleAuthProvider } from "../../lib/firebase";
+import Image from "next/image";
+import Google from "../../images/Google.png";
+import Apple from "../../images/Apple.png";
+import Facebook from "../../images/Facebook.png";
+
 import { UserContext } from "@/lib/context";
 function Login() {
   // This is the sign in with google function
@@ -105,7 +110,6 @@ function Login() {
           <div className={styles.authSubmit} onClick={() => loginWithEmail()}>
               <p className="font-lato italic font-bold">Login</p>
           </div>
-          <div className={styles.loginDivider}></div>
         </div>
       ) : (
         <div className={styles.loginContainer}>
@@ -139,16 +143,28 @@ function Login() {
       <p className={`${styles.copyright} font-lato`}>
         Developed by Jake Dobler and John Gaynor
       </p>
-
-      {/* <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+      <div className={styles.signInProviders}>
             <Image
               src={Google}
               width={50}
               height={50}
               alt="Sign in with google"
+              onClick={signInWithGoogle}
             />
-            Sign in Google
-          </button> */}
+            <Image
+              src={Apple}
+              width={50}
+              height={50}
+              alt="Sign in with apple"
+            />
+            <Image
+              src={Facebook}
+              width={50}
+              height={50}
+              alt="Sign in with facebook"
+            />
+            
+      </div>
     </>
   );
 }
