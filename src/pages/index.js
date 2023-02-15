@@ -177,7 +177,12 @@ function UsernameMessage({ username, isValid, loading }) {
 function Hero() {
   return (
     <>
-      <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic">
+      <div className={styles.heroEmojis}>
+        <p>🐱🎣</p>
+        <p>🕵️</p>
+        <p>🥸</p>
+      </div>
+      <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic tracking-wide">
         WELCOME TO CATFISH!
       </h1>
       <p className="font-raleway tracking-wide">
@@ -189,8 +194,8 @@ function Hero() {
         fake profiles and emerge victorious.
       </p>
       <p className="font-raleway tracking-wide mb-2">
-        Or will the catfish fool the group with their fake identiy and stand win
-        it all?
+        Can the detectives find the fraud, or will the catfish fool the group
+        and stand to win it all?
       </p>
       <h2 className="font-lato italic font-bold">
         DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?

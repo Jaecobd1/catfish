@@ -23,6 +23,29 @@
   animation-duration: var(--slideInOutAnimation);
 }
 
+.heroEmojis p {
+  position: absolute;
+  opacity: 0.5;
+}
+
+.heroEmojis p:nth-child(1) {
+  font-size: 90px;
+  inset: 120px 50px auto auto;
+  transform: rotate(10deg);
+}
+
+.heroEmojis p:nth-child(2) {
+  font-size: 70px;
+  inset: auto 40px 130px auto;
+  transform: rotate(10deg);
+}
+
+.heroEmojis p:nth-child(3) {
+  font-size: 70px;
+  inset: auto 170px 190px auto;
+  transform: rotate(-10deg);
+}
+
 .leftPanel h1,
 .leftPanel h2 {
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
@@ -33,14 +56,12 @@
 }
 
 .leftPanel h1 {
-  margin-top: 40px;
-  margin: 40px auto 70px 50px;
+  margin: 40px auto 50px 50px;
 }
 
 .leftPanel p {
-  margin-left: 50px;
+  margin: 0 0 30px 50px;
   max-width: 400px;
-  margin-bottom: 50px;
   font-size: 20px;
 }
 
