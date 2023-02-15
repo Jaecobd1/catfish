@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/RightPanel/Login.module.css";
 import { toast } from "react-hot-toast";
 import { auth, firebase, googleAuthProvider } from "../../lib/firebase";
 import { UserContext } from "@/lib/context";
@@ -78,7 +78,7 @@ function Login() {
   return (
     <>
       {userLogin ? (
-        <>
+        <div className={styles.loginContainer}>
         <div className="font-lato">
           <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
           <div
@@ -106,9 +106,9 @@ function Login() {
               <p className="font-lato italic font-bold">Login</p>
           </div>
           <div className={styles.loginDivider}></div>
-        </>
+        </div>
       ) : (
-        <>
+        <div className={styles.loginContainer}>
         <div className="font-lato">
         <div
             className={`${styles.loginTab} ${styles.authTab} ${styles.hiddenTab}`}
@@ -134,7 +134,7 @@ function Login() {
               <p className="font-lato italic font-bold">Sign up</p>
           </div>
           <div className={styles.loginDivider}></div>
-        </>
+        </div>
       )}
       <p className={`${styles.copyright} font-lato`}>
         Developed by Jake Dobler and John Gaynor
