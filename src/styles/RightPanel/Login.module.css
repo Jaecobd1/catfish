@@ -67,7 +67,7 @@
 
 .copyright {
   position: absolute;
-  inset: auto 0 5px 0;
+  inset: auto 0 10px 0;
   display: flex;
   justify-content: center;
 }
