@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/RightPanel/Login.module.css";
 import { toast } from "react-hot-toast";
 import { auth, firebase, googleAuthProvider } from "../../lib/firebase";
 import { UserContext } from "@/lib/context";
-function RightPannel() {
+function Login() {
   // This is the sign in with google function
   const signInWithGoogle = async () => {
     await auth.signInWithPopup(googleAuthProvider).then(() => {
@@ -78,7 +78,8 @@ function RightPannel() {
   return (
     <>
       {userLogin ? (
-        <>
+        <div className={styles.loginContainer}>
+        <div className="font-lato">
           <div className={`${styles.loginTab} ${styles.authTab}`}>Login</div>
           <div
             className={`${styles.signUpTab} ${styles.authTab} ${styles.hiddenTab}`}
@@ -86,58 +87,56 @@ function RightPannel() {
           >
             Signup
           </div>
-
-          <h3 style={{ marginTop: 50 }}>Email</h3>
-          <input type="text" ref={loginEmail} className="loginUsername" />
-          <h3>Password</h3>
+        </div>
+       <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
+          <input type="text" ref={loginEmail} className="loginUsername p-2 font-lato" />
+          <h3 className="font-lato">Password</h3>
           <input
             type="password"
             ref={loginPasswordRef}
-            className="loginPassword"
+            className="loginPassword p-2 font-lato"
           />
           <p
-            className="text-right underline hover:no-underline"
+            className="text-right underline hover:no-underline font-lato italic"
             onClick={() => resetPassword()}
           >
             Need to reset your password?
           </p>
-          <div className={styles.loginSubmit}>
-            <button onClick={() => loginWithEmail()}>
+          <div className={styles.authSubmit} onClick={() => loginWithEmail()}>
               <p className="font-lato italic font-bold">Login</p>
-            </button>
           </div>
           <div className={styles.loginDivider}></div>
-        </>
+        </div>
       ) : (
-        <>
-          <div
+        <div className={styles.loginContainer}>
+        <div className="font-lato">
+        <div
             className={`${styles.loginTab} ${styles.authTab} ${styles.hiddenTab}`}
             onClick={() => setUserLogin(true)}
           >
             Login
           </div>
           <div className={`${styles.signUpTab} ${styles.authTab}`}>Signup</div>
+        </div> 
+          <h3 style={{ marginTop: 50 }} className="font-lato">Email</h3>
+          <input type="email" ref={signUpEmailRef} className=" p-2 font-lato" />
 
-          <h3 style={{ marginTop: 30 }}>Email</h3>
-          <input type="email" ref={signUpEmailRef} />
-
-          <h3>Password</h3>
-          <input type="password" ref={signUpPasswordRef} />
-          <h3>Confirm Password</h3>
+          <h3 className="font-lato">Password</h3>
+          <input type="password" ref={signUpPasswordRef} className="p-2 font-lato" />
+          <h3 className="font-lato">Confirm Password</h3>
           <input
             type="password"
             style={{ marginBottom: 10 }}
             ref={signUpPasswordConfirmRef}
+            className="p-2 font-lato"
           />
-          <div className={styles.loginSubmit}>
-            <button onClick={() => signUpWithEmail()}>
-              <p className="font-lato italic font-bold text-center ">Sign up</p>
-            </button>
+          <div className={styles.authSubmit} onClick={() => signUpWithEmail()}>   
+              <p className="font-lato italic font-bold">Sign up</p>
           </div>
           <div className={styles.loginDivider}></div>
-        </>
+        </div>
       )}
-      <p className={styles.copyright}>
+      <p className={`${styles.copyright} font-lato`}>
         Developed by Jake Dobler and John Gaynor
       </p>
 
@@ -154,4 +153,4 @@ function RightPannel() {
   );
 }
 
-export default RightPannel;
+export default Login;
