@@ -28,10 +28,7 @@ export default function Home() {
   // Get User Context
   const { user, username } = useContext(UserContext);
 
-  if (process.browser) {
-    const cards = Array.from(document.getElementsByClassName("home-card"));
-    console.log(cards);
-  }
+  const [switchHome, setSwitchHome] = useState(false);
 
   return (
     <>
@@ -46,15 +43,8 @@ export default function Home() {
           {/* Left Side Panel */}
           <div className={styles.leftPanel}>
             {!user ? (
-              <div
-                className={styles.homeCard}
-                data-index="0"
-                data-status="active"
-              >
+              <div>
                 <Hero />
-                <div className={styles.cardSwitch}>
-                  <FaArrowCircleRight className={styles.switchArrow} />
-                </div>
               </div>
             ) : (
               <Game />
@@ -69,15 +59,12 @@ export default function Home() {
                 <UserProfile />
               )
             ) : (
-              <div
-                className={styles.homeCard}
-                data-index="1"
-                data-status="unknown"
-              >
+              <div>
                 <Login />
-                <div className={styles.cardSwitch}>
+                {/* <div className={styles.cardSwitch}>
+                  <p className="font-lato font-bold text-[30px]">NEXT</p>
                   <FaArrowCircleRight className={styles.switchArrow} />
-                </div>
+                </div> */}
               </div>
             )}
           </div>

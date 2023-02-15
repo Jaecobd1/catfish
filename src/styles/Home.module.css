@@ -53,10 +53,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-.homeCard[data-status="unknown"] {
-  transform: scale(0);
-}
-
 @keyframes slideInFromRight {
   from {
     transform: translateX(150%);
@@ -85,59 +81,3 @@
     position: absolute;
   }
 }
-
-/* @media screen and (max-width: 990px) {
-  .main {
-    flex-direction: column;
-    padding: 20px;
-    justify-content: space-between;
-  }
-  .leftPanel {
-    height: 45%;
-    width: 80%;
-  }
-  .leftPanel h1 {
-    margin-bottom: 25px;
-  }
-  .rightPanel {
-    height: 45%;
-    width: 80%;
-  }
-  .leftPanel p {
-    margin-left: 50px;
-    max-width: 100%;
-    margin-bottom: 50px;
-    font-size: 15px;
-  }
-} */
-
-/* @media screen and (max-width: 660px) {
-  .main {
-    flex-direction: column;
-    padding: 20px;
-    justify-content: space-between;
-  }
-  .leftPanel {
-    height: 45%;
-    width: 80%;
-  }
-  .leftPanel h1 {
-    margin-bottom: 25px;
-    font-size: 25px;
-  }
-  .leftPanel h2 {
-    font-size: 20px;
-    margin-right: 5px;
-  }
-  .rightPanel {
-    height: 45%;
-    width: 80%;
-  }
-
-  .leftPanel p {
-    margin-left: 50px;
-    max-width: 100%;
-    margin-bottom: 50px;
-    font-size: 15px;
-  }
-} */
