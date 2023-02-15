@@ -1,3 +1,7 @@
+.heroContainer {
+  padding-right: 20px;
+}
+
 .heroEmojis p {
   position: absolute;
   opacity: 0.5;
@@ -5,7 +9,7 @@
 
 .heroEmojis p:nth-child(1) {
   font-size: 90px;
-  inset: 120px 50px auto auto;
+  inset: 120px 5% auto auto;
   transform: rotate(10deg);
 }
 
@@ -17,7 +21,7 @@
 
 .heroEmojis p:nth-child(3) {
   font-size: 70px;
-  inset: auto 170px 190px auto;
+  inset: auto 23% 190px auto;
   transform: rotate(-10deg);
 }
 
@@ -41,7 +45,21 @@
 }
 
 .heroContainer h2 {
-  font-size: 35px;
   position: absolute;
-  inset: auto auto 40px 50px;
+  inset: auto 20px 40px 50px;
+}
+
+@media screen and (max-width: 1200px) {
+  .heroEmojis p:nth-child(1) {
+    font-size: 60px;
+  }
+
+  .heroEmojis p:nth-child(2) {
+    font-size: 60px;
+  }
+
+  .heroEmojis p:nth-child(3) {
+    font-size: 60px;
+    inset: auto 100px 220px auto;
+  }
 }

@@ -7,7 +7,7 @@ function Hero() {
       <p>🕵️</p>
       <p>🥸</p>
     </div>
-    <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic tracking-wide">
+    <h1 className="md:text-[40px] font-lato font-black italic tracking-wide">
       WELCOME TO CATFISH!
     </h1>
     <p className="font-raleway tracking-wide">
@@ -22,7 +22,7 @@ function Hero() {
       Can the detectives find the fraud, or will the catfish fool the group
       and stand to win it all?
     </p>
-    <h2 className="font-lato italic font-bold">
+    <h2 className="lg:text-[25px] xl:text-[35px] font-lato italic font-bold">
       DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
     </h2>
   </div>;

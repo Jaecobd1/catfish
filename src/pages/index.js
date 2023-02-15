@@ -50,25 +50,25 @@ export default function Home() {
   );
 }
 
-function GoogleSignUp() {
-  // This is the sign in with google function
-  const signInWithGoogle = async () => {
-    await auth
-      .signInWithPopup(googleAuthProvider)
-      .then(() => {
-        toast.success("Signed in");
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-  return (
-    <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
-      <Image src={Google} width={50} height={50} alt="Sign in with google" />
-      Sign in Google
-    </button>
-  );
-}
+// function GoogleSignUp() {
+// This is the sign in with google function
+//   const signInWithGoogle = async () => {
+//     await auth
+//       .signInWithPopup(googleAuthProvider)
+//       .then(() => {
+//         toast.success("Signed in");
+//       })
+//       .catch((error) => {
+//         console.log(error.message);
+//       });
+//   };
+//   return (
+//     <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
+//       <Image src={Google} width={50} height={50} alt="Sign in with google" />
+//       Sign in Google
+//     </button>
+//   );
+// }
 
 // Username Validation form
 function UsernameForm() {
