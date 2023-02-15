@@ -1,0 +1,47 @@
+.heroEmojis p {
+  position: absolute;
+  opacity: 0.5;
+}
+
+.heroEmojis p:nth-child(1) {
+  font-size: 90px;
+  inset: 120px 50px auto auto;
+  transform: rotate(10deg);
+}
+
+.heroEmojis p:nth-child(2) {
+  font-size: 70px;
+  inset: auto 40px 130px auto;
+  transform: rotate(10deg);
+}
+
+.heroEmojis p:nth-child(3) {
+  font-size: 70px;
+  inset: auto 170px 190px auto;
+  transform: rotate(-10deg);
+}
+
+.heroContainer h1,
+.heroContainer h2 {
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.heroContainer h1 {
+  margin: 40px auto 50px 50px;
+}
+
+.heroContainer p {
+  margin: 0 0 30px 50px;
+  max-width: 400px;
+  font-size: 20px;
+}
+
+.heroContainer h2 {
+  font-size: 35px;
+  position: absolute;
+  inset: auto auto 40px 50px;
+}

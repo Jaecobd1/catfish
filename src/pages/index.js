@@ -14,6 +14,7 @@ import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
 import UserProfile from "@/components/Profiles/UserProfile";
 import Game from "@/components/Game/Game";
+import Hero from "@/components/LeftPanel/Hero";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -174,32 +175,32 @@ function UsernameMessage({ username, isValid, loading }) {
   }
 }
 
-function Hero() {
-  return (
-    <>
-      <div className={styles.heroEmojis}>
-        <p>🐱🎣</p>
-        <p>🕵️</p>
-        <p>🥸</p>
-      </div>
-      <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic tracking-wide">
-        WELCOME TO CATFISH!
-      </h1>
-      <p className="font-raleway tracking-wide">
-        In this social media-inspired game, players work together to catch the
-        elusive catfish, but be careful - not everyone is who they claim to be!
-      </p>
-      <p className="font-raleway tracking-wide">
-        Analyze messages, photos, and participate in minigames to expose the
-        fake profiles and emerge victorious.
-      </p>
-      <p className="font-raleway tracking-wide mb-2">
-        Can the detectives find the fraud, or will the catfish fool the group
-        and stand to win it all?
-      </p>
-      <h2 className="font-lato italic font-bold">
-        DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
-      </h2>
-    </>
-  );
-}
+// function Hero() {
+//   return (
+//     <>
+//       <div className={styles.heroEmojis}>
+//         <p>🐱🎣</p>
+//         <p>🕵️</p>
+//         <p>🥸</p>
+//       </div>
+//       <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic tracking-wide">
+//         WELCOME TO CATFISH!
+//       </h1>
+//       <p className="font-raleway tracking-wide">
+//         In this social media-inspired game, players work together to catch the
+//         elusive catfish, but be careful - not everyone is who they claim to be!
+//       </p>
+//       <p className="font-raleway tracking-wide">
+//         Analyze messages, photos, and participate in minigames to expose the
+//         fake profiles and emerge victorious.
+//       </p>
+//       <p className="font-raleway tracking-wide mb-2">
+//         Can the detectives find the fraud, or will the catfish fool the group
+//         and stand to win it all?
+//       </p>
+//       <h2 className="font-lato italic font-bold">
+//         DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
+//       </h2>
+//     </>
+//   );
+// }
