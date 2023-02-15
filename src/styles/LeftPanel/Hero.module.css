@@ -60,6 +60,16 @@
 
   .heroEmojis p:nth-child(3) {
     font-size: 60px;
-    inset: auto 100px 220px auto;
+    inset: auto 60px 220px auto;
+  }
+
+  .heroContainer p {
+    max-width: 65%;
+  }
+}
+
+@media screen and (max-width: 1065px) {
+  .heroContainer p:nth-child(5) {
+    display: none;
   }
 }

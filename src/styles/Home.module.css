@@ -55,6 +55,18 @@
 }
 
 @media screen and (max-width: 990px) {
+  .leftPanel {
+    max-width: 410px;
+    margin-right: 0;
+  }
+  .leftPanel,
+  .rightPanel {
+    position: absolute;
+    /* display: none; */
+  }
+}
+
+/* @media screen and (max-width: 990px) {
   .main {
     flex-direction: column;
     padding: 20px;
@@ -77,9 +89,9 @@
     margin-bottom: 50px;
     font-size: 15px;
   }
-}
+} */
 
-@media screen and (max-width: 660px) {
+/* @media screen and (max-width: 660px) {
   .main {
     flex-direction: column;
     padding: 20px;
@@ -108,4 +120,4 @@
     margin-bottom: 50px;
     font-size: 15px;
   }
-}
+} */

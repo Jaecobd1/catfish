@@ -7,12 +7,12 @@ import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
 import { useState, useRef, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../lib/context";
-import Login from "@/components/RightPanel/Login";
+import Login from "@/components/Home/Login";
 import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
 import UserProfile from "@/components/Profiles/UserProfile";
 import Game from "@/components/Game/Game";
-import Hero from "@/components/LeftPanel/Hero";
+import Hero from "@/components/Home/Hero";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -26,6 +26,8 @@ export default function Home() {
   // Get User Context
   const { user, username } = useContext(UserContext);
 
+  const cards = Array.from(document.getElementsByClassName("home-card"));
+  console.log(cards);
   return (
     <>
       <Head>
@@ -37,38 +39,34 @@ export default function Home() {
       <div className="">
         <main className={styles.main}>
           {/* Left Side Panel */}
-          <div className={styles.leftPanel}>{!user ? <Hero /> : <Game />}</div>
-
-          {/* Could we make this it's own components? */}
+          <div className={styles.leftPanel}>
+            {!user ? (
+              <div className="home-card">
+                <Hero />
+              </div>
+            ) : (
+              <Game />
+            )}
+          </div>
           {/* Right Side Panel */}
           <div className={styles.rightPanel}>
-            {user ? !username ? <UsernameForm /> : <UserProfile /> : <Login />}
+            {user ? (
+              !username ? (
+                <UsernameForm />
+              ) : (
+                <UserProfile />
+              )
+            ) : (
+              <div className="home-card">
+                <Login />
+              </div>
+            )}
           </div>
         </main>
       </div>
     </>
   );
 }
-
-// function GoogleSignUp() {
-// This is the sign in with google function
-//   const signInWithGoogle = async () => {
-//     await auth
-//       .signInWithPopup(googleAuthProvider)
-//       .then(() => {
-//         toast.success("Signed in");
-//       })
-//       .catch((error) => {
-//         console.log(error.message);
-//       });
-//   };
-//   return (
-//     <button className={styles.SWIGoogle} onClick={signInWithGoogle}>
-//       <Image src={Google} width={50} height={50} alt="Sign in with google" />
-//       Sign in Google
-//     </button>
-//   );
-// }
 
 // Username Validation form
 function UsernameForm() {
