@@ -13,6 +13,8 @@ import { firestore } from "../lib/firebase";
 import UserProfile from "@/components/Profiles/UserProfile";
 import Game from "@/components/Game/Game";
 import Hero from "@/components/Home/Hero";
+import { FaArrowCircleRight } from "react-icons/fa";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -26,8 +28,11 @@ export default function Home() {
   // Get User Context
   const { user, username } = useContext(UserContext);
 
-  const cards = Array.from(document.getElementsByClassName("home-card"));
-  console.log(cards);
+  if (process.browser) {
+    const cards = Array.from(document.getElementsByClassName("home-card"));
+    console.log(cards);
+  }
+
   return (
     <>
       <Head>
@@ -41,8 +46,15 @@ export default function Home() {
           {/* Left Side Panel */}
           <div className={styles.leftPanel}>
             {!user ? (
-              <div className="home-card">
+              <div
+                className={styles.homeCard}
+                data-index="0"
+                data-status="active"
+              >
                 <Hero />
+                <div className={styles.cardSwitch}>
+                  <FaArrowCircleRight className={styles.switchArrow} />
+                </div>
               </div>
             ) : (
               <Game />
@@ -57,8 +69,15 @@ export default function Home() {
                 <UserProfile />
               )
             ) : (
-              <div className="home-card">
+              <div
+                className={styles.homeCard}
+                data-index="1"
+                data-status="unknown"
+              >
                 <Login />
+                <div className={styles.cardSwitch}>
+                  <FaArrowCircleRight className={styles.switchArrow} />
+                </div>
               </div>
             )}
           </div>
