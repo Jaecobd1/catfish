@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, firestore } from "./firebase";
 
@@ -26,6 +26,6 @@ export function useUserData() {
 
 export function useGameData() {
   const [isUserInGame, setIsUserInGame] = useState(false);
-  const [users, setUsers] = useState([]);
+  const { user, username } = useContext(UserContext);
   const [chatUID, setChatUID] = useState();
 }

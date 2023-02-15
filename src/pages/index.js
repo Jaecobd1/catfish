@@ -13,6 +13,7 @@ import RightPannel from "@/components/RightPanel/RightPanel";
 import debounce from "lodash.debounce";
 import { firestore } from "../lib/firebase";
 import UserProfile from "@/components/Profiles/UserProfile";
+import Game from "@/components/Game/Game";
 
 const inter = Inter({ subsets: ["latin"] });
 const lato = Lato({
@@ -37,22 +38,7 @@ export default function Home() {
       <div className="">
         <main className={styles.main}>
           {/* Left Side Panel */}
-          <div className={styles.leftPanel}>
-            {!user ? (
-              <Hero />
-            ) : (
-              <>
-                <div className="flex justify-center items-center h-full">
-                  <button
-                    onClick={() => toast.success("looking for match...")}
-                    className="p-2 rounded-xl bg-gradient-to-tr from-[#00bfff] to-[#ba55d3] via-[#8a2be2] text-white font-lato text-3xl "
-                  >
-                    Start Game
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
+          <div className={styles.leftPanel}>{!user ? <Hero /> : <Game />}</div>
 
           {/* Could we make this it's own components? */}
           {/* Right Side Panel */}
@@ -102,6 +88,7 @@ function UsernameForm() {
 
   useEffect(() => {
     checkUsername(formValue);
+    console.log(user.displayName);
   }, [formValue]);
 
   const onChange = (e) => {
@@ -146,10 +133,11 @@ function UsernameForm() {
     const batch = firestore.batch();
     batch.set(userDoc, {
       username: formValue,
-      photoURL: user.photoURL,
-      displayName: user.displayName,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      photoURL: "",
+      displayName: formValue,
+      firstName: "",
+      lastName: "",
+      isUserInGame: false,
     });
     batch.set(usernameDoc, { uid: user.uid });
 
