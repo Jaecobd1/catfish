@@ -110,6 +110,30 @@ function Login() {
           <div className={styles.authSubmit} onClick={() => loginWithEmail()}>
               <p className="font-lato italic font-bold">Login</p>
           </div>
+          <div className={styles.loginDivider}>
+            <div className={styles.line}></div>
+            <p className="font-lato italic">OR</p>
+            <div className={styles.line}></div>
+          </div>
+          <div className={styles.signInProviders}>
+            <Image
+              src={Google}
+              height={40}
+              alt="Sign in with google"
+              onClick={signInWithGoogle}
+            />
+            <Image
+              src={Apple}
+              height={40}
+              alt="Sign in with apple"
+            />
+            <Image
+              src={Facebook}
+              height={40}
+              alt="Sign in with facebook"
+            />
+            
+      </div>
         </div>
       ) : (
         <div className={styles.loginContainer}>
@@ -137,34 +161,11 @@ function Login() {
           <div className={styles.authSubmit} onClick={() => signUpWithEmail()}>   
               <p className="font-lato italic font-bold">Sign up</p>
           </div>
-          <div className={styles.loginDivider}></div>
         </div>
       )}
       <p className={`${styles.copyright} font-lato`}>
         Developed by Jake Dobler and John Gaynor
       </p>
-      <div className={styles.signInProviders}>
-            <Image
-              src={Google}
-              width={50}
-              height={50}
-              alt="Sign in with google"
-              onClick={signInWithGoogle}
-            />
-            <Image
-              src={Apple}
-              width={50}
-              height={50}
-              alt="Sign in with apple"
-            />
-            <Image
-              src={Facebook}
-              width={50}
-              height={50}
-              alt="Sign in with facebook"
-            />
-            
-      </div>
     </>
   );
 }
