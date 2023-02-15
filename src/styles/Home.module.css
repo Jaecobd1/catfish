@@ -36,6 +36,27 @@
   animation-duration: var(--slideInOutAnimation);
 }
 
+.cardSwitch {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  inset: auto 30px 45px auto;
+}
+
+.cardSwitch .switchArrow {
+  font-size: 50px;
+  margin-left: 10px;
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  /* background-size: 100%; */
+  /* background-repeat: repeat; */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.homeCard[data-status="unknown"] {
+  transform: scale(0);
+}
+
 @keyframes slideInFromRight {
   from {
     transform: translateX(150%);
@@ -55,6 +76,17 @@
 }
 
 @media screen and (max-width: 990px) {
+  .leftPanel {
+    max-width: 410px;
+    margin-right: 0;
+  }
+  .leftPanel,
+  .rightPanel {
+    position: absolute;
+  }
+}
+
+/* @media screen and (max-width: 990px) {
   .main {
     flex-direction: column;
     padding: 20px;
@@ -77,9 +109,9 @@
     margin-bottom: 50px;
     font-size: 15px;
   }
-}
+} */
 
-@media screen and (max-width: 660px) {
+/* @media screen and (max-width: 660px) {
   .main {
     flex-direction: column;
     padding: 20px;
@@ -108,4 +140,4 @@
     margin-bottom: 50px;
     font-size: 15px;
   }
-}
+} */
