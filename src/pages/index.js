@@ -2,7 +2,7 @@ import Head from "next/head";
 import { Inter, Lato, Roboto } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
-import { auth, firebase, googleAuthProvider } from "../lib/firebase";
+import { auth, googleAuthProvider } from "../lib/firebase";
 import { toast } from "react-hot-toast";
 import { StyleRegistry } from "styled-jsx";
 import { useState, useRef, useContext, useEffect, useCallback } from "react";

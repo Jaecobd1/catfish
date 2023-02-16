@@ -1,14 +1,13 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import styles from "@/styles/RightPanel/Login.module.css";
 import { toast } from "react-hot-toast";
-import { auth, firebase, googleAuthProvider } from "../../lib/firebase";
+import { auth, googleAuthProvider } from "../../lib/firebase";
 import Image from "next/image";
 import Google from "../../images/Google.png";
 import Apple from "../../images/Apple.png";
 import Facebook from "../../images/Facebook.png";
-import { OAuthProvider } from "firebase/auth";
+import firebase from "firebase/app";
 
-import { UserContext } from "@/lib/context";
 function Login() {
   // This is the sign in with google function
   const signInWithGoogle = async () => {
@@ -18,6 +17,21 @@ function Login() {
   };
 
   //Sign Up with Apple
+
+  // Sign up/ with Facebook
+  const signInWithFB = async () => {
+    var provider = new firebase.auth.FacebookAuthProvider();
+    await auth
+      .signInWithPopup(provider)
+      .then((res) => {
+        var credential = result.credential;
+        var user = result.user;
+        toast.success("Signed in");
+      })
+      .catch((err) => {
+        toast.error("Try again or a different sign in method");
+      });
+  };
 
   // Sign Up with an email & add username
   const signUpWithEmail = async () => {
@@ -132,7 +146,12 @@ function Login() {
               onClick={signInWithGoogle}
             />
             <Image src={Apple} height={40} alt="Sign in with apple" />
-            <Image src={Facebook} height={40} alt="Sign in with facebook" />
+            <Image
+              src={Facebook}
+              height={40}
+              alt="Sign in with facebook"
+              onClick={signInWithFB}
+            />
           </div>
         </div>
       ) : (
