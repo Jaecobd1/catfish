@@ -8,21 +8,20 @@ const gameDBRef = firestore.collection("games");
 
 function Game() {
   // Get user
-  const [gameID, setGameID] = useState();
+  const [gameID, setGameID] = useState(null);
   const [isGameActive, setIsGameActive] = useState(false);
   const [isUserInGame, setIsUserInGame] = useState(false);
   const [lobbyCount, setLobbyCount] = useState(0);
   const { user, username } = useContext(UserContext);
-
   useEffect(() => {
     const userDoc = firestore.doc(`users/${user.uid}`);
     userDoc.get().then((doc) => {
       const userDetails = doc.data();
       // get the length of the game
 
-      if (userDetails?.gameID?.length > 0) {
+      if (userDetails.gameID) {
         console.log(userDetails.gameID);
-        setGameID(gameID);
+        setGameID(userDetails.gameID);
         setIsUserInGame(true);
 
         // Check if Game is active
@@ -55,7 +54,7 @@ function Game() {
           <Start onClick={() => setIsUserInGame(true)} />
         ) : // check if user is in loby or if game is active
         isGameActive ? (
-          <Chat />
+          <Chat gameId={gameID} />
         ) : (
           <div className="flex flex-col text-center">
             <div>Player count:</div>

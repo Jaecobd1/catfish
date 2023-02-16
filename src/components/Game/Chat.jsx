@@ -1,23 +1,104 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/lib/context";
-import { firestore } from "@/lib/firebase";
+import { auth, firestore } from "@/lib/firebase";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import firebase from "firebase/app";
+import styles from "../../styles/LeftPanel/Chat.module.css";
+import Image from "next/image";
 function Chat({ gameId }) {
-  const { user, username } = useContext(UserContext);
+  const { user, username, photoURL } = useContext(UserContext);
   const { userData, setUserData } = useState({});
-  useEffect(() => {
-    console.log("gameid" + gameId);
-    const userDoc = firestore.doc(`users/${user.uid}`);
-
-    userDoc.get().then((doc) => {
-      const userData = doc.data();
-    });
-  });
+  const ChatRef = firestore.collection(gameId);
+  const query = ChatRef.orderBy("createdAt").limit(50);
+  const [message] = useCollectionData(query, { idField: "id" });
+  const [formValue, setFormValue] = useState("");
 
   //   const messagesRef = firestore.collection(gameId);
   //   const query = messagesRef.orderBy("createdAt").limit(25);
   //   const [messages] = useCollectionData(query, {});
 
-  return <div>Chat</div>;
+  const sendMessage = async (e) => {
+    e.preventDefault();
+
+    const { uid } = user;
+
+    await ChatRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL,
+    }).then(() => {
+      setFormValue("");
+    });
+  };
+
+  return (
+    <div className="">
+      <div className="flex-col">
+        {message &&
+          message.map((msg) => (
+            <ChatMessage key={msg.id} message={msg} photoURL={photoURL} />
+          ))}
+      </div>
+      <div className="">
+        <form onSubmit={sendMessage} className="flex ">
+          <input
+            type="text"
+            onChange={(e) => setFormValue(e.target.value)}
+            className="bg-blue-200"
+            placeholder="Message"
+          />
+          <button type="submit" className="p-2 bg-purple-400">
+            🎣 send
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
+function ChatMessage(props) {
+  const { user, username } = useContext(UserContext);
+  const { text, uid, photoURL } = props.message;
+
+  // Create Message class if sent from user, then show as sent, if otherwise, show recieved
+  const messageClass = uid === user.uid ? "sent" : "recieved";
+
+  switch (messageClass) {
+    case "sent":
+      return (
+        <div className="w-[200px] flex flex-row-reverse h-min items-center justify-start mb-2">
+          <div className="h-12 w-12 rounded-full overflow-hidden">
+            <Image
+              src={photoURL ? photoURL : ""}
+              alt="userImage"
+              height={50}
+              width={50}
+              className="rounded-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col p-2">
+            <p className="text">{text}</p>
+          </div>
+        </div>
+      );
+    case "recieved":
+      return (
+        <div className="w-1/2 flex h-min items-center justify-evenly">
+          <div className="h-12 w-12 rounded-full overflow-hidden">
+            <Image
+              src={photoURL ? photoURL : ""}
+              alt="userImage"
+              height={50}
+              width={50}
+              className="rounded-full object-cover"
+            />
+          </div>
+          <div className="flex flex-col">
+            <p className="text">{text}</p>
+          </div>
+        </div>
+      );
+  }
+}
 export default Chat;
