@@ -37,14 +37,11 @@
   animation-duration: var(--slideInOutAnimation);
 }
 
-.cardSwitch {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  inset: auto 30px 45px auto;
+.hiddenPanel {
+  display: none;
 }
 
-.cardSwitch .switchArrow {
+.switchArrow {
   font-size: 50px;
   margin-left: 10px;
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
