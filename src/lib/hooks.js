@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-hot-toast";
 import { auth, firestore } from "./firebase";
+import { UserContext } from "./context";
 
 export function useUserData() {
   const [user] = useAuthState(auth);
   const [username, setUsername] = useState(null);
   const [photoURL, setPhotoURL] = useState("");
+  const [gameID, setGameID] = useState(null);
+  const [catfishUID, setCatfishUID] = useState(false);
 
   useEffect(() => {
     let unsubscribe;
@@ -16,6 +19,8 @@ export function useUserData() {
       unsubscribe = ref.onSnapshot((doc) => {
         setUsername(doc.data()?.username);
         setPhotoURL(doc.data()?.photoURL);
+        setGameID(doc.data()?.gameID);
+        setCatfishUID(doc.data?.catfishUID);
       });
     } else {
       setUsername(null);
@@ -25,7 +30,7 @@ export function useUserData() {
     return unsubscribe;
   }, [user]);
 
-  return { user, username, photoURL };
+  return { user, username, photoURL, gameID, catfishUID };
 }
 
 export function useGameData() {
@@ -33,30 +38,46 @@ export function useGameData() {
   const [isUserInGame, setIsUserInGame] = useState(false);
   const [userProfile, setUserProfile] = useState();
   const [isGameActive, setIsGameActive] = useState();
+  const [test, setTest] = useState();
+  // const gameRef = firestore.collection(user?.uid);
+  // const [game] = useCollectionData(gameRef);
 
   useEffect(() => {
-    let unsubscribe;
-    if (user) {
-      const userDoc = firestore.doc(`users/${user.uid}`);
-      unsubscribe = userDoc.get().then((doc) => {
-        const userDetails = doc.data();
-        setUserProfile(userDetails);
-        console.log(userDetails);
-        if (userDetails.gameID) {
-          setIsUserInGame(true);
+    const userDoc = firestore.doc(`users/${user?.uid}`);
 
-          // Check if Game is active or in lobby
-          firestore.doc(`game/${userDetails.gameID}`);
-        } else {
-          setIsUserInGame(false);
-        }
-      });
-    } else {
-      toast.error("Please try to sign out and sign back in");
-    }
+    userDoc.get().then((doc) => {
+      const userDetails = doc.data();
+      // get the length of the game
 
-    return unsubscribe;
+      if (userDetails?.gameID) {
+        console.log(userDetails.gameID);
+        setGameID(userDetails.gameID);
+        setIsUserInGame(true);
+
+        // Check if Game is active
+        gameDBRef
+          .doc(userDetails.gameID)
+          .get()
+          .then((game) => {
+            const active = game.data().isGameActive;
+            console.log(active);
+            if (active) {
+              setIsGameActive(true);
+            } else {
+              setIsGameActive(false);
+            }
+
+            const length = game.data().userList.length;
+            toast.success(length);
+            setLobbyCount(length);
+          });
+      } else {
+        setIsUserInGame(false);
+      }
+    });
+
+    console.log(user);
   }, [user, isUserInGame]);
 
-  return { userProfile, isUserInGame };
+  return { userProfile, isUserInGame, test };
 }

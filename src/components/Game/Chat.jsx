@@ -1,18 +1,28 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/lib/context";
+import { useContext, useEffect, useState, useRef } from "react";
+import { GameContext, UserContext } from "@/lib/context";
 import { auth, firestore } from "@/lib/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import firebase from "firebase/app";
 import styles from "../../styles/LeftPanel/Chat.module.css";
 import Image from "next/image";
+import { toast } from "react-hot-toast";
 function Chat({ gameId }) {
-  const { user, username, photoURL } = useContext(UserContext);
+  const { user, username, photoURL, gameID } = useContext(UserContext);
+  const { isUserInGame } = useContext(GameContext);
   const { userData, setUserData } = useState({});
   const ChatRef = firestore.collection(gameId);
   const query = ChatRef.orderBy("createdAt").limit(50);
   const [message] = useCollectionData(query, { idField: "id" });
-  const [formValue, setFormValue] = useState("");
+  const inputRef = useRef();
 
+  const [formValue, setFormValue] = useState("");
+  useEffect(() => {
+    if (gameID) {
+      console.log("user is in game");
+    } else {
+      console.log("user is not in game");
+    }
+  }, [gameID]);
   //   const messagesRef = firestore.collection(gameId);
   //   const query = messagesRef.orderBy("createdAt").limit(25);
   //   const [messages] = useCollectionData(query, {});
@@ -20,15 +30,18 @@ function Chat({ gameId }) {
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    const { uid } = user;
+    const { uid, catfishUID } = user;
+    // If the user is catfish, change it to their catfish UID
+    const _uid = catfishUID ? catfishUID : uid;
 
     await ChatRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      uid,
+      _uid,
       photoURL,
     }).then(() => {
       setFormValue("");
+      inputRef.current.value = "";
     });
   };
 
@@ -44,6 +57,7 @@ function Chat({ gameId }) {
         <form onSubmit={sendMessage} className="flex ">
           <input
             type="text"
+            ref={inputRef}
             onChange={(e) => setFormValue(e.target.value)}
             className="bg-blue-200"
             placeholder="Message"
@@ -58,11 +72,14 @@ function Chat({ gameId }) {
 }
 
 function ChatMessage(props) {
-  const { user, username } = useContext(UserContext);
+  const { user, username, catfishUID } = useContext(UserContext);
   const { text, uid, photoURL } = props.message;
 
   // Create Message class if sent from user, then show as sent, if otherwise, show recieved
+
   const messageClass = uid === user.uid ? "sent" : "recieved";
+
+  useEffect(() => {});
 
   switch (messageClass) {
     case "sent":

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useId, useState } from "react";
-import { UserContext } from "@/lib/context";
+import { GameContext, UserContext } from "@/lib/context";
 import { toast } from "react-hot-toast";
 import { firestore } from "@/lib/firebase";
 import Chat from "./Chat";
@@ -13,31 +13,43 @@ function Game() {
   const [isUserInGame, setIsUserInGame] = useState(false);
   const [lobbyCount, setLobbyCount] = useState(0);
   const { user, username } = useContext(UserContext);
+  const { test, userProfile } = useContext(GameContext);
+  const [game, setGame] = useState(null);
   useEffect(() => {
     const userDoc = firestore.doc(`users/${user.uid}`);
     userDoc.get().then((doc) => {
       const userDetails = doc.data();
-      // get the length of the game
 
-      if (userDetails.gameID) {
-        console.log(userDetails.gameID);
+      // Check if user is in game, set gameID
+      if (userDetails?.gameID) {
         setGameID(userDetails.gameID);
         setIsUserInGame(true);
+        if (game?.startTime > 360000) {
+          firestore
+            .collection("games")
+            .doc(gameID)
+            .delete()
+            .then(() => {
+              toast.error("Game Expired");
+            });
+          firestore.doc(`users/${user.uid}`).update({ gameID: "" });
+          setGame(null);
+        }
 
         // Check if Game is active
         gameDBRef
           .doc(userDetails.gameID)
           .get()
-          .then((game) => {
-            const active = game.data().isGameActive;
-            console.log(active);
+          .then((_game) => {
+            const active = _game.data()?.isGameActive;
+            setGame(_game.data());
             if (active) {
               setIsGameActive(true);
             } else {
               setIsGameActive(false);
             }
-
-            const length = game.data().userList.length;
+            // get the length of the game
+            const length = _game.data()?.userList.length;
             toast.success(length);
             setLobbyCount(length);
           });
@@ -58,7 +70,7 @@ function Game() {
         ) : (
           <div className="flex flex-col text-center">
             <div>Player count:</div>
-            <div className="">{lobbyCount} /11</div>
+            <div className="">{lobbyCount} /10</div>
           </div>
         )}
       </div>
@@ -69,6 +81,7 @@ function Game() {
 function Start() {
   const [isSearching, setIsSearching] = useState(false);
   const { user, username } = useContext(UserContext);
+  const [game, setGame] = useState(null);
 
   const searchForMatch = () => {
     toast.success("looking for match...");
@@ -82,26 +95,56 @@ function Start() {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((game) => {
+            setGame(game.id);
             const data = game.data();
             let userList = data.userList;
             //Check if room is full
             console.log(userList);
-            if (userList.length > 9) {
+            if (userList.length > 1) {
               // Create a new room for next player
-              gameDBRef
-                .add({ isGameActive: false, userList: [] })
-                .then((doc) => {});
+              gameDBRef.add({ isGameActive: false, userList: [] });
+
               // Game Start time
               const startTime = new Date();
               gameDBRef
                 .doc(game.id)
-                .update({ isGameActive: true, startTime: startTime });
+                .update({ isGameActive: true, startTime: startTime })
+                .then(() => {
+                  // Once the game is active
+                  // Create Two catfish players at random and add the catfish UID to their profile
+                  let random1 = Math.random(0, 1) * 10;
+                  let random2 = Math.random(0, 1) * 10;
+                  // get userID for random 1 and 2
+                  const gameUID1 = userList[random1];
+                  const gameUID2 = userList[random2];
+
+                  // Get random profiles that aren't in game
+                  firestore
+                    .collection("users")
+                    .where("gameID", "!=", game.id)
+                    .get()
+                    .then((userIDs) => {
+                      const users = userIDs.id;
+                      const fakeuser1 = firestore
+                        .collection("games")
+                        .doc(game)
+                        .get()
+                        .then((doc) => {
+                          const gameInfo = doc.data();
+                          const gameUsers = gameInfo.userList;
+                          gameUsers.forEach((user, id) => {
+                            firestore
+                              .collection("users")
+                              .doc(user)
+                              .update({ catfishUID: fakeUser });
+                          });
+                        });
+                    });
+                });
             } else {
             }
 
             // Add UID to userList
-            console.log(data.userList);
-            console.log(user.uid);
             userList.push(user.uid);
             console.log(userList);
             gameDBRef.doc(game.id).update({ userList: userList });
@@ -116,8 +159,6 @@ function Start() {
               .catch((err) => {
                 toast.error(err.message);
               });
-
-            setIsSearching(false);
           });
         });
     }
@@ -133,7 +174,7 @@ function Start() {
       </button>
     );
   } else {
-    return null;
+    return <p>Refresh Page</p>;
   }
 }
 
