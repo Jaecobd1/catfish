@@ -30,6 +30,7 @@ export function useUserData() {
         //   });
 
         setCatfishUID(doc.data?.catfishUID);
+        setGameID(doc.data?.gameID);
       });
     } else {
       setUsername(null);
@@ -39,7 +40,7 @@ export function useUserData() {
     return unsubscribe;
   }, [user]);
 
-  return { user, username, photoURL, gameID, catfishUID };
+  return { user, username, photoURL, gameID };
 }
 
 export function useGameData() {

@@ -3,6 +3,7 @@ import { GameContext, UserContext } from "@/lib/context";
 import { toast } from "react-hot-toast";
 import { firestore } from "@/lib/firebase";
 import Chat from "./Chat";
+import firebase from "firebase/app";
 
 const gameDBRef = firestore.collection("games");
 
@@ -15,6 +16,9 @@ function Game() {
   const { user, username } = useContext(UserContext);
   const { test, userProfile } = useContext(GameContext);
   const [game, setGame] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date().getTime() / 1000);
+
   useEffect(() => {
     const userDoc = firestore.doc(`users/${user.uid}`);
     userDoc.get().then((doc) => {
@@ -27,7 +31,7 @@ function Game() {
         console.log(game?.startTime);
 
         // Check if the startTime is longer than 1 hour
-        if (game?.startTime > 3600000) {
+        if (game?.startTime > game?.startTime.seconds + 3600000) {
           // Clear Game  & users Game ID from firestore
           firestore
             .collection("games")
@@ -67,6 +71,15 @@ function Game() {
     });
   }, [user, isUserInGame]);
 
+  useEffect(() => {
+    setCurrentTime(new Date().getTime() / 1000);
+  }, [currentTime]);
+
+  // useEffect(() => {
+  //   const timestamp = new Date(game?.startTime.seconds);
+  //   setStartTime(timestamp);
+  // }, [game]);
+
   return (
     <>
       <div className="w-full h-full flex justify-center items-center">
@@ -74,7 +87,12 @@ function Game() {
           <Start onClick={() => setIsUserInGame(true)} />
         ) : // check if user is in loby or if game is active
         isGameActive ? (
-          <Chat gameId={gameID} />
+          <>
+            <p>{"Current:" + currentTime}</p>
+            <p>Start:{game.startTime.seconds}</p>
+            <p>End{game.startTime.seconds + 3600000}</p>
+            <Chat gameId={gameID} />
+          </>
         ) : (
           <div className="flex flex-col text-center">
             <div>Player count:</div>
@@ -116,10 +134,12 @@ function Start() {
               gameDBRef.add({ isGameActive: false, userList: [] });
 
               // Game Start time
-              const startTime = new Date();
               gameDBRef
                 .doc(game.id)
-                .update({ isGameActive: true, startTime: startTime })
+                .update({
+                  isGameActive: true,
+                  startTime: firebase.firestore.FieldValue.serverTimestamp(),
+                })
                 .then(() => {
                   // Once the game is active
                   // Create Two catfish players at random and add the catfish UID to their profile
