@@ -27,8 +27,24 @@ const lato = Lato({
 export default function Home() {
   // Get User Context
   const { user, username } = useContext(UserContext);
+  const [homePanel, setHomePanel] = useState("login");
 
-  const [switchHome, setSwitchHome] = useState(false);
+  useEffect(() => {
+    // console.log(window.innerWidth);
+    if (window.innerWidth <= 990) {
+      if (homePanel == "about") {
+        const rightPanel = document.getElementById("right-panel");
+        rightPanel.classList.add(`${styles.hiddenPanel}`);
+        const leftPanel = document.getElementById("left-panel");
+        leftPanel.classList.remove(`${styles.hiddenPanel}`);
+      } else {
+        const rightPanel = document.getElementById("right-panel");
+        rightPanel.classList.remove(`${styles.hiddenPanel}`);
+        const leftPanel = document.getElementById("left-panel");
+        leftPanel.classList.add(`${styles.hiddenPanel}`);
+      }
+    }
+  }, [homePanel]);
 
   return (
     <>
@@ -41,17 +57,28 @@ export default function Home() {
       <div className="">
         <main className={styles.main}>
           {/* Left Side Panel */}
-          <div className={styles.leftPanel}>
+          <div className={styles.leftPanel} id="left-panel">
             {!user ? (
               <div>
                 <Hero />
+                <div
+                  className={
+                    "flex items-center absolute right-[20px] bottom-[35px]"
+                    // md:hidden
+                  }
+                >
+                  <FaArrowCircleRight
+                    className={styles.switchArrow}
+                    onClick={() => setHomePanel("login")}
+                  />
+                </div>
               </div>
             ) : (
               <Game />
             )}
           </div>
           {/* Right Side Panel */}
-          <div className={styles.rightPanel}>
+          <div className={styles.rightPanel} id="right-panel">
             {user ? (
               !username ? (
                 <UsernameForm />
@@ -61,10 +88,18 @@ export default function Home() {
             ) : (
               <div>
                 <Login />
-                {/* <div className={styles.cardSwitch}>
-                  <p className="font-lato font-bold text-[30px]">NEXT</p>
-                  <FaArrowCircleRight className={styles.switchArrow} />
-                </div> */}
+                <div
+                  className={
+                    "flex items-center absolute right-[20px] bottom-[35px]"
+                    // md:hidden
+                  }
+                >
+                  <p className="font-lato font-bold text-[30px]">ABOUT</p>
+                  <FaArrowCircleRight
+                    className={styles.switchArrow}
+                    onClick={() => setHomePanel("about")}
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -176,33 +211,3 @@ function UsernameMessage({ username, isValid, loading }) {
     return <p></p>;
   }
 }
-
-// function Hero() {
-//   return (
-//     <>
-//       <div className={styles.heroEmojis}>
-//         <p>🐱🎣</p>
-//         <p>🕵️</p>
-//         <p>🥸</p>
-//       </div>
-//       <h1 className="lg:text-[50px] text-[40px] font-lato font-black italic tracking-wide">
-//         WELCOME TO CATFISH!
-//       </h1>
-//       <p className="font-raleway tracking-wide">
-//         In this social media-inspired game, players work together to catch the
-//         elusive catfish, but be careful - not everyone is who they claim to be!
-//       </p>
-//       <p className="font-raleway tracking-wide">
-//         Analyze messages, photos, and participate in minigames to expose the
-//         fake profiles and emerge victorious.
-//       </p>
-//       <p className="font-raleway tracking-wide mb-2">
-//         Can the detectives find the fraud, or will the catfish fool the group
-//         and stand to win it all?
-//       </p>
-//       <h2 className="font-lato italic font-bold">
-//         DO YOU HAVE WHAT IT TAKES TO CATCH THE CATFISH?
-//       </h2>
-//     </>
-//   );
-// }
