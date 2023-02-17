@@ -26,7 +26,9 @@ function Game() {
         setIsUserInGame(true);
         console.log(game?.startTime);
 
+        // Check if the startTime is longer than 1 hour
         if (game?.startTime > 3600000) {
+          // Clear Game  & users Game ID from firestore
           firestore
             .collection("games")
             .doc(userDetails.gameID)
@@ -88,7 +90,9 @@ function Start() {
   const [isSearching, setIsSearching] = useState(false);
   const { user, username } = useContext(UserContext);
   const [game, setGame] = useState(null);
-  const [cfList, setCfList] = useState([]);
+  const [userListWithCatfish, setUserListWithCatfish] = useState(null);
+  const [catFishUID1, setCatFishUID1] = useState(null);
+  const [catFishUID2, setCatFishUID2] = useState(null);
 
   const searchForMatch = () => {
     toast.success("looking for match...");
@@ -128,20 +132,16 @@ function Start() {
 
                   firestore
                     .collection("users")
-                    .where("gameID", "!=", game.id)
+                    .where("gameID", "!=", game.id, 2)
                     .get()
                     .then((querySnapshot) => {
-                      // const users = userIDs;
-                      // console.log(users);
-                      // const user1 = users.data()[0].uid;
-                      // const user2 = users.data()[1].uid;
-                      querySnapshot.forEach((user) => {
-                        const uid = user.id;
-                        setCfList([uid, ...cfList]);
-                      });
-                      const user1 = cfList[random1];
-                      const user2 = cfList[random2];
-                      console.log(user1);
+                      const Cfusers = querySnapshot;
+                      console.log(Cfusers);
+                      //forEach((user) => {
+                      //   const uid = user.id;
+                      //   setCfList([uid, ...cfList]);
+                      // });
+
                       firestore
                         .collection("games")
                         .doc(game.id)
