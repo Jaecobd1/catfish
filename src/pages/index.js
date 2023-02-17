@@ -62,7 +62,7 @@ export default function Home() {
                 <Hero />
                 <div
                   className={
-                    "flex lg:hidden items-center absolute right-[20px] bottom-[35px]"
+                    "flex lg:hidden items-center absolute right-[20px] bottom-[40px]"
                   }
                 >
                   <FaArrowCircleRight
@@ -88,10 +88,10 @@ export default function Home() {
                 <Login />
                 <div
                   className={
-                    "flex lg:hidden items-center absolute right-[20px] bottom-[35px]"
+                    "flex lg:hidden items-center absolute right-[20px] bottom-[40px] font-lato"
                   }
                 >
-                  <p className="font-lato font-bold text-[30px]">ABOUT</p>
+                  <p className="text-[16px] text-slate-400">BACK</p>
                   <FaArrowCircleRight
                     className={styles.switchArrow}
                     onClick={() => setHomePanel("about")}
