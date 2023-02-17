@@ -26,16 +26,20 @@ function Game() {
         setIsUserInGame(true);
         console.log(game?.startTime);
 
-        if (game?.startTime > 360000) {
+        if (game?.startTime > 3600000) {
           firestore
             .collection("games")
             .doc(userDetails.gameID)
             .delete()
             .then(() => {
               toast.error("Game Expired");
+              firestore
+                .collection("games")
+                .add({ isGameActive: false, userList: [] });
             });
           firestore.doc(`users/${user.uid}`).update({ gameID: "" });
           setGame(null);
+          setIsUserInGame(false);
         }
 
         // Check if Game is active
@@ -84,6 +88,7 @@ function Start() {
   const [isSearching, setIsSearching] = useState(false);
   const { user, username } = useContext(UserContext);
   const [game, setGame] = useState(null);
+  const [cfList, setCfList] = useState([]);
 
   const searchForMatch = () => {
     toast.success("looking for match...");
@@ -120,13 +125,23 @@ function Start() {
                   const gameUID1 = userList[random1];
                   const gameUID2 = userList[random2];
                   // Get random profiles that aren't in game
+
                   firestore
                     .collection("users")
                     .where("gameID", "!=", game.id)
                     .get()
-                    .then((userIDs) => {
-                      const users = userIDs.id;
-                      console.log(users);
+                    .then((querySnapshot) => {
+                      // const users = userIDs;
+                      // console.log(users);
+                      // const user1 = users.data()[0].uid;
+                      // const user2 = users.data()[1].uid;
+                      querySnapshot.forEach((user) => {
+                        const uid = user.data().uid;
+                        setCfList([uid, ...cfList]);
+                      });
+                      const user1 = cfList[random1];
+                      const user2 = cfList[random2];
+                      console.log(user1);
                       firestore
                         .collection("games")
                         .doc(game.id)
@@ -134,11 +149,18 @@ function Start() {
                         .then((doc) => {
                           const gameInfo = doc.data();
                           const gameUsers = gameInfo.userList;
-                          gameUsers.forEach((user, id) => {
-                            firestore
-                              .collection("users")
-                              .doc(user)
-                              .update({ catfish: true });
+                          gameUsers.forEach((user, index) => {
+                            if (random1 == index) {
+                              firestore
+                                .collection("users")
+                                .doc(user)
+                                .update({ catfishUID: user1 });
+                            } else if (random2 == index) {
+                              firestore
+                                .collection("users")
+                                .doc(user)
+                                .update({ catfishUID: user2 });
+                            }
                           });
                         });
                     });
@@ -151,7 +173,7 @@ function Start() {
 
             // Add UID to userList
             userList.push(user.uid);
-            console.log(userList);
+            console.log({ userList });
             gameDBRef.doc(game.id).update({ userList: userList });
             // Update user's profile to be in game
             userDoc
