@@ -29,22 +29,21 @@ export default function Home() {
   const { user, username } = useContext(UserContext);
   const [homePanel, setHomePanel] = useState("login");
 
+  // checking active panel, only applies to home page
   useEffect(() => {
-    // console.log(window.innerWidth);
+    const rightPanel = document.getElementById("right-panel");
+    const leftPanel = document.getElementById("left-panel");
     if (window.innerWidth <= 990) {
       if (homePanel == "about") {
-        const rightPanel = document.getElementById("right-panel");
         rightPanel.classList.add(`${styles.hiddenPanel}`);
-        const leftPanel = document.getElementById("left-panel");
         leftPanel.classList.remove(`${styles.hiddenPanel}`);
       } else {
-        const rightPanel = document.getElementById("right-panel");
         rightPanel.classList.remove(`${styles.hiddenPanel}`);
-        const leftPanel = document.getElementById("left-panel");
         leftPanel.classList.add(`${styles.hiddenPanel}`);
       }
     }
   }, [homePanel]);
+  // this doesn't work if you go from being on mobile to desktop, as of right now user has to refresh
 
   return (
     <>
@@ -63,8 +62,7 @@ export default function Home() {
                 <Hero />
                 <div
                   className={
-                    "flex items-center absolute right-[20px] bottom-[35px]"
-                    // md:hidden
+                    "flex lg:hidden items-center absolute right-[20px] bottom-[40px]"
                   }
                 >
                   <FaArrowCircleRight
@@ -90,11 +88,10 @@ export default function Home() {
                 <Login />
                 <div
                   className={
-                    "flex items-center absolute right-[20px] bottom-[35px]"
-                    // md:hidden
+                    "flex lg:hidden items-center absolute right-[20px] bottom-[40px] font-lato"
                   }
                 >
-                  <p className="font-lato font-bold text-[30px]">ABOUT</p>
+                  <p className="text-[16px] text-slate-400">BACK</p>
                   <FaArrowCircleRight
                     className={styles.switchArrow}
                     onClick={() => setHomePanel("about")}

@@ -6,6 +6,7 @@
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
   padding: 0 50px;
   --slideInOutAnimation: 2.5s;
+  overflow: hidden;
 }
 
 /* these are the styles for the left panel */
@@ -21,7 +22,7 @@
   position: relative;
   animation-name: slideInFromLeft;
   animation-duration: var(--slideInOutAnimation);
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 /* these are the styles for the right panel */
@@ -44,11 +45,10 @@
 .switchArrow {
   font-size: 50px;
   margin-left: 10px;
-  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
-  /* background-size: 100%; */
-  /* background-repeat: repeat; */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #8a2be2;
+  animation-name: buttonColor;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
 }
 
 @keyframes slideInFromRight {
@@ -66,6 +66,18 @@
   }
   to {
     transform: translateX(0);
+  }
+}
+
+@keyframes buttonColor {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
   }
 }
 
