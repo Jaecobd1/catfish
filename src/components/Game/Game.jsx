@@ -24,10 +24,12 @@ function Game() {
       if (userDetails?.gameID) {
         setGameID(userDetails.gameID);
         setIsUserInGame(true);
+        console.log(game?.startTime);
+
         if (game?.startTime > 360000) {
           firestore
             .collection("games")
-            .doc(gameID)
+            .doc(userDetails.gameID)
             .delete()
             .then(() => {
               toast.error("Game Expired");
@@ -117,7 +119,6 @@ function Start() {
                   // get userID for random 1 and 2
                   const gameUID1 = userList[random1];
                   const gameUID2 = userList[random2];
-
                   // Get random profiles that aren't in game
                   firestore
                     .collection("users")
@@ -125,9 +126,10 @@ function Start() {
                     .get()
                     .then((userIDs) => {
                       const users = userIDs.id;
-                      const fakeuser1 = firestore
+                      console.log(users);
+                      firestore
                         .collection("games")
-                        .doc(game)
+                        .doc(game.id)
                         .get()
                         .then((doc) => {
                           const gameInfo = doc.data();
@@ -136,10 +138,13 @@ function Start() {
                             firestore
                               .collection("users")
                               .doc(user)
-                              .update({ catfishUID: fakeUser });
+                              .update({ catfish: true });
                           });
                         });
                     });
+                })
+                .catch((error) => {
+                  toast.error(error.message);
                 });
             } else {
             }
