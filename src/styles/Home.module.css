@@ -6,6 +6,7 @@
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
   padding: 0 50px;
   --slideInOutAnimation: 2.5s;
+  overflow: hidden;
 }
 
 /* these are the styles for the left panel */
@@ -21,7 +22,7 @@
   position: relative;
   animation-name: slideInFromLeft;
   animation-duration: var(--slideInOutAnimation);
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 /* these are the styles for the right panel */
@@ -38,6 +39,7 @@
 }
 
 .hiddenPanel {
+  background-color: red;
   display: none;
 }
 
