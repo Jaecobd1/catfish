@@ -136,7 +136,7 @@ function Start() {
                       // const user1 = users.data()[0].uid;
                       // const user2 = users.data()[1].uid;
                       querySnapshot.forEach((user) => {
-                        const uid = user.data().uid;
+                        const uid = user.id;
                         setCfList([uid, ...cfList]);
                       });
                       const user1 = cfList[random1];
