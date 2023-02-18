@@ -1,7 +1,15 @@
 import styles from "@/styles/LeftPanel/Hero.module.css"
+import { useEffect } from "react";
 
-function Hero() {
-    return <div className={styles.heroContainer}>
+function Hero(props) {
+ 
+// attempt to figure out bringing in a specific style
+  // useEffect(() =>{
+  //   const container = document.getElementById("hero-container");
+  //   container.classList.add(`${props.style}`)
+  // }, [])
+  
+    return <div className={styles.heroContainer} id="hero-container">
     <div className={styles.heroEmojis}>
       <p>🐱🎣</p>
       <p>🕵️</p>

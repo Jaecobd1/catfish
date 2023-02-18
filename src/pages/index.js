@@ -58,7 +58,19 @@ export default function Home() {
           <div className={styles.leftPanel} id="left-panel">
             {!user ? (
               // if no user, run this code
-              <Hero />
+              <div>
+                <Hero style="normal" />
+                <div
+                  className={
+                    "flex lg:hidden items-center absolute right-[20px] bottom-[40px]"
+                  }
+                >
+                  <FaArrowCircleRight
+                    className={styles.switchArrow}
+                    onClick={() => setHomePanel(false)}
+                  />
+                </div>
+              </div>
             ) : !username ? (
               <UsernameForm />
             ) : (
@@ -86,7 +98,7 @@ export default function Home() {
           <div className={styles.rightPanel} id="right-panel">
             {user ? (
               !username ? (
-                <Hero />
+                <Hero style="compressed" />
               ) : (
                 <UserProfile />
               )

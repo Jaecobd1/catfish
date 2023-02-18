@@ -2,6 +2,10 @@
   padding-right: 20px;
 }
 
+.compressed {
+  background-color: red;
+}
+
 .heroEmojis p {
   position: absolute;
   opacity: 0.5;
