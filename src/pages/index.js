@@ -27,20 +27,19 @@ const lato = Lato({
 export default function Home() {
   // Get User Context
   const { user, username } = useContext(UserContext);
-  const [homePanel, setHomePanel] = useState("login");
+  // true is about page, false is login page
+  const [homePanel, setHomePanel] = useState(true);
 
   // checking active panel, only applies to home page
   useEffect(() => {
     const rightPanel = document.getElementById("right-panel");
     const leftPanel = document.getElementById("left-panel");
-    if (window.innerWidth <= 990) {
-      if (homePanel == "about") {
-        rightPanel.classList.add(`${styles.hiddenPanel}`);
-        leftPanel.classList.remove(`${styles.hiddenPanel}`);
-      } else {
-        rightPanel.classList.remove(`${styles.hiddenPanel}`);
-        leftPanel.classList.add(`${styles.hiddenPanel}`);
-      }
+    if (homePanel) {
+      rightPanel.classList.add(`${styles.hiddenPanel}`);
+      leftPanel.classList.remove(`${styles.hiddenPanel}`);
+    } else {
+      rightPanel.classList.remove(`${styles.hiddenPanel}`);
+      leftPanel.classList.add(`${styles.hiddenPanel}`);
     }
   }, [homePanel]);
   // this doesn't work if you go from being on mobile to desktop, as of right now user has to refresh
@@ -67,7 +66,7 @@ export default function Home() {
                 >
                   <FaArrowCircleRight
                     className={styles.switchArrow}
-                    onClick={() => setHomePanel("login")}
+                    onClick={() => setHomePanel(false)}
                   />
                 </div>
               </div>
@@ -94,7 +93,7 @@ export default function Home() {
                   <p className="text-[16px] text-slate-400">BACK</p>
                   <FaArrowCircleRight
                     className={styles.switchArrow}
-                    onClick={() => setHomePanel("about")}
+                    onClick={() => setHomePanel(true)}
                   />
                 </div>
               </div>

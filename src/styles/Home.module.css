@@ -39,7 +39,7 @@
 }
 
 .hiddenPanel {
-  display: none;
+  display: flex;
 }
 
 .switchArrow {
@@ -82,12 +82,19 @@
 }
 
 @media screen and (max-width: 990px) {
+  .main {
+  }
   .leftPanel {
     max-width: 410px;
     margin-right: 0;
   }
+
   .leftPanel,
   .rightPanel {
     position: absolute;
+  }
+
+  .hiddenPanel {
+    display: none;
   }
 }
