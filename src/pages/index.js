@@ -118,6 +118,7 @@ function UsernameForm() {
     console.log(user.displayName);
   }, [formValue]);
 
+  // Regex
   const onChange = (e) => {
     const val = e.target.value.toLowerCase();
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;

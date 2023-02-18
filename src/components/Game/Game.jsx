@@ -39,14 +39,13 @@ function Game() {
             .delete()
             .then(() => {
               toast.error("Game Expired");
+              firestore
+                .collection("games")
+                .add({ isGameActive: false, userList: [] });
             });
-          firestore.doc(`users/${userDetails.uid}`).update({ gameID: "" });
+          firestore.doc(`users/${user.uid}`).update({ gameID: "" });
           setGame(null);
           setIsUserInGame(false);
-        } else {
-          if ((currentTime - game?.startTime) % 10) {
-            toast.success("VOTING");
-          }
         }
 
         // Check if Game is active
