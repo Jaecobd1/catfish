@@ -27,13 +27,13 @@ export function UsernameForm() {
 
     // Only set form value if length is < 3 Or it passes regex
     if (val.length < 3) {
-      setFormValue(val);
+      setDisplayName(val);
       setLoading(false);
       setIsValid(false);
     }
 
     if (re.test(val)) {
-      setFormValue(val);
+      setDisplayName(val);
       setLoading(true);
       setIsValid(true);
     }
