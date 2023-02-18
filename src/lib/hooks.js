@@ -19,8 +19,18 @@ export function useUserData() {
       unsubscribe = ref.onSnapshot((doc) => {
         setUsername(doc.data()?.username);
         setPhotoURL(doc.data()?.photoURL);
-        setGameID(doc.data()?.gameID);
+        // firestore
+        //   .collection("games")
+        //   .where("games", "==", doc.data().gameID)
+        //   .get((games) => {
+        //     console.log(games);
+        //     if (games) {
+        //       ref.update({ gameID: "" });
+        //     }
+        //   });
+
         setCatfishUID(doc.data?.catfishUID);
+        setGameID(doc.data?.gameID);
       });
     } else {
       setUsername(null);
@@ -30,7 +40,7 @@ export function useUserData() {
     return unsubscribe;
   }, [user]);
 
-  return { user, username, photoURL, gameID, catfishUID };
+  return { user, username, photoURL, gameID };
 }
 
 export function useGameData() {

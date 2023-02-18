@@ -3,6 +3,7 @@ import { GameContext, UserContext } from "@/lib/context";
 import { toast } from "react-hot-toast";
 import { firestore } from "@/lib/firebase";
 import Chat from "./Chat";
+import firebase from "firebase/app";
 
 const gameDBRef = firestore.collection("games");
 
@@ -15,6 +16,9 @@ function Game() {
   const { user, username } = useContext(UserContext);
   const { test, userProfile } = useContext(GameContext);
   const [game, setGame] = useState(null);
+  const [startTime, setStartTime] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date().getTime() / 1000);
+
   useEffect(() => {
     const userDoc = firestore.doc(`users/${user.uid}`);
     userDoc.get().then((doc) => {
@@ -26,7 +30,9 @@ function Game() {
         setIsUserInGame(true);
         console.log(game?.startTime);
 
-        if (game?.startTime > 360000) {
+        // Check if the startTime is longer than 1 hour
+        if (game?.startTime > game?.startTime.seconds + 3600000) {
+          // Clear Game  & users Game ID from firestore
           firestore
             .collection("games")
             .doc(userDetails.gameID)
@@ -34,8 +40,13 @@ function Game() {
             .then(() => {
               toast.error("Game Expired");
             });
-          firestore.doc(`users/${user.uid}`).update({ gameID: "" });
+          firestore.doc(`users/${userDetails.uid}`).update({ gameID: "" });
           setGame(null);
+          setIsUserInGame(false);
+        } else {
+          if ((currentTime - game?.startTime) % 10) {
+            toast.success("VOTING");
+          }
         }
 
         // Check if Game is active
@@ -61,6 +72,15 @@ function Game() {
     });
   }, [user, isUserInGame]);
 
+  useEffect(() => {
+    setCurrentTime(new Date().getTime() / 1000);
+  }, [currentTime]);
+
+  // useEffect(() => {
+  //   const timestamp = new Date(game?.startTime.seconds);
+  //   setStartTime(timestamp);
+  // }, [game]);
+
   return (
     <>
       <div className="w-full h-full flex justify-center items-center">
@@ -68,7 +88,12 @@ function Game() {
           <Start onClick={() => setIsUserInGame(true)} />
         ) : // check if user is in loby or if game is active
         isGameActive ? (
-          <Chat gameId={gameID} />
+          <div className="flex flex-col">
+            <p>{"Current:" + currentTime}</p>
+            <p>Start:{game.startTime.seconds}</p>
+            <p>End{game.startTime.seconds + 3600000}</p>
+            <Chat gameId={gameID} />
+          </div>
         ) : (
           <div className="flex flex-col text-center">
             <div>Player count:</div>
@@ -84,6 +109,9 @@ function Start() {
   const [isSearching, setIsSearching] = useState(false);
   const { user, username } = useContext(UserContext);
   const [game, setGame] = useState(null);
+  const [userListWithCatfish, setUserListWithCatfish] = useState(null);
+  const [catFishUID1, setCatFishUID1] = useState(null);
+  const [catFishUID2, setCatFishUID2] = useState(null);
 
   const searchForMatch = () => {
     toast.success("looking for match...");
@@ -107,10 +135,12 @@ function Start() {
               gameDBRef.add({ isGameActive: false, userList: [] });
 
               // Game Start time
-              const startTime = new Date();
               gameDBRef
                 .doc(game.id)
-                .update({ isGameActive: true, startTime: startTime })
+                .update({
+                  isGameActive: true,
+                  startTime: firebase.firestore.FieldValue.serverTimestamp(),
+                })
                 .then(() => {
                   // Once the game is active
                   // Create Two catfish players at random and add the catfish UID to their profile
@@ -120,13 +150,19 @@ function Start() {
                   const gameUID1 = userList[random1];
                   const gameUID2 = userList[random2];
                   // Get random profiles that aren't in game
+
                   firestore
                     .collection("users")
-                    .where("gameID", "!=", game.id)
+                    .where("gameID", "!=", game.id, 2)
                     .get()
-                    .then((userIDs) => {
-                      const users = userIDs.id;
-                      console.log(users);
+                    .then((querySnapshot) => {
+                      const Cfusers = querySnapshot;
+                      console.log(Cfusers);
+                      //forEach((user) => {
+                      //   const uid = user.id;
+                      //   setCfList([uid, ...cfList]);
+                      // });
+
                       firestore
                         .collection("games")
                         .doc(game.id)
@@ -134,11 +170,18 @@ function Start() {
                         .then((doc) => {
                           const gameInfo = doc.data();
                           const gameUsers = gameInfo.userList;
-                          gameUsers.forEach((user, id) => {
-                            firestore
-                              .collection("users")
-                              .doc(user)
-                              .update({ catfish: true });
+                          gameUsers.forEach((user, index) => {
+                            if (random1 == index) {
+                              firestore
+                                .collection("users")
+                                .doc(user)
+                                .update({ catfishUID: user1 });
+                            } else if (random2 == index) {
+                              firestore
+                                .collection("users")
+                                .doc(user)
+                                .update({ catfishUID: user2 });
+                            }
                           });
                         });
                     });
@@ -151,7 +194,7 @@ function Start() {
 
             // Add UID to userList
             userList.push(user.uid);
-            console.log(userList);
+            console.log({ userList });
             gameDBRef.doc(game.id).update({ userList: userList });
             // Update user's profile to be in game
             userDoc
