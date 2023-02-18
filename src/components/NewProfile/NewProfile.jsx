@@ -6,26 +6,22 @@ import { firestore } from "../../lib/firebase";
 // everything relating to the username function
 // Username Validation form
 export function UsernameForm() {
-  const [firstName, setFirstName] = useState("");
-  const [displayName, setDisplayName] = useState("");
-  const [bio, setBio] = useState("");
-  const [occupation, setOccupation] = useState("");
-
+  const [formValue, setFormValue] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user, username } = useContext(UserContext);
 
   useEffect(() => {
-    checkUsername(displayName);
+    checkUsername(formValue);
     console.log(user.displayName);
-  }, [displayName]);
+  }, [formValue]);
 
   // Regex
   const onChange = (e) => {
     const val = e.target.value.toLowerCase();
     const re = /^(?=[a-zA-Z0-9._]{3,15}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
 
-    // Only set form value if length is < 3 Or it passes regex
+    // Only set form calue if length is < 3 Or it passes regex
     if (val.length < 3) {
       setDisplayName(val);
       setLoading(false);
@@ -62,6 +58,7 @@ export function UsernameForm() {
     // Send to DB at same time
     const batch = firestore.batch();
     batch.set(userDoc, {
+<<<<<<< HEAD
         photoURL: "",
         firstName: firstName,
         username: displayName,
@@ -72,6 +69,13 @@ export function UsernameForm() {
         instagramUsername: "",
         facebookUsername: "",
 
+=======
+      username: formValue,
+      photoURL: "",
+      displayName: formValue,
+      firstName: "",
+      lastName: "",
+>>>>>>> 89dd85008b5ac05680325beb6b0ae89bfe5bd2ef
       isUserInGame: false,
     });
     batch.set(usernameDoc, { uid: user.uid });
@@ -89,63 +93,13 @@ export function UsernameForm() {
               type="text"
               name="username"
               placeholder="username"
-              value={displayName}
+              value={formValue}
               onChange={onChange}
             />
             <UsernameMessage
-              username={displayName}
+              username={formValue}
               isValid={isValid}
               loading={loading}
-            />
-             <input
-              type="text"
-              name="fName"
-              placeholder="first name"
-              value={firstName}
-              onChange={() => setFirstName(firstName)}
-            />
-            <input
-              type="text"
-              name="bio"
-              placeholder="bio"
-              value={bio}
-              onChange={() => setBio(bio)}
-            />
-            <input
-              type="text"
-              name="occupation"
-              placeholder="occupation"
-              value={occupation}
-              onChange={() => setOccupation(occupation)}
-            />
-            <input
-              type="text"
-              name="interests"
-              placeholder="interests"
-            //   value={}
-            //   onChange={}
-            />
-            {/* social media links */}
-            <input
-              type="text"
-              name="snap"
-              placeholder="snap username"
-            //   value={}
-            //   onChange={}
-            />
-            <input
-              type="text"
-              name="insta"
-              placeholder="instagram username"
-            //   value={}
-            //   onChange={}
-            />
-            <input
-              type="text"
-              name="facebook"
-              placeholder="facebook username"
-            //   value={}
-            //   onChange={}
             />
             <button type="submit" disabled={!isValid}>
               Choose
