@@ -68,7 +68,7 @@ export function UsernameForm() {
         bio: bio,
         occupation: occupation,
         interests: [],
-        snapchatUsername: "",
+        snapchatUsername: "snap",
         instagramUsername: "",
         facebookUsername: "",
 
