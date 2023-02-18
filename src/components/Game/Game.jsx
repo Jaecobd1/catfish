@@ -39,13 +39,14 @@ function Game() {
             .delete()
             .then(() => {
               toast.error("Game Expired");
-              firestore
-                .collection("games")
-                .add({ isGameActive: false, userList: [] });
             });
-          firestore.doc(`users/${user.uid}`).update({ gameID: "" });
+          firestore.doc(`users/${userDetails.uid}`).update({ gameID: "" });
           setGame(null);
           setIsUserInGame(false);
+        } else {
+          if ((currentTime - game?.startTime) % 10) {
+            toast.success("VOTING");
+          }
         }
 
         // Check if Game is active
@@ -87,12 +88,12 @@ function Game() {
           <Start onClick={() => setIsUserInGame(true)} />
         ) : // check if user is in loby or if game is active
         isGameActive ? (
-          <>
+          <div className="flex flex-col">
             <p>{"Current:" + currentTime}</p>
             <p>Start:{game.startTime.seconds}</p>
             <p>End{game.startTime.seconds + 3600000}</p>
             <Chat gameId={gameID} />
-          </>
+          </div>
         ) : (
           <div className="flex flex-col text-center">
             <div>Player count:</div>
