@@ -57,6 +57,14 @@ export default function Home() {
           {/* Left Side Panel */}
           <div className={styles.leftPanel} id="left-panel">
             {!user ? (
+              // if no user, run this code
+              <Hero />
+            ) : !username ? (
+              <UsernameForm />
+            ) : (
+              <Game />
+            )}
+            {/* {!username ? (
               <div>
                 <Hero />
                 <div
@@ -72,13 +80,13 @@ export default function Home() {
               </div>
             ) : (
               <Game />
-            )}
+            )} */}
           </div>
           {/* Right Side Panel */}
           <div className={styles.rightPanel} id="right-panel">
             {user ? (
               !username ? (
-                <UsernameForm />
+                <Hero />
               ) : (
                 <UserProfile />
               )

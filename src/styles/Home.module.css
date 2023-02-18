@@ -22,7 +22,6 @@
   position: relative;
   animation-name: slideInFromLeft;
   animation-duration: var(--slideInOutAnimation);
-  /* overflow-y: scroll; */
 }
 
 /* these are the styles for the right panel */
