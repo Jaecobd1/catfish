@@ -1,0 +1,22 @@
+.all {
+  overflow: hidden;
+  height: 100%;
+  width: 720px;
+  border-radius: 50px;
+  background-color: red;
+}
+
+.all .container {
+  top: -100px;
+  height: 120%;
+  overflow: hidden;
+  position: relative;
+  opacity: 0.5;
+}
+
+.all .animate {
+  margin: 0 auto;
+  width: 20px;
+  overflow: visible;
+  position: relative;
+}

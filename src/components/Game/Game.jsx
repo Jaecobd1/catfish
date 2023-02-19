@@ -4,6 +4,8 @@ import { toast } from "react-hot-toast";
 import { firestore } from "@/lib/firebase";
 import Chat from "./Chat";
 import firebase from "firebase/app";
+import StartScreen from "./StartScreen";
+import styles from "@/styles/LeftPanel/Game.module.css"
 
 const gameDBRef = firestore.collection("games");
 
@@ -213,12 +215,15 @@ function Start() {
 
   if (!isSearching) {
     return (
-      <button
+      <div className={styles.startContainer}>
+        <StartScreen />
+        <button
         onClick={searchForMatch}
-        className="p-2 rounded-xl bg-gradient-to-tr from-[#00bfff] to-[#ba55d3] via-[#8a2be2] text-white font-lato text-3xl "
-      >
+        className="font-lato"
+        >
         Start Game
-      </button>
+        </button>
+      </div>
     );
   } else {
     return <p>Refresh Page</p>;
