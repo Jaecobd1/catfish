@@ -6,3 +6,8 @@
 .recieved {
   background-color: blue;
 }
+
+.chatContainer {
+  background-color: red;
+  height: 560px;
+}
