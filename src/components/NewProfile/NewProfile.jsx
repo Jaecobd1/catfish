@@ -19,7 +19,7 @@ export function UsernameForm() {
   useEffect(() => {
     checkUsername(displayName);
     console.log(user.displayName);
-  }, [displayName]);
+  }, []);
 
   // Regex
   const onChange = (e) => {
@@ -63,15 +63,15 @@ export function UsernameForm() {
     // Send to DB at same time
     const batch = firestore.batch();
     batch.set(userDoc, {
-        photoURL: "",
-        firstName: firstName,
-        username: displayName,
-        bio: bio,
-        occupation: occupation,
-        interests: [],
-        snapchatUsername: "snap",
-        instagramUsername: "",
-        facebookUsername: "",
+      photoURL: "",
+      firstName: firstName,
+      username: displayName,
+      bio: bio,
+      occupation: occupation,
+      interests: [],
+      snapchatUsername: "snap",
+      instagramUsername: "",
+      facebookUsername: "",
 
       isUserInGame: false,
     });
@@ -103,21 +103,21 @@ export function UsernameForm() {
               name="firstName"
               placeholder="first name"
               value={firstName}
-              onChange={setFirstName(firstName)}
+              onChange={() => setFirstName(firstName)}
             />
             <input
               type="text"
               name="bio"
               placeholder="bio"
               value={bio}
-              onChange={setBio(bio)}
+              onChange={() => setBio(bio)}
             />
             <input
               type="text"
               name="occupation"
               placeholder="occupation"
               value={occupation}
-              onChange={setOccupation(occupation)}
+              onChange={() => setOccupation(occupation)}
             />
             <button type="submit" disabled={!isValid}>
               Choose
