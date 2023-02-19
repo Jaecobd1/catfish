@@ -77,23 +77,6 @@ export default function Home() {
             ) : (
               <Game />
             )}
-            {/* {!username ? (
-              <div>
-                <Hero />
-                <div
-                  className={
-                    "flex lg:hidden items-center absolute right-[20px] bottom-[40px]"
-                  }
-                >
-                  <FaArrowCircleRight
-                    className={styles.switchArrow}
-                    onClick={() => setHomePanel(false)}
-                  />
-                </div>
-              </div>
-            ) : (
-              <Game />
-            )} */}
           </div>
           {/* Right Side Panel */}
           <div className={styles.rightPanel} id="right-panel">

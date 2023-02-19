@@ -97,3 +97,10 @@
     display: none;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .leftPanel {
+    background-color: red;
+    max-width: 300px;
+  }
+}
