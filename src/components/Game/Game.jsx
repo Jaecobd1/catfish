@@ -131,7 +131,7 @@ function Start() {
             let userList = data.userList;
             //Check if room is full
             console.log(userList);
-            if (userList.length > 0) {
+            if ((userList.length = 0)) {
               // Create a new room for next player
               gameDBRef.add({ isGameActive: false, userList: [] });
 
