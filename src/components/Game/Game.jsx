@@ -5,7 +5,7 @@ import { firestore } from "@/lib/firebase";
 import Chat from "./Chat";
 import firebase from "firebase/app";
 import StartScreen from "./StartScreen";
-import styles from "@/styles/LeftPanel/Game.module.css"
+import styles from "@/styles/LeftPanel/Game.module.css";
 
 const gameDBRef = firestore.collection("games");
 
@@ -131,7 +131,7 @@ function Start() {
             let userList = data.userList;
             //Check if room is full
             console.log(userList);
-            if (userList.length > 1) {
+            if (userList.length > 0) {
               // Create a new room for next player
               gameDBRef.add({ isGameActive: false, userList: [] });
 
@@ -217,11 +217,8 @@ function Start() {
     return (
       <div className={styles.startContainer}>
         <StartScreen />
-        <button
-        onClick={searchForMatch}
-        className="font-lato"
-        >
-        Start Game
+        <button onClick={searchForMatch} className="font-lato">
+          Start Game
         </button>
       </div>
     );
