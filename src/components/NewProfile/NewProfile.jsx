@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "@/lib/context";
 import { useCallback } from "react";
 import debounce from "lodash.debounce";
@@ -8,13 +8,13 @@ import { firestore } from "../../lib/firebase";
 // Username Validation form
 export function UsernameForm() {
   const [displayName, setDisplayName] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [bio, setBio] = useState("");
-  const [occupation, setOccupation] = useState("");
 
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user, username } = useContext(UserContext);
+  const firstNameRef = useRef();
+  const bioRef = useRef();
+  const occupationRef = useRef();
 
   useEffect(() => {
     checkUsername(displayName);
@@ -64,10 +64,10 @@ export function UsernameForm() {
     const batch = firestore.batch();
     batch.set(userDoc, {
       photoURL: "",
-      firstName: firstName,
+      firstName: firstNameRef.current.value,
       username: displayName,
-      bio: bio,
-      occupation: occupation,
+      bio: bioRef.current.value,
+      occupation: occupationRef.current.value,
       interests: [],
       snapchatUsername: "snap",
       instagramUsername: "",
@@ -91,6 +91,7 @@ export function UsernameForm() {
               name="username"
               placeholder="username"
               onChange={onChange}
+              required
             />
             <UsernameMessage
               username={displayName}
@@ -101,25 +102,21 @@ export function UsernameForm() {
               type="text"
               name="firstName"
               placeholder="first name"
-              value={firstName}
-              onChange={() => setFirstName(firstName)}
+              ref={firstNameRef}
             />
-            <input
-              type="text"
-              name="bio"
-              placeholder="bio"
-              value={bio}
-              onChange={() => setBio(bio)}
-            />
+            <input type="text" name="bio" placeholder="bio" ref={bioRef} />
             <input
               type="text"
               name="occupation"
               placeholder="occupation"
-              value={occupation}
-              onChange={() => setOccupation(occupation)}
+              ref={occupationRef}
             />
-            <button type="submit" disabled={!isValid}>
-              Choose
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="bg-blue-200 w-min hover:bg-blue-500"
+            >
+              Create Profile
             </button>
           </form>
         </section>
