@@ -31,12 +31,12 @@ var circles = [];
 
 for (var i = 0; i < 15; i++) {
   addCircle(
-    i * 150,
+    i * 100,
     [10 + 0, 300],
     emoji[Math.floor(Math.random() * emoji.length)]
   );
   addCircle(
-    i * 150,
+    i * 100,
     [10 + 0, -300],
     emoji[Math.floor(Math.random() * emoji.length)]
   );

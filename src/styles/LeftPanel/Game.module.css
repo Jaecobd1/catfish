@@ -16,4 +16,13 @@
   border-radius: 5px;
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
   font-size: 30px;
+  animation-name: buttonPulse;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes buttonPulse {
+  50% {
+    scale: 85%;
+  }
 }
