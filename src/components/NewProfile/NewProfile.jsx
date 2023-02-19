@@ -2,12 +2,13 @@ import { useState, useEffect, useContext, useRef } from "react";
 import { UserContext } from "@/lib/context";
 import { useCallback } from "react";
 import debounce from "lodash.debounce";
-import { firestore } from "../../lib/firebase";
+import { firestore, storage, STATE_CHANGED } from "../../lib/firebase";
 import styles from "@/styles/LeftPanel/NewProfile.module.css";
 // import { first } from "lodash";
 // everything relating to the username function
 // Username Validation form
 export function UsernameForm() {
+  const [uploading, setUploading] = useState(false);
   const [displayName, setDisplayName] = useState("");
 
   const [isValid, setIsValid] = useState(false);
@@ -21,6 +22,27 @@ export function UsernameForm() {
     checkUsername(displayName);
     console.log(user.displayName);
   }, []);
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const userDoc = firestore.doc(`users/${user.uid}`);
+    const usernameDoc = firestore.doc(`usernames/${displayName}`);
+    // Send to DB at same time
+    const batch = firestore.batch();
+    batch.set(userDoc, {
+      photoURL: "",
+      firstName: firstNameRef.current.value,
+      username: displayName,
+      bio: bioRef.current.value,
+      occupation: occupationRef.current.value,
+      interests: [],
+      snapchatUsername: "snap",
+      instagramUsername: "",
+      facebookUsername: "",
+      isUserInGame: false,
+    });
+    batch.set(usernameDoc, { uid: user.uid });
+    await batch.commit();
+  };
 
   // Regex
   const onChange = (e) => {
@@ -54,111 +76,135 @@ export function UsernameForm() {
     }, 500),
     []
   );
+  const userStorageRef = storage.ref().child(user.uid);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const addImage = async (e) => {
+    // Get storage bucket, Add Image to storage bucket
+    // Create URL for Image and change image front end
+    const file = Array.from(e.target.files)[0];
+    const extension = file.type.split("/")[1];
+    // ref to upload
+    const ref = storage.ref(`uploads/${user.uid}/${Date.now()}.${extension}`);
+    setUploading(true);
 
-    const userDoc = firestore.doc(`users/${user.uid}`);
-    const usernameDoc = firestore.doc(`usernames/${displayName}`);
+    // Start upload
+    const task = ref.put(file);
 
-    // Send to DB at same time
-    const batch = firestore.batch();
-    batch.set(userDoc, {
-      photoURL: "",
-      firstName: firstNameRef.current.value,
-      username: displayName,
-      bio: bioRef.current.value,
-      occupation: occupationRef.current.value,
-      interests: [],
-      snapchatUsername: "snap",
-      instagramUsername: "",
-      facebookUsername: "",
-
-      isUserInGame: false,
+    task.on(STATE_CHANGED, (snapshot) => {
+      task
+        .then(() => ref.getDownloadURL())
+        .then((url) => {
+          setDownloadURL(url);
+          setUploading(false);
+          toast.success("Image Uploaded");
+          imageRef.current.src = url;
+          userDoc
+            .update({
+              photoURL: url,
+            })
+            .then(() => {
+              toast.success("Image Saved!");
+            })
+            .catch((error) => {
+              toast.error(error.code + " : " + error.message);
+            });
+        });
     });
-    batch.set(usernameDoc, { uid: user.uid });
-
-    await batch.commit();
   };
 
   return (
     !username && (
       <>
-      <div className={styles.newProfileContainer}>
-      <h1 className="text-[40px] font-lato font-black italic tracking-wide">
-      CREATE YOUR PROFILE!
-    </h1>
-        <form onSubmit={onSubmit} className={`${styles.newUserForm} font-raleway italic`}>
-            <div className="flex">
-                <div>
-                <label for="username">Username</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="username"
-            onChange={onChange}
-            required
-            className={styles.smallInput}
-
-          />
-              </div>
-            <div>
-            <label for="firstName">First Name</label>
-            <input
-            type="text"
-            name="firstName"
-            placeholder="first name"
-            ref={firstNameRef}
-            className={styles.smallInput}
-          />
-            </div>  
-                </div>
-                <UsernameMessage
-            username={displayName}
-            isValid={isValid}
-            loading={loading}
-          />
-
-          <label for="bio" className="mt-5">Bio</label>     
-          <textarea type="text" name="bio" placeholder="bio" ref={bioRef} className={styles.formBigBox} style={{height: 50}} />
-          
-{/* need to specify what file type? */}
-           <div className="flex mt-3">
-                <div>
-                <label for="occupation" className="mt-3">Occupation</label>
-                <input
-            type="text"
-            name="occupation"
-            placeholder="occupation"
-            ref={occupationRef}
-          />
-              </div>
-            <div>
-            <label for="profilePicture">Profile Picture</label>
-            <input
-            type="file"
-            name="profilePicture"
-            placeholder="first name"
-            ref={firstNameRef}
-            className={styles.smallInput}
-          />
-            </div>  
-                </div>
-                <label for="interests" className="mt-3">Interests</label>     
-          <select name="interests">
-              <option value="skiing">Skiing</option>
-          </select>
-
-          <button
-            type="submit"
-            disabled={!isValid}
-            className={`${styles.formSubmit} font-lato font-bold`}
+        <div className={styles.newProfileContainer}>
+          <h1 className="text-[40px] font-lato font-black italic tracking-wide">
+            CREATE YOUR PROFILE!
+          </h1>
+          <form
+            onSubmit={onSubmit}
+            className={`${styles.newUserForm} font-raleway italic`}
           >
-            Create Profile
-          </button>
-        </form>
-      </div>
-    </>
+            <div className="flex">
+              <div>
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="username"
+                  onChange={onChange}
+                  required
+                  className={styles.smallInput}
+                />
+              </div>
+              <div>
+                <label for="firstName">First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="first name"
+                  ref={firstNameRef}
+                  className={styles.smallInput}
+                />
+              </div>
+            </div>
+            <UsernameMessage
+              username={displayName}
+              isValid={isValid}
+              loading={loading}
+            />
+
+            <label for="bio" className="mt-5">
+              Bio
+            </label>
+            <textarea
+              type="text"
+              name="bio"
+              placeholder="bio"
+              ref={bioRef}
+              className={styles.formBigBox}
+              style={{ height: 50 }}
+            />
+
+            {/* need to specify what file type? */}
+            <div className="flex mt-3">
+              <div>
+                <label for="occupation" className="mt-3">
+                  Occupation
+                </label>
+                <input
+                  type="text"
+                  name="occupation"
+                  placeholder="occupation"
+                  ref={occupationRef}
+                />
+              </div>
+              <div>
+                <label for="profilePicture">Profile Picture</label>
+                <input
+                  type="file"
+                  name="profilePicture"
+                  placeholder="first name"
+                  className={styles.smallInput}
+                  onChange={addImage}
+                />
+              </div>
+            </div>
+            <label for="interests" className="mt-3">
+              Interests
+            </label>
+            <select name="interests">
+              <option value="skiing">Skiing</option>
+            </select>
+
+            <button
+              type="submit"
+              disabled={!isValid}
+              className={`${styles.formSubmit} font-lato font-bold`}
+            >
+              Create Profile
+            </button>
+          </form>
+        </div>
+      </>
     )
   );
 }
@@ -169,9 +215,7 @@ function UsernameMessage({ username, isValid, loading }) {
     return <p> Checking...</p>;
   } else if (isValid) {
     return <p>{username} is available!</p>;
-  } else if (!isValid) {
-    return <p>{username} is not available</p>;
   } else {
-    <p></p>;
+    return <p></p>;
   }
 }

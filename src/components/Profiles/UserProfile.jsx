@@ -13,7 +13,6 @@ function UserProfile() {
   const imageRef = useRef();
   const imageFileRef = useRef();
 
-  const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [downloadURL, setDownloadURL] = useState(null);
 
