@@ -90,7 +90,6 @@ export function UsernameForm() {
               type="text"
               name="username"
               placeholder="username"
-              value={displayName}
               onChange={onChange}
             />
             <UsernameMessage
