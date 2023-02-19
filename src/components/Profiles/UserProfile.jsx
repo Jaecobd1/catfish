@@ -13,22 +13,25 @@ function UserProfile() {
   const bioRef = useRef();
   const imageRef = useRef();
   const imageFileRef = useRef();
+  const [firstName, setFirstName] = useState();
+  const [bio, setBio] = useState();
+  const [occupation, setOccupation] = useState();
 
   const [progress, setProgress] = useState(0);
   const [downloadURL, setDownloadURL] = useState(null);
 
-  const userStorageRef = storage.ref().child(user.uid);
-  useEffect(() => {
-    userDoc.get().then((userProfile) => {
-      if (userProfile.exists) {
-        let profile = userProfile.data();
-        firstNameRef.current.value = profile.firstName;
-        lastNameRef.current.value = profile.lastName;
-        bioRef.current.value = profile.bio;
-        imageRef.current.src = profile.photoURL;
-      }
-    });
-  }, []);
+  // const userStorageRef = storage.ref().child(user.uid);
+  // useEffect(() => {
+  //   userDoc.get().then((userProfile) => {
+  //     if (userProfile.exists) {
+  //       let profile = userProfile.data();
+  //       firstNameRef.current.value = profile.firstName;
+  //       lastNameRef.current.value = profile.lastName;
+  //       bioRef.current.value = profile.bio;
+  //       imageRef.current.src = profile.photoURL;
+  //     }
+  //   });
+  // }, []);
 
   const updateFirstName = () => {
     if (firstNameRef.current.value == "") {
@@ -115,21 +118,18 @@ function UserProfile() {
   };
   return (
     <>
-    <div className={styles.userProfileContainer}>
-
-
-    <div class={styles.profileImage}></div>
-          <h1 className="font-lato font-bold italic">Matthew</h1>
-          <h2 className="font-raleway italic">matthewtheman23</h2>
-          <h6 className="font-raleway">
-            Hey everyone! I am a first year student at Butler University.
-            Looking forward to meeting everyone!
-          </h6>
-          <p className="font-raleway italic">Occupation: Student</p>
-          <h3 className="font-lato font-bold italic">Interests:</h3>
-        
-    </div>
-    <p>hello</p>
+      <div className={styles.userProfileContainer}>
+        <div class={styles.profileImage}></div>
+        <h1 className="font-lato font-bold italic">firstName</h1>
+        <h2 className="font-raleway italic">matthewtheman23</h2>
+        <h6 className="font-raleway">
+          Hey everyone! I am a first year student at Butler University. Looking
+          forward to meeting everyone!
+        </h6>
+        <p className="font-raleway italic">Occupation: Student</p>
+        <h3 className="font-lato font-bold italic">Interests:</h3>
+      </div>
+      <p>hello</p>
     </>
     // <>
     //   <div className="flex w-full h-full justify-between flex-col items-center">

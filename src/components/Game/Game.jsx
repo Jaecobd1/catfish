@@ -136,11 +136,12 @@ function Start() {
               gameDBRef.add({ isGameActive: false, userList: [] });
 
               // Game Start time
+              let start = firebase.firestore.FieldValue.serverTimestamp();
               gameDBRef
                 .doc(game.id)
                 .update({
                   isGameActive: true,
-                  startTime: firebase.firestore.FieldValue.serverTimestamp(),
+                  startTime: start,
                 })
                 .then(() => {
                   // Once the game is active
