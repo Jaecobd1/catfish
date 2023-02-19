@@ -3,18 +3,23 @@ import { UserContext } from "@/lib/context";
 import { useCallback } from "react";
 import debounce from "lodash.debounce";
 import { firestore } from "../../lib/firebase";
+// import { first } from "lodash";
 // everything relating to the username function
 // Username Validation form
 export function UsernameForm() {
-  const [formValue, setFormValue] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [bio, setBio] = useState("");
+  const [occupation, setOccupation] = useState("");
+
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const { user, username } = useContext(UserContext);
 
   useEffect(() => {
-    checkUsername(formValue);
+    checkUsername(displayName);
     console.log(user.displayName);
-  }, [formValue]);
+  }, [displayName]);
 
   // Regex
   const onChange = (e) => {
@@ -53,12 +58,11 @@ export function UsernameForm() {
     e.preventDefault();
 
     const userDoc = firestore.doc(`users/${user.uid}`);
-    const usernameDoc = firestore.doc(`usernames/${formValue}`);
+    const usernameDoc = firestore.doc(`usernames/${displayName}`);
 
     // Send to DB at same time
     const batch = firestore.batch();
     batch.set(userDoc, {
-<<<<<<< HEAD
         photoURL: "",
         firstName: firstName,
         username: displayName,
@@ -69,13 +73,6 @@ export function UsernameForm() {
         instagramUsername: "",
         facebookUsername: "",
 
-=======
-      username: formValue,
-      photoURL: "",
-      displayName: formValue,
-      firstName: "",
-      lastName: "",
->>>>>>> 89dd85008b5ac05680325beb6b0ae89bfe5bd2ef
       isUserInGame: false,
     });
     batch.set(usernameDoc, { uid: user.uid });
@@ -93,13 +90,34 @@ export function UsernameForm() {
               type="text"
               name="username"
               placeholder="username"
-              value={formValue}
+              value={displayName}
               onChange={onChange}
             />
             <UsernameMessage
-              username={formValue}
+              username={displayName}
               isValid={isValid}
               loading={loading}
+            />
+            <input
+              type="text"
+              name="firstName"
+              placeholder="first name"
+              value={firstName}
+              onChange={setFirstName(firstName)}
+            />
+            <input
+              type="text"
+              name="bio"
+              placeholder="bio"
+              value={bio}
+              onChange={setBio(bio)}
+            />
+            <input
+              type="text"
+              name="occupation"
+              placeholder="occupation"
+              value={occupation}
+              onChange={setOccupation(occupation)}
             />
             <button type="submit" disabled={!isValid}>
               Choose
