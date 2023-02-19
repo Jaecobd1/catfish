@@ -18,7 +18,6 @@ function UserProfile() {
   const [occupation, setOccupation] = useState();
 
   const [progress, setProgress] = useState(0);
-  const [downloadURL, setDownloadURL] = useState(null);
 
   // const userStorageRef = storage.ref().child(user.uid);
   // useEffect(() => {
@@ -83,39 +82,6 @@ function UserProfile() {
     }
   };
 
-  const addImage = async (e) => {
-    // Get storage bucket, Add Image to storage bucket
-    // Create URL for Image and change image front end
-    const file = Array.from(e.target.files)[0];
-    const extension = file.type.split("/")[1];
-    // ref to upload
-    const ref = storage.ref(`uploads/${user.uid}/${Date.now()}.${extension}`);
-    setUploading(true);
-
-    // Start upload
-    const task = ref.put(file);
-
-    task.on(STATE_CHANGED, (snapshot) => {
-      task
-        .then(() => ref.getDownloadURL())
-        .then((url) => {
-          setDownloadURL(url);
-          setUploading(false);
-          toast.success("Image Uploaded");
-          imageRef.current.src = url;
-          userDoc
-            .update({
-              photoURL: url,
-            })
-            .then(() => {
-              toast.success("Image Saved!");
-            })
-            .catch((error) => {
-              toast.error(error.code + " : " + error.message);
-            });
-        });
-    });
-  };
   return (
     <>
       <div className={styles.userProfileContainer}>

@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import debounce from "lodash.debounce";
 import { firestore, storage, STATE_CHANGED } from "../../lib/firebase";
 import styles from "@/styles/LeftPanel/NewProfile.module.css";
+import { toast } from "react-hot-toast";
 // import { first } from "lodash";
 // everything relating to the username function
 // Username Validation form
@@ -17,6 +18,7 @@ export function UsernameForm() {
   const firstNameRef = useRef();
   const bioRef = useRef();
   const occupationRef = useRef();
+  const [downloadURL, setDownloadURL] = useState(null);
 
   useEffect(() => {
     checkUsername(displayName);
@@ -59,7 +61,6 @@ export function UsernameForm() {
     if (re.test(val)) {
       setDisplayName(val);
       setLoading(true);
-      setIsValid(true);
     }
   };
 
