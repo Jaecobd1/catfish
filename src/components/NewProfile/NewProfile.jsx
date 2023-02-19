@@ -3,6 +3,7 @@ import { UserContext } from "@/lib/context";
 import { useCallback } from "react";
 import debounce from "lodash.debounce";
 import { firestore } from "../../lib/firebase";
+import styles from "@/styles/LeftPanel/NewProfile.module.css";
 // import { first } from "lodash";
 // everything relating to the username function
 // Username Validation form
@@ -83,44 +84,81 @@ export function UsernameForm() {
   return (
     !username && (
       <>
-        <section>
-          <h3>Username</h3>
-          <form onSubmit={onSubmit} className="flex flex-col">
+      <div className={styles.newProfileContainer}>
+      <h1 className="text-[40px] font-lato font-black italic tracking-wide">
+      CREATE YOUR PROFILE!
+    </h1>
+        <form onSubmit={onSubmit} className={`${styles.newUserForm} font-raleway italic`}>
+            <div className="flex">
+                <div>
+                <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="username"
+            onChange={onChange}
+            required
+            className={styles.smallInput}
+
+          />
+              </div>
+            <div>
+            <label for="firstName">First Name</label>
             <input
-              type="text"
-              name="username"
-              placeholder="username"
-              onChange={onChange}
-              required
-            />
-            <UsernameMessage
-              username={displayName}
-              isValid={isValid}
-              loading={loading}
-            />
+            type="text"
+            name="firstName"
+            placeholder="first name"
+            ref={firstNameRef}
+            className={styles.smallInput}
+          />
+            </div>  
+                </div>
+                <UsernameMessage
+            username={displayName}
+            isValid={isValid}
+            loading={loading}
+          />
+
+          <label for="bio" className="mt-5">Bio</label>     
+          <textarea type="text" name="bio" placeholder="bio" ref={bioRef} className={styles.formBigBox} style={{height: 50}} />
+          
+{/* need to specify what file type? */}
+           <div className="flex mt-3">
+                <div>
+                <label for="occupation" className="mt-3">Occupation</label>
+                <input
+            type="text"
+            name="occupation"
+            placeholder="occupation"
+            ref={occupationRef}
+          />
+              </div>
+            <div>
+            <label for="profilePicture">Profile Picture</label>
             <input
-              type="text"
-              name="firstName"
-              placeholder="first name"
-              ref={firstNameRef}
-            />
-            <input type="text" name="bio" placeholder="bio" ref={bioRef} />
-            <input
-              type="text"
-              name="occupation"
-              placeholder="occupation"
-              ref={occupationRef}
-            />
-            <button
-              type="submit"
-              disabled={!isValid}
-              className="bg-blue-200 w-min hover:bg-blue-500"
-            >
-              Create Profile
-            </button>
-          </form>
-        </section>
-      </>
+            type="file"
+            name="profilePicture"
+            placeholder="first name"
+            ref={firstNameRef}
+            className={styles.smallInput}
+          />
+            </div>  
+                </div>
+                <label for="interests" className="mt-3">Interests</label>     
+          <select name="interests">
+              <option value="skiing">Skiing</option>
+          </select>
+
+          <button
+            type="submit"
+            disabled={!isValid}
+            className={`${styles.formSubmit} font-lato font-bold`}
+          >
+            Create Profile
+          </button>
+        </form>
+      </div>
+    </>
     )
   );
 }

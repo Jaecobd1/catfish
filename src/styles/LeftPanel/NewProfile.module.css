@@ -1,0 +1,88 @@
+.newProfileContainer {
+}
+
+.newProfileContainer h1 {
+  margin: 40px auto 30px 50px;
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.newUserForm {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  width: 80%;
+}
+
+.newUserForm label {
+  font-size: 20px;
+}
+
+.newUserForm input,
+.newUserForm textarea,
+.newUserForm select {
+  height: 35px;
+  width: 90%;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px 0;
+}
+
+.newUserForm textarea {
+  max-height: 50px;
+}
+
+.newUserForm .formSubmit {
+  height: 40px;
+  width: 90%;
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  border-radius: 5px;
+  margin-top: 15px;
+  color: white;
+  animation-name: buttonPulse;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+
+.newUserForm .smallInput {
+  width: 80%;
+}
+
+.newUserForm .formBigBox {
+  height: 100px;
+  position: relative;
+}
+
+@keyframes buttonPulse {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .newProfileContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .newProfileContainer h1 {
+    margin: 30px auto 30px 0;
+    text-align: center;
+  }
+
+  .newUserForm {
+    margin-left: 20px;
+  }
+}
