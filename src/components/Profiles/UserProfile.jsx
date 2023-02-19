@@ -3,6 +3,7 @@ import { UserContext } from "@/lib/context";
 import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { storage, firestore, STATE_CHANGED, auth } from "@/lib/firebase";
+import styles from "@/styles/RightPanel/UserProfile.module.css";
 
 function UserProfile() {
   const { user, username } = useContext(UserContext);
@@ -115,68 +116,84 @@ function UserProfile() {
   };
   return (
     <>
-      <div className="flex w-full h-full justify-between flex-col items-center">
-        <h1 className="font-lato text-2xl mt-2 w-1/2 ">
-          Hi <span className="capitalize">{username}</span>, would you like to
-          update your profile?
-        </h1>
-        <p className="">
-          Make your profile authentic, the catfish of the group will be selected
-          at random
-        </p>
-        <div className="flex">
-          <div className="w-20 h-20 overflow-hidden rounded-full">
-            <Image
-              alt="profile"
-              ref={imageRef}
-              src={downloadURL ? downloadURL : ""}
-              height={100}
-              width={100}
-              className=" object-cover "
-            />
-          </div>
-          <input
-            type="file"
-            onChange={addImage}
-            ref={imageFileRef}
-            accept="image/x-png,image/gif,image/jpeg"
-          ></input>
-        </div>
-        <div className="flex flex-col">
-          <h3>First Name</h3>
-          <div className="flex">
-            <input
-              type="text"
-              name="firstName"
-              placeholder={!user.firstName ? `${user.firstName}` : "First Name"}
-              ref={firstNameRef}
-            />
-            <button onClick={updateFirstName}>save</button>
-          </div>
-          <h3>Last Name</h3>
-          <div className="flex">
-            <input
-              type="text"
-              name="lastName"
-              placeholder={!user.lastName ? user.lastName : "Last Name"}
-              ref={lastNameRef}
-            />
-            <button onClick={updateLastName}>save</button>
-          </div>
-          <h3>Bio</h3>
-          <div className="flex">
-            <input
-              type="text"
-              name="Bio"
-              placeholder={!user.bio || user.bio == "" ? user.bio : "Add a Bio"}
-              ref={bioRef}
-            />
-            <button onClick={updateBio}>save</button>
-          </div>
-        </div>
-        <SignOutButton />
-      </div>
+    <div className={styles.userProfileContainer}>
+
+
+    <div class={styles.profileImage}></div>
+          <h1 className="font-lato font-bold italic">Matthew</h1>
+          <h2 className="font-raleway italic">matthewtheman23</h2>
+          <h6 className="font-raleway">
+            Hey everyone! I am a first year student at Butler University.
+            Looking forward to meeting everyone!
+          </h6>
+          <p className="font-raleway italic">Occupation: Student</p>
+          <h3 className="font-lato font-bold italic">Interests:</h3>
+        
+    </div>
     </>
+    // <>
+    //   <div className="flex w-full h-full justify-between flex-col items-center">
+    //     <h1 className="font-lato text-2xl mt-2 w-1/2 ">
+    //       Hi <span className="capitalize">{username}</span>, would you like to
+    //       update your profile?
+    //     </h1>
+    //     <p className="">
+    //       Make your profile authentic, the catfish of the group will be selected
+    //       at random
+    //     </p>
+    //     <div className="flex">
+    //       <div className="w-20 h-20 overflow-hidden rounded-full">
+    //         <Image
+    //           alt="profile"
+    //           ref={imageRef}
+    //           src={downloadURL ? downloadURL : ""}
+    //           height={100}
+    //           width={100}
+    //           className=" object-cover "
+    //         />
+    //       </div>
+    //       <input
+    //         type="file"
+    //         onChange={addImage}
+    //         ref={imageFileRef}
+    //         accept="image/x-png,image/gif,image/jpeg"
+    //       ></input>
+    //     </div>
+    //     <div className="flex flex-col">
+    //       <h3>First Name</h3>
+    //       <div className="flex">
+    //         <input
+    //           type="text"
+    //           name="firstName"
+    //           placeholder={!user.firstName ? `${user.firstName}` : "First Name"}
+    //           ref={firstNameRef}
+    //         />
+    //         <button onClick={updateFirstName}>save</button>
+    //       </div>
+    //       <h3>Last Name</h3>
+    //       <div className="flex">
+    //         <input
+    //           type="text"
+    //           name="lastName"
+    //           placeholder={!user.lastName ? user.lastName : "Last Name"}
+    //           ref={lastNameRef}
+    //         />
+    //         <button onClick={updateLastName}>save</button>
+    //       </div>
+    //       <h3>Bio</h3>
+    //       <div className="flex">
+    //         <input
+    //           type="text"
+    //           name="Bio"
+    //           placeholder={!user.bio || user.bio == "" ? user.bio : "Add a Bio"}
+    //           ref={bioRef}
+    //         />
+    //         <button onClick={updateBio}>save</button>
+    //       </div>
+    //     </div>
+    //     <SignOutButton />
+    //   </div>
+    // </>
   );
 }
 function SignOutButton() {
