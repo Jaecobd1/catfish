@@ -14,6 +14,7 @@ function Chat({ gameId }) {
   const query = ChatRef.orderBy("createdAt").limit(50);
   const [message] = useCollectionData(query, { idField: "id" });
   const inputRef = useRef();
+  const uid = user.uid;
 
   const [formValue, setFormValue] = useState("");
   useEffect(() => {
@@ -29,10 +30,6 @@ function Chat({ gameId }) {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-
-    const { uid, catfishUID } = user;
-    // If the user is catfish, change it to their catfish UID
-    const _uid = catfishUID ? catfishUID : uid;
 
     await ChatRef.add({
       text: formValue,
@@ -55,7 +52,7 @@ function Chat({ gameId }) {
               key={msg.id}
               message={msg}
               photoURL={photoURL}
-              username={username}
+              _username={msg.username}
             />
           ))}
       </div>
@@ -79,8 +76,7 @@ function Chat({ gameId }) {
 
 function ChatMessage(props) {
   const { user, username, catfishUID } = useContext(UserContext);
-  const { text, uid, photoURL } = props.message;
-
+  const { text, uid, photoURL, _username } = props.message;
   // Create Message class if sent from user, then show as sent, if otherwise, show recieved
 
   const messageClass = uid === user.uid ? "sent" : "recieved";
@@ -118,7 +114,7 @@ function ChatMessage(props) {
             />
           </div>
           <div className={styles.textContent}>
-            <p className="mb-2 font-raleway font-bold">OTHER USERS</p>
+            <p className="mb-2 font-raleway font-bold">{_username}</p>
             <p className="font-lato">{text}</p>
           </div>
         </div>
