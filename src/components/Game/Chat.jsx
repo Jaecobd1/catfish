@@ -84,7 +84,7 @@ function ChatMessage(props) {
   switch (messageClass) {
     case "sent":
       return (
-        <div className="w-[200px] flex flex-row-reverse h-min items-center justify-start mb-2">
+        <div className={styles.textSent}>
           <div className="h-12 w-12 rounded-full overflow-hidden">
             <Image
               src={photoURL ? photoURL : ""}
@@ -101,7 +101,7 @@ function ChatMessage(props) {
       );
     case "recieved":
       return (
-        <div className="w-1/2 flex h-min items-center justify-evenly">
+        <div className={styles.textReceived}>
           <div className="h-12 w-12 rounded-full overflow-hidden">
             <Image
               src={photoURL ? photoURL : ""}

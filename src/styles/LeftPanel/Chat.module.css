@@ -14,7 +14,7 @@
 }
 
 .chatLog {
-  background-color: blue;
+  /* background-color: blue; */
   position: absolute;
   left: 0;
   right: 0;
@@ -44,4 +44,13 @@
   background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
   border-radius: 5px;
   color: white;
+}
+
+/* this area is for the chat boxes */
+.textSent {
+  background-color: #00bfff;
+}
+
+.textReceived {
+  background-color: #8a2be2;
 }
