@@ -22,6 +22,7 @@
   position: relative;
   animation-name: slideInFromLeft;
   animation-duration: var(--slideInOutAnimation);
+  overflow: hidden;
 }
 
 /* these are the styles for the right panel */
