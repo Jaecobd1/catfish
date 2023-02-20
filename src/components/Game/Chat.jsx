@@ -46,24 +46,24 @@ function Chat({ gameId }) {
   };
 
   return (
-    <div className="flex w-full">
-      <div className="flex-col">
+    <div className={styles.chatContainer}>
+      <div className={styles.chatLog}>
         {message &&
           message.map((msg) => (
             <ChatMessage key={msg.id} message={msg} photoURL={photoURL} />
           ))}
       </div>
-      <div className="">
+      <div className={styles.chatSubmit}>
         <form onSubmit={sendMessage} className="flex ">
           <input
             type="text"
             ref={inputRef}
             onChange={(e) => setFormValue(e.target.value)}
-            className="bg-blue-200"
             placeholder="Message"
+            className="font-lato"
           />
-          <button type="submit" className="p-2 bg-purple-400">
-            🎣 send
+          <button type="submit" className="font-lato">
+            send 🎣
           </button>
         </form>
       </div>
@@ -84,7 +84,7 @@ function ChatMessage(props) {
   switch (messageClass) {
     case "sent":
       return (
-        <div className="w-[200px] flex flex-row-reverse h-min items-center justify-start mb-2">
+        <div className={styles.textSent}>
           <div className="h-12 w-12 rounded-full overflow-hidden">
             <Image
               src={photoURL ? photoURL : ""}
@@ -101,7 +101,7 @@ function ChatMessage(props) {
       );
     case "recieved":
       return (
-        <div className="w-1/2 flex h-min items-center justify-evenly">
+        <div className={styles.textReceived}>
           <div className="h-12 w-12 rounded-full overflow-hidden">
             <Image
               src={photoURL ? photoURL : ""}

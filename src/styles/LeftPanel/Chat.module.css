@@ -9,5 +9,48 @@
 
 .chatContainer {
   background-color: red;
-  height: 550px;
+  overflow: hidden;
+  width: 550px;
+}
+
+.chatLog {
+  /* background-color: blue; */
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 90%;
+  bottom: 70px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.chatSubmit input {
+  height: 30px;
+  width: 70%;
+  position: absolute;
+  padding: 5px;
+  bottom: 30px;
+  left: 5%;
+  border-radius: 5px;
+  border: 2px solid #aaa;
+}
+
+.chatSubmit button {
+  position: absolute;
+  bottom: 30px;
+  left: 75%;
+  width: 15%;
+  height: 30px;
+  background: linear-gradient(45deg, #00bfff 0%, #8a2be2 50%, #ba55d3 100%);
+  border-radius: 5px;
+  color: white;
+}
+
+/* this area is for the chat boxes */
+.textSent {
+  background-color: #00bfff;
+}
+
+.textReceived {
+  background-color: #8a2be2;
 }
