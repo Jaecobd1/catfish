@@ -62,6 +62,7 @@ export function UsernameForm() {
 
     if (re.test(val)) {
       setDisplayName(val);
+      setIsValid(true);
     }
   };
 

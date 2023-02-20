@@ -40,7 +40,9 @@ function UserProfile() {
         <p className="font-raleway italic">Occupation: {occupation}</p>
         <h3 className="font-lato font-bold italic">Interests:</h3>
       </div>
-      <p>hello</p>
+      <p>
+        <SignOutButton />
+      </p>
     </>
     // <>
     //   <div className="flex w-full h-full justify-between flex-col items-center">
