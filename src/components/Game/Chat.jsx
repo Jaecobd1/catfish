@@ -93,7 +93,7 @@ function ChatMessage(props) {
               width={50}
             />
           </div>
-          <div className="flex flex-col p-2">
+          <div className={styles.textContent}>
             <p className="text">{text}</p>
           </div>
         </div>
@@ -112,7 +112,7 @@ function ChatMessage(props) {
           </div>
           <div className={styles.textContent}>
             <p className="mb-2 font-raleway font-bold">Username</p>
-            <p className="text">{text}</p>
+            <p className="font-lato">{text}</p>
           </div>
         </div>
       );
