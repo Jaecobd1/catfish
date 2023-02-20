@@ -75,13 +75,11 @@ function Chat({ gameId }) {
 }
 
 function ChatMessage(props) {
-  const { user, username, catfishUID } = useContext(UserContext);
-  const { text, uid, photoURL, _username } = props.message;
+  const { user, catfishUID } = useContext(UserContext);
+  const { text, uid, photoURL, username } = props.message;
   // Create Message class if sent from user, then show as sent, if otherwise, show recieved
 
   const messageClass = uid === user.uid ? "sent" : "recieved";
-
-  useEffect(() => {});
 
   switch (messageClass) {
     case "sent":
@@ -114,7 +112,7 @@ function ChatMessage(props) {
             />
           </div>
           <div className={styles.textContent}>
-            <p className="mb-2 font-raleway font-bold">{_username}</p>
+            <p className="mb-2 font-raleway font-bold">{username}</p>
             <p className="font-lato">{text}</p>
           </div>
         </div>
