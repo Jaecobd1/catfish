@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import styles from "@/styles/RightPanel/Login.module.css";
 import { toast } from "react-hot-toast";
-import { auth, googleAuthProvider } from "../../lib/firebase";
+import { auth, firestore, googleAuthProvider } from "../../lib/firebase";
 import Image from "next/image";
 import Google from "../../images/Google.png";
 import Apple from "../../images/Apple.png";
@@ -44,9 +44,7 @@ function Login() {
         var user = userCredentials.user;
         if (user) {
           toast.success("Account Created");
-          user.updateProfile({
-            displayName: username,
-          });
+          firestore.collection("users").doc(user.uid).set({ email: email });
         }
       })
       .catch((error) => {

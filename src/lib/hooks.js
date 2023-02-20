@@ -16,6 +16,7 @@ export function useUserData() {
 
     if (user) {
       const ref = firestore.collection("users").doc(user.uid);
+
       unsubscribe = ref.onSnapshot((doc) => {
         setUsername(doc.data()?.username);
         setPhotoURL(doc.data()?.photoURL);

@@ -1,7 +1,9 @@
+import { UserContext } from "@/lib/context";
 import styles from "@/styles/LeftPanel/Hero.module.css";
-import { useEffect } from "react";
-
+import { useContext, useEffect } from "react";
+import { SignOutButton } from "../Profiles/UserProfile";
 function Hero(props) {
+  const { user } = useContext(UserContext);
   // attempt to figure out bringing in a specific style
   // useEffect(() =>{
   //   const container = document.getElementById("hero-container");
@@ -33,6 +35,7 @@ function Hero(props) {
       <h2 className="text-[28px] lg:text-[28px] xl:text-[35px] font-lato italic font-bold">
         Because, the chat only lasts for one hour
       </h2>
+      {user ? <SignOutButton /> : null}
     </div>
   );
 }
