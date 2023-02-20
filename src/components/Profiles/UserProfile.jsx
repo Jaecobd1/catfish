@@ -124,27 +124,28 @@ function Profile({ currentUser }) {
   const [username, setUsername] = useState();
   const [bio, setBio] = useState();
   const [occupation, setOccupation] = useState();
+  const [image, setImage] = useState();
 
-  useEffect(() => {
-    firestore
-      .collection("users")
-      .doc(currentUser)
-      .get()
-      .then((doc) => {
-        const userInfo = doc.data();
+  firestore
+    .collection("users")
+    .doc(currentUser)
+    .get()
+    .then((doc) => {
+      const userInfo = doc.data();
 
-        setFirstName(userInfo?.firstName);
-        setUsername(userInfo?.username);
-        setBio(userInfo?.bio);
-        setOccupation(userInfo?.occupation);
-      });
-  });
+      setFirstName(userInfo?.firstName);
+      setUsername(userInfo?.username);
+      setBio(userInfo?.bio);
+      setOccupation(userInfo?.occupation);
+      setImage(userInfo?.photoURL);
+    });
   return (
     <>
       <h1>{firstName}</h1>
       <p>{username}</p>
       <p>{bio}</p>
       <p>{occupation}</p>
+      {image ? <Image src={image} height={100} width={100} /> : null}
     </>
   );
 }
