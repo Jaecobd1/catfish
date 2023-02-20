@@ -18,6 +18,7 @@ function UserProfile() {
   const [occupation, setOccupation] = useState();
   const [imageLink, setImageLink] = useState();
   const [isUserInGame, setIsUserInGame] = useState(false);
+  const [gameID, setGameID] = useState();
 
   const [progress, setProgress] = useState(0);
 
@@ -30,6 +31,7 @@ function UserProfile() {
       setOccupation(profile.occupation);
       setImageLink(profile?.photoURL);
       setIsUserInGame(profile.isUserInGame);
+      setGameID(profile.gameID);
     });
   }, [user]);
 
@@ -64,11 +66,7 @@ function UserProfile() {
       </>
     );
   } else {
-    return (
-      <>
-        <OtherUserProfile />
-      </>
-    );
+    return <>{!gameID ? null : <OtherUserProfile gameID={gameID} />}</>;
   }
 }
 export function SignOutButton() {
@@ -76,10 +74,77 @@ export function SignOutButton() {
 }
 export default UserProfile;
 
-function OtherUserProfile() {
+function OtherUserProfile({ gameID }) {
+  const [userList, setUserList] = useState();
+  const [currentUser, setCurrentUser] = useState(0);
+
+  // Moves up the array of users
+  const right = () => {
+    if (currentUser < userList.length - 1) {
+      setCurrentUser(currentUser + 1);
+    } else {
+      setCurrentUser(0);
+    }
+  };
+
+  // Moves down the array  of users
+  const left = () => {
+    if (currentUser > 0) {
+      setCurrentUser(currentUser - 1);
+    } else {
+      setCurrentUser(userList.length - 1);
+    }
+  };
+
+  useEffect(() => {
+    firestore
+      .collection("games")
+      .doc(gameID)
+      .get()
+      .then((doc) => {
+        const gameInfo = doc.data();
+        setUserList(gameInfo.userList);
+      });
+  });
   return (
     <>
+      <p>Blank</p>
+
+      {userList ? <Profile currentUser={userList[currentUser]} /> : null}
+      <p>{currentUser}</p>
+      <button onClick={right}>Right</button>
+      <button onClick={left}>Left</button>
       <SignOutButton />
+    </>
+  );
+}
+
+function Profile({ currentUser }) {
+  const [firstName, setFirstName] = useState();
+  const [username, setUsername] = useState();
+  const [bio, setBio] = useState();
+  const [occupation, setOccupation] = useState();
+
+  useEffect(() => {
+    firestore
+      .collection("users")
+      .doc(currentUser)
+      .get()
+      .then((doc) => {
+        const userInfo = doc.data();
+
+        setFirstName(userInfo?.firstName);
+        setUsername(userInfo?.username);
+        setBio(userInfo?.bio);
+        setOccupation(userInfo?.occupation);
+      });
+  });
+  return (
+    <>
+      <h1>{firstName}</h1>
+      <p>{username}</p>
+      <p>{bio}</p>
+      <p>{occupation}</p>
     </>
   );
 }
