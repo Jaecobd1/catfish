@@ -4,6 +4,8 @@ import { toast } from "react-hot-toast";
 import Image from "next/image";
 import { storage, firestore, STATE_CHANGED, auth } from "@/lib/firebase";
 import styles from "@/styles/RightPanel/UserProfile.module.css";
+import { FaArrowCircleRight, FaArrowCircleLeft } from "react-icons/fa";
+
 
 function UserProfile() {
   const { user, username } = useContext(UserContext);
@@ -110,9 +112,16 @@ function OtherUserProfile({ gameID }) {
     <>
 
       {userList ? <Profile currentUser={userList[currentUser]} /> : null}
-      <p>{currentUser}</p>
-      <button onClick={right}>Right</button>
-      <button onClick={left}>Left</button>
+      <div className={styles.profileButtons}>
+      <FaArrowCircleLeft
+                    onClick={left}
+                  />
+                  <p className="font-lato">{currentUser + 1}</p>
+      <FaArrowCircleRight
+                    onClick={right}
+                  />
+      
+      </div>
       <SignOutButton />
     </>
   );
