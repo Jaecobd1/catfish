@@ -1,5 +1,4 @@
 .chatContainer {
-  background-color: red;
   overflow: hidden;
   width: 550px;
 }
@@ -41,7 +40,7 @@
 .chatImage {
   height: 50px;
   width: 50px;
-  background-color: blue;
+  background-color: #aaa;
   border-radius: 50%;
   margin: 10px;
 }
@@ -50,21 +49,19 @@
 .textReceived {
   margin-top: 10px;
   display: flex;
-  max-width: 60%;
 }
 
-.textReceived {
+.textSent {
   flex-direction: row-reverse;
   text-align: right;
-  background-color: blue;
 }
 
 .textContent {
-  background-color: blue;
   display: flex;
   flex-direction: column;
   border-radius: 5px;
   padding: 5px 10px;
+  max-width: 60%;
 }
 
 .textSent .textContent {
