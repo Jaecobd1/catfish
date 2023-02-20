@@ -19,6 +19,8 @@ export function UsernameForm() {
   const bioRef = useRef();
   const occupationRef = useRef();
   const [downloadURL, setDownloadURL] = useState(null);
+  const imageRef = useRef();
+  const userDoc = firestore.doc(`users/${user.uid}`);
 
   useEffect(() => {
     checkUsername(displayName);
@@ -31,7 +33,7 @@ export function UsernameForm() {
     // Send to DB at same time
     const batch = firestore.batch();
     batch.set(userDoc, {
-      photoURL: "",
+      photoURL: downloadURL,
       firstName: firstNameRef.current.value,
       username: displayName,
       bio: bioRef.current.value,
@@ -184,6 +186,7 @@ export function UsernameForm() {
                   type="file"
                   name="profilePicture"
                   placeholder="first name"
+                  ref={imageRef}
                   className={styles.smallInput}
                   onChange={addImage}
                 />

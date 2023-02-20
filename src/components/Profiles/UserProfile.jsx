@@ -16,83 +16,28 @@ function UserProfile() {
   const [firstName, setFirstName] = useState();
   const [bio, setBio] = useState();
   const [occupation, setOccupation] = useState();
+  const [imageLink, setImageLink] = useState();
 
   const [progress, setProgress] = useState(0);
 
-  // const userStorageRef = storage.ref().child(user.uid);
-  // useEffect(() => {
-  //   userDoc.get().then((userProfile) => {
-  //     if (userProfile.exists) {
-  //       let profile = userProfile.data();
-  //       firstNameRef.current.value = profile.firstName;
-  //       lastNameRef.current.value = profile.lastName;
-  //       bioRef.current.value = profile.bio;
-  //       imageRef.current.src = profile.photoURL;
-  //     }
-  //   });
-  // }, []);
-
-  const updateFirstName = () => {
-    if (firstNameRef.current.value == "") {
-      toast.error("Enter your first name");
-    } else {
-      userDoc
-        .update({
-          firstName: firstNameRef.current.value,
-        })
-        .then(() => {
-          toast.success("First Name Saved!");
-        })
-        .catch((error) => {
-          toast.error(error.code + " : " + error.message);
-        });
-    }
-  };
-  const updateLastName = () => {
-    if (lastNameRef.current.value == "") {
-      toast.error("Please enter a valid last name");
-    } else {
-      userDoc
-        .update({
-          lastName: lastNameRef.current.value,
-        })
-        .then(() => {
-          toast.success("Last Name Saved!");
-        })
-        .catch((error) => {
-          toast.error(error.code + " : " + error.message);
-        });
-    }
-  };
-
-  const updateBio = () => {
-    if (bioRef.current.value == "") {
-      toast.error("pleast enter a valid bio");
-    } else {
-      userDoc
-        .update({
-          bio: bioRef.current.value,
-        })
-        .then(() => {
-          toast.success("Bio Saved!");
-        })
-        .catch((error) => {
-          toast.error(error.code + " : " + error.message);
-        });
-    }
-  };
+  useEffect(() => {
+    userDoc.get().then((doc) => {
+      const profile = doc.data();
+      console.log(profile);
+      setFirstName(profile.firstName);
+      setBio(profile.bio);
+      setOccupation(profile.occupation);
+    });
+  }, [user]);
 
   return (
     <>
       <div className={styles.userProfileContainer}>
         <div class={styles.profileImage}></div>
-        <h1 className="font-lato font-bold italic">firstName</h1>
-        <h2 className="font-raleway italic">matthewtheman23</h2>
-        <h6 className="font-raleway">
-          Hey everyone! I am a first year student at Butler University. Looking
-          forward to meeting everyone!
-        </h6>
-        <p className="font-raleway italic">Occupation: Student</p>
+        <h1 className="font-lato font-bold italic">{firstName}</h1>
+        <h2 className="font-raleway italic">{username}</h2>
+        <h6 className="font-raleway">{bio}</h6>
+        <p className="font-raleway italic">Occupation: {occupation}</p>
         <h3 className="font-lato font-bold italic">Interests:</h3>
       </div>
       <p>hello</p>
