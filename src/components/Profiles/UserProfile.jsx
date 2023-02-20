@@ -112,11 +112,11 @@ function OtherUserProfile({ gameID }) {
     <>
 
       {userList ? <Profile currentUser={userList[currentUser]} /> : null}
-      <p>{currentUser}</p>
       <div className={styles.profileButtons}>
       <FaArrowCircleLeft
                     onClick={left}
                   />
+                  <p className="font-lato">{currentUser + 1}</p>
       <FaArrowCircleRight
                     onClick={right}
                   />
