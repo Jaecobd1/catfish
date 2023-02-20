@@ -100,7 +100,7 @@ function ChatMessage(props) {
             />
           </div>
           <div className={styles.textContent}>
-          <p className="mb-2 font-raleway font-bold">Username</p>
+            <p className="mb-2 font-raleway font-bold">{username}</p>
             <p className="text">{text}</p>
           </div>
         </div>
