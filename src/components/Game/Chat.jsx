@@ -46,7 +46,7 @@ function Chat({ gameId }) {
   };
 
   return (
-    <div className={styles.chatContainer}>
+    <div className="flex w-full">
       <div className="flex-col">
         {message &&
           message.map((msg) => (

@@ -15,6 +15,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 40px;
+  overflow: hidden;
 }
 
 .userProfileContainer h1 {

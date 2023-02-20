@@ -19,7 +19,6 @@ export function UsernameForm() {
   const bioRef = useRef();
   const occupationRef = useRef();
   const [downloadURL, setDownloadURL] = useState(null);
-  const imageRef = useRef();
   const userDoc = firestore.doc(`users/${user.uid}`);
 
   useEffect(() => {
@@ -58,6 +57,7 @@ export function UsernameForm() {
       setDisplayName(val);
       setLoading(false);
       setIsValid(false);
+      toast.error("Password must be atleast 3");
     }
 
     if (re.test(val)) {
@@ -100,7 +100,6 @@ export function UsernameForm() {
           setDownloadURL(url);
           setUploading(false);
           toast.success("Image Uploaded");
-          imageRef.current.src = url;
           userDoc
             .update({
               photoURL: url,
@@ -186,7 +185,6 @@ export function UsernameForm() {
                   type="file"
                   name="profilePicture"
                   placeholder="first name"
-                  ref={imageRef}
                   className={styles.smallInput}
                   onChange={addImage}
                 />

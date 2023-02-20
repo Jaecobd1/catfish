@@ -17,6 +17,7 @@ function UserProfile() {
   const [bio, setBio] = useState();
   const [occupation, setOccupation] = useState();
   const [imageLink, setImageLink] = useState();
+  const [isUserInGame, setIsUserInGame] = useState(false);
 
   const [progress, setProgress] = useState(0);
 
@@ -27,89 +28,58 @@ function UserProfile() {
       setFirstName(profile.firstName);
       setBio(profile.bio);
       setOccupation(profile.occupation);
+      setImageLink(profile?.photoURL);
+      setIsUserInGame(profile.isUserInGame);
     });
   }, [user]);
 
-  return (
-    <>
-      <div className={styles.userProfileContainer}>
-        <div class={styles.profileImage}></div>
-        <h1 className="font-lato font-bold italic">{firstName}</h1>
-        <h2 className="font-raleway italic">{username}</h2>
-        <h6 className="font-raleway">{bio}</h6>
-        <p className="font-raleway italic">Occupation: {occupation}</p>
-        <h3 className="font-lato font-bold italic">Interests:</h3>
-      </div>
-      <p>
-        <SignOutButton />
-      </p>
-    </>
-    // <>
-    //   <div className="flex w-full h-full justify-between flex-col items-center">
-    //     <h1 className="font-lato text-2xl mt-2 w-1/2 ">
-    //       Hi <span className="capitalize">{username}</span>, would you like to
-    //       update your profile?
-    //     </h1>
-    //     <p className="">
-    //       Make your profile authentic, the catfish of the group will be selected
-    //       at random
-    //     </p>
-    //     <div className="flex">
-    //       <div className="w-20 h-20 overflow-hidden rounded-full">
-    //         <Image
-    //           alt="profile"
-    //           ref={imageRef}
-    //           src={downloadURL ? downloadURL : ""}
-    //           height={100}
-    //           width={100}
-    //           className=" object-cover "
-    //         />
-    //       </div>
-    //       <input
-    //         type="file"
-    //         onChange={addImage}
-    //         ref={imageFileRef}
-    //         accept="image/x-png,image/gif,image/jpeg"
-    //       ></input>
-    //     </div>
-    //     <div className="flex flex-col">
-    //       <h3>First Name</h3>
-    //       <div className="flex">
-    //         <input
-    //           type="text"
-    //           name="firstName"
-    //           placeholder={!user.firstName ? `${user.firstName}` : "First Name"}
-    //           ref={firstNameRef}
-    //         />
-    //         <button onClick={updateFirstName}>save</button>
-    //       </div>
-    //       <h3>Last Name</h3>
-    //       <div className="flex">
-    //         <input
-    //           type="text"
-    //           name="lastName"
-    //           placeholder={!user.lastName ? user.lastName : "Last Name"}
-    //           ref={lastNameRef}
-    //         />
-    //         <button onClick={updateLastName}>save</button>
-    //       </div>
-    //       <h3>Bio</h3>
-    //       <div className="flex">
-    //         <input
-    //           type="text"
-    //           name="Bio"
-    //           placeholder={!user.bio || user.bio == "" ? user.bio : "Add a Bio"}
-    //           ref={bioRef}
-    //         />
-    //         <button onClick={updateBio}>save</button>
-    //       </div>
-    //     </div>
-    //     <SignOutButton />
-    //   </div>
-    // </>
-  );
+  useEffect(() => {
+    toast(isUserInGame);
+  }, [1000]);
+
+  if (!isUserInGame) {
+    return (
+      <>
+        <div className={styles.userProfileContainer}>
+          <div class={styles.profileImage}>
+            {imageLink ? (
+              <Image
+                src={imageLink}
+                alt="profile image"
+                height={100}
+                width={100}
+                className="object-cover h-full w-full"
+              />
+            ) : null}
+          </div>
+          <h1 className="font-lato font-bold italic">{firstName}</h1>
+          <h2 className="font-raleway italic">{username}</h2>
+          <h6 className="font-raleway">{bio}</h6>
+          <p className="font-raleway italic">Occupation: {occupation}</p>
+          <h3 className="font-lato font-bold italic">Interests:</h3>
+        </div>
+        <p>
+          <SignOutButton />
+        </p>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <OtherUserProfile />
+      </>
+    );
+  }
 }
 export function SignOutButton() {
   return <button onClick={() => auth.signOut()}>Sign Out</button>;
 }
 export default UserProfile;
+
+function OtherUserProfile() {
+  return (
+    <>
+      <SignOutButton />
+    </>
+  );
+}

@@ -33,7 +33,7 @@ function Game() {
         console.log(game?.startTime);
 
         // Check if the startTime is longer than 1 hour
-        if (game?.startTime > game?.startTime.seconds + 3600000) {
+        if (game?.startTime > game?.startTime + 3600000000000) {
           // Clear Game  & users Game ID from firestore
           firestore
             .collection("games")
@@ -77,11 +77,6 @@ function Game() {
     setCurrentTime(new Date().getTime() / 1000);
   }, [currentTime]);
 
-  // useEffect(() => {
-  //   const timestamp = new Date(game?.startTime.seconds);
-  //   setStartTime(timestamp);
-  // }, [game]);
-
   return (
     <>
       <div className="w-full h-full flex justify-center items-center">
@@ -90,9 +85,6 @@ function Game() {
         ) : // check if user is in loby or if game is active
         isGameActive ? (
           <div className="flex flex-col">
-            <p>{"Current:" + currentTime}</p>
-            <p>Start:{game.startTime.seconds}</p>
-            <p>End{game.startTime.seconds + 3600000}</p>
             <Chat gameId={gameID} />
           </div>
         ) : (
@@ -110,9 +102,6 @@ function Start() {
   const [isSearching, setIsSearching] = useState(false);
   const { user, username } = useContext(UserContext);
   const [game, setGame] = useState(null);
-  const [userListWithCatfish, setUserListWithCatfish] = useState(null);
-  const [catFishUID1, setCatFishUID1] = useState(null);
-  const [catFishUID2, setCatFishUID2] = useState(null);
 
   const searchForMatch = () => {
     toast.success("looking for match...");
@@ -127,70 +116,23 @@ function Start() {
         .then((querySnapshot) => {
           querySnapshot.forEach((game) => {
             setGame(game.id);
+            userDoc.update({ gameID: game.id, isUserInGame: true });
             const data = game.data();
             let userList = data.userList;
             //Check if room is full
             console.log(userList);
-            if (userList.length > 0) {
+            if (userList.length > 1) {
               // Create a new room for next player
               gameDBRef.add({ isGameActive: false, userList: [] });
 
               // Game Start time
-              let start = firebase.firestore.FieldValue.serverTimestamp();
               gameDBRef
                 .doc(game.id)
                 .update({
                   isGameActive: true,
-                  startTime: start,
+                  startTime: firebase.firestore.FieldValue.serverTimestamp(),
                 })
-                .then(() => {
-                  // Once the game is active
-                  // Create Two catfish players at random and add the catfish UID to their profile
-                  let random1 = Math.random(0, 1) * 10;
-                  let random2 = Math.random(0, 1) * 10;
-                  // get userID for random 1 and 2
-                  const gameUID1 = userList[random1];
-                  const gameUID2 = userList[random2];
-                  // Get random profiles that aren't in game
-
-                  firestore
-                    .collection("users")
-                    .where("gameID", "!=", game.id, 2)
-                    .get()
-                    .then((querySnapshot) => {
-                      const Cfusers = querySnapshot;
-                      console.log(Cfusers);
-                      //forEach((user) => {
-                      //   const uid = user.id;
-                      //   setCfList([uid, ...cfList]);
-                      // });
-
-                      firestore
-                        .collection("games")
-                        .doc(game.id)
-                        .get()
-                        .then((doc) => {
-                          const gameInfo = doc.data();
-                          const gameUsers = gameInfo.userList;
-                          gameUsers.forEach((user, index) => {
-                            if (random1 == index) {
-                              firestore
-                                .collection("users")
-                                .doc(user)
-                                .update({ catfishUID: user1 });
-                            } else if (random2 == index) {
-                              firestore
-                                .collection("users")
-                                .doc(user)
-                                .update({ catfishUID: user2 });
-                            }
-                          });
-                        });
-                    });
-                })
-                .catch((error) => {
-                  toast.error(error.message);
-                });
+                .then(() => {});
             } else {
             }
 
