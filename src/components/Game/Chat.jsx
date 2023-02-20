@@ -37,8 +37,9 @@ function Chat({ gameId }) {
     await ChatRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      _uid,
+      uid,
       photoURL,
+      username: username,
     }).then(() => {
       setFormValue("");
       inputRef.current.value = "";
