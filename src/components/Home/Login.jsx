@@ -38,20 +38,24 @@ function Login() {
     var email = signUpEmailRef.current.value;
     var password = signUpPasswordRef.current.value;
     var confirmPassword = signUpPasswordConfirmRef.current.value;
-    await auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        var user = userCredentials.user;
-        if (user) {
-          toast.success("Account Created");
-          firestore.collection("users").doc(user.uid).set({ email: email });
-        }
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        toast.error(errorCode + ":" + errorMessage);
-      });
+    if (password == confirmPassword) {
+      await auth
+        .createUserWithEmailAndPassword(email, password)
+        .then((userCredentials) => {
+          var user = userCredentials.user;
+          if (user) {
+            toast.success("Account Created");
+            firestore.collection("users").doc(user.uid).set({ email: email });
+          }
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          toast.error(errorCode + ":" + errorMessage);
+        });
+    } else {
+      toast.error("passwords must match");
+    }
   };
 
   // Login With Email

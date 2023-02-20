@@ -51,7 +51,12 @@ function Chat({ gameId }) {
       <div className={styles.chatLog}>
         {message &&
           message.map((msg) => (
-            <ChatMessage key={msg.id} message={msg} photoURL={photoURL} />
+            <ChatMessage
+              key={msg.id}
+              message={msg}
+              photoURL={photoURL}
+              username={username}
+            />
           ))}
       </div>
       <div className={styles.chatSubmit}>
@@ -112,7 +117,7 @@ function ChatMessage(props) {
             />
           </div>
           <div className={styles.textContent}>
-            <p className="mb-2 font-raleway font-bold">Username</p>
+            <p className="mb-2 font-raleway font-bold">{username}</p>
             <p className="font-lato">{text}</p>
           </div>
         </div>
