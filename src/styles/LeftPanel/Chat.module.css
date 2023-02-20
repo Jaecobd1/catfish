@@ -47,6 +47,29 @@
 }
 
 /* this area is for the chat boxes */
+.chatImage {
+  height: 50px;
+  width: 50px;
+  background-color: red;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.textSent,
+.textReceived {
+  margin-top: 10px;
+  display: flex;
+  max-width: 60%;
+}
+
+.textContent {
+  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
 .textSent {
   background-color: #00bfff;
 }
