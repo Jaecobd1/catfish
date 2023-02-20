@@ -70,7 +70,7 @@ function UserProfile() {
   }
 }
 export function SignOutButton() {
-  return <button onClick={() => auth.signOut()}>Sign Out</button>;
+  return <button onClick={() => auth.signOut()} className="font-lato absolute bottom-8 right-0 left-0">Sign Out</button>;
 }
 export default UserProfile;
 
@@ -108,7 +108,6 @@ function OtherUserProfile({ gameID }) {
   });
   return (
     <>
-      <p>Blank</p>
 
       {userList ? <Profile currentUser={userList[currentUser]} /> : null}
       <p>{currentUser}</p>
@@ -141,11 +140,18 @@ function Profile({ currentUser }) {
     });
   return (
     <>
-      <h1>{firstName}</h1>
-      <p>{username}</p>
-      <p>{bio}</p>
-      <p>{occupation}</p>
-      {image ? <Image src={image} height={100} width={100} /> : null}
+    <div className={styles.userProfileContainer}>
+          <div class={styles.profileImage}>
+          {image ? <Image src={image} height={100} width={100} /> : null}
+          </div>
+          <h1 className="font-lato font-bold italic">{firstName}</h1>
+          <h2 className="font-raleway italic">{username}</h2>
+          <h6 className="font-raleway">{bio}</h6>
+          <p className="font-raleway italic">Occupation: {occupation}</p>
+          <h3 className="font-lato font-bold italic">Interests:</h3>
+        </div>
+
+      
     </>
   );
 }
