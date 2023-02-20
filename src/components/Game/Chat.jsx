@@ -85,13 +85,12 @@ function ChatMessage(props) {
     case "sent":
       return (
         <div className={styles.textSent}>
-          <div className="h-12 w-12 rounded-full overflow-hidden">
+          <div className={styles.chatImage}>
             <Image
               src={photoURL ? photoURL : ""}
               alt="userImage"
               height={50}
               width={50}
-              className="rounded-full object-cover"
             />
           </div>
           <div className="flex flex-col p-2">
@@ -102,7 +101,7 @@ function ChatMessage(props) {
     case "recieved":
       return (
         <div className={styles.textReceived}>
-          <div className="h-12 w-12 rounded-full overflow-hidden">
+          <div className={styles.chatImage}>
             <Image
               src={photoURL ? photoURL : ""}
               alt="userImage"
@@ -111,7 +110,8 @@ function ChatMessage(props) {
               className="rounded-full object-cover"
             />
           </div>
-          <div className="flex flex-col">
+          <div className={styles.textContent}>
+            <p className="mb-2 font-raleway font-bold">Username</p>
             <p className="text">{text}</p>
           </div>
         </div>
