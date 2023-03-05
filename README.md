@@ -1,16 +1,12 @@
 <h1 align="center">Welcome to ChatFish 🎣</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
-   <img alt="Last Updated" src="https://img.shields.io/badge/last%20updated-February%202023-red" />
+   <img alt="Last Updated" src="https://img.shields.io/badge/last%20updated-March%202023-red" />
    <img alt="Contributors" src="https://img.shields.io/badge/contributors-2-bright%20green">
    <img alt="Status" src="https://img.shields.io/badge/status-GOOD-bright%20green">
 </p>
 
 > ChatFish is an online chat app, where users are placed into random rooms of 3 for 1 hour to strike up conversations. This was designed and developed for the IUPUI Computer Science Web Development Hackathon.
-
-<p>
-<img alt="Homepage Image" src="src/assets/images/readme-img.png">
-</p>
 
 ### 🏠 [Homepage](https://catfish-alpha.vercel.app/)
 
